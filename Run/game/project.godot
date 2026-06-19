@@ -1,0 +1,32 @@
+; 約跑團 Run With Me — Godot project
+; Vertical slice: 標題大廳 (title lobby) ported 1:1 from the design handoff.
+
+config_version=5
+
+[application]
+
+config/name="約跑團 Run With Me"
+config/description="VN × Reigns 滑卡敘事。下班後，你決定今晚把自己交給誰。"
+run/main_scene="res://scenes/TitleScreen.tscn"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+config/icon="res://icon.svg"
+boot_splash/show_image=false
+
+[autoload]
+
+SceneRouter="*res://scripts/SceneRouter.gd"
+Bootstrap="*res://scripts/Bootstrap.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+window/subwindows/embed_subwindows=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.0196078, 0.0156863, 0.0352941, 1)

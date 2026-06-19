@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Saira+Stencil+One&family=Saira:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#050409;overflow:hidden}
+  @keyframes ringPulse{0%,100%{box-shadow:0 0 22px rgba(232,184,107,.55),0 0 60px rgba(232,184,107,.22),inset 0 0 26px rgba(232,184,107,.28)}50%{box-shadow:0 0 34px rgba(244,201,122,.8),0 0 96px rgba(232,184,107,.34),inset 0 0 34px rgba(244,201,122,.4)}}
+  @keyframes floorGlow{0%,100%{opacity:.55;transform:translateX(-50%) scaleX(1)}50%{opacity:.85;transform:translateX(-50%) scaleX(1.08)}}
+  @keyframes storyShimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  @keyframes dotBlink{0%,100%{opacity:.35}50%{opacity:1}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;background:#050409;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans TC',sans-serif;">
+  <div ref="{{ stageRef }}" style="position:relative;flex:none;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:#0a0812;">
+
+    <!-- BACKGROUND ART -->
+    <img src="assets/title_bg.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;"/>
+
+    <!-- SCRIMS for legibility -->
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,5,12,.86) 0%,rgba(6,5,12,.5) 20%,rgba(6,5,12,0) 38%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,5,12,.7) 0%,rgba(6,5,12,0) 24%,rgba(6,5,12,0) 62%,rgba(6,5,12,.72) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;top:0;right:0;bottom:0;width:700px;background:linear-gradient(90deg,rgba(8,6,15,0) 0%,rgba(8,6,15,.6) 34%,rgba(8,6,15,.96) 78%);pointer-events:none;"></div>
+    <div style="position:absolute;top:0;right:0;width:560px;height:200px;background:linear-gradient(180deg,rgba(8,6,15,.92),rgba(8,6,15,0));pointer-events:none;"></div>
+    <div style="position:absolute;bottom:0;right:0;width:620px;height:240px;background:linear-gradient(0deg,rgba(8,6,15,.98) 30%,rgba(8,6,15,0));pointer-events:none;"></div>
+
+    <!-- TAGLINE -->
+    <div style="position:absolute;left:58px;top:40px;font-size:17px;letter-spacing:.42em;color:#b9b2c8;font-weight:500;text-shadow:0 2px 8px rgba(0,0,0,.8);">所有選擇，都是在決定你是誰。</div>
+
+    <!-- TITLE -->
+    <div style="position:absolute;left:50px;top:66px;">
+      <div style="display:flex;align-items:flex-end;gap:8px;">
+        <h1 style="font-size:142px;line-height:.92;font-weight:900;color:#f4f1f8;letter-spacing:.04em;text-shadow:0 4px 2px rgba(0,0,0,.55),0 0 38px rgba(163,112,255,.28);-webkit-text-stroke:1px rgba(255,255,255,.12);">約跑團</h1>
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#E8B86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:28px;filter:drop-shadow(0 0 8px rgba(232,184,107,.6));"><circle cx="17" cy="4" r="2"/><path d="M14 7l-3 3 2 4-4 4"/><path d="M9 11l-2 2-3-1"/><path d="M13 14l4 1 1 4"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;margin-top:8px;padding-left:6px;">
+        <span style="flex:none;width:30px;height:1px;background:rgba(232,184,107,.7);"></span>
+        <span style="flex:none;white-space:nowrap;font-family:'Saira Stencil One',sans-serif;font-size:27px;letter-spacing:.46em;color:#e6dff0;text-shadow:0 2px 10px rgba(0,0,0,.7);">RUN WITH ME</span>
+        <span style="flex:none;width:90px;height:1px;background:linear-gradient(90deg,rgba(232,184,107,.7),rgba(232,184,107,0));"></span>
+      </div>
+    </div>
+
+    <!-- LEFT MENU -->
+    <nav style="position:absolute;left:48px;top:300px;width:332px;display:flex;flex-direction:column;gap:6px;">
+      <!-- active item -->
+      <a style="position:relative;display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:linear-gradient(90deg,rgba(232,184,107,.16),rgba(232,184,107,.03));border:1px solid rgba(232,184,107,.42);box-shadow:0 0 24px rgba(232,184,107,.12);cursor:pointer;">
+        <span style="position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:#E8B86B;box-shadow:0 0 10px rgba(232,184,107,.8);"></span>
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E8B86B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;filter:drop-shadow(0 0 6px rgba(232,184,107,.5));"><circle cx="17" cy="4" r="2"/><path d="M14 7l-3 3 2 4-4 4"/><path d="M9 11l-2 2-3-1"/><path d="M13 14l4 1 1 4"/></svg>
+        <span><span style="display:block;font-size:24px;font-weight:700;color:#fbf6ec;letter-spacing:.06em;">新遊戲</span><span style="display:block;font-size:13px;color:#cdb88e;letter-spacing:.04em;margin-top:2px;">開始你的故事</span></span>
+      </a>
+      <!-- continue -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M4 7a2 2 0 0 1 2-2h3l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M12 11v5"/><path d="M9.5 13.5 12 11l2.5 2.5"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">繼續遊戲</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">接續未完的旅程</span></span>
+      </a>
+      <!-- chapters -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="3.5" cy="6" r="1.2"/><circle cx="3.5" cy="12" r="1.2"/><circle cx="3.5" cy="18" r="1.2"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">章節選擇</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">重溫你的選擇</span></span>
+      </a>
+      <!-- gallery -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9V4h12v5a6 6 0 0 1-12 0Z"/><path d="M6 5H3.5v2A2.5 2.5 0 0 0 6 9.5"/><path d="M18 5h2.5v2A2.5 2.5 0 0 1 18 9.5"/><path d="M12 15v3"/><path d="M9 20h6"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">圖鑑</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">角色・場景・回憶</span></span>
+      </a>
+      <!-- settings -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.81 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">設定</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">調整遊戲體驗</span></span>
+      </a>
+      <!-- credits -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 2v8"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">製作團隊</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">致每一個參與的人</span></span>
+      </a>
+      <!-- quit -->
+      <a style="display:flex;align-items:center;gap:18px;padding:14px 18px;border-radius:12px;text-decoration:none;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#cfc8db" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <span><span style="display:block;font-size:23px;font-weight:700;color:#ece8f2;letter-spacing:.06em;">結束遊戲</span><span style="display:block;font-size:13px;color:#938ca3;letter-spacing:.04em;margin-top:2px;">離開這個世界</span></span>
+      </a>
+    </nav>
+
+    <!-- 18+ RATING -->
+    <div style="position:absolute;left:56px;bottom:62px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:74px;height:74px;border-radius:10px;border:2.5px solid #d94b5a;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(20,8,12,.5);box-shadow:0 0 16px rgba(217,75,90,.25);">
+          <span style="font-size:27px;font-weight:900;color:#f0e9ef;line-height:1;">18+</span>
+          <span style="font-size:12px;font-weight:700;color:#e0a9b0;letter-spacing:.1em;margin-top:3px;">限制級</span>
+        </div>
+      </div>
+      <div style="font-size:13px;line-height:1.7;color:#8d8699;margin-top:12px;letter-spacing:.03em;">本遊戲包含成人內容，<br/>僅限 18 歲以上玩家遊玩。</div>
+    </div>
+
+    <!-- CENTER START -->
+    <div style="position:absolute;left:760px;top:760px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;">
+      <div style="position:absolute;left:50%;top:118px;width:300px;height:46px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(232,184,107,.5),rgba(232,184,107,0) 70%);filter:blur(6px);animation:floorGlow 3.4s ease-in-out infinite;"></div>
+      <a style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:360px;height:150px;border-radius:50%;border:1.5px solid rgba(244,201,122,.85);background:rgba(12,9,18,.18);cursor:pointer;animation:ringPulse 3.4s ease-in-out infinite;text-decoration:none;transition:transform .2s ease-out;" style-hover="transform:scale(1.04);">
+        <span style="font-size:36px;font-weight:700;letter-spacing:.5em;color:#fdf6e9;text-indent:.5em;text-shadow:0 0 18px rgba(232,184,107,.6);">觸碰開始</span>
+        <span style="font-size:15px;letter-spacing:.42em;color:#d9c39c;margin-top:8px;text-indent:.42em;">踏出第一步</span>
+      </a>
+    </div>
+
+    <!-- BOTTOM HINTS -->
+    <div style="position:absolute;left:760px;bottom:40px;transform:translateX(-50%);display:flex;align-items:center;gap:42px;">
+      <span style="display:flex;align-items:center;gap:9px;font-size:15px;letter-spacing:.08em;color:#a59eb3;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#cdb88e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 16a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2z"/><path d="M3 16a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z"/></svg>耳機建議</span>
+      <span style="display:flex;align-items:center;gap:9px;font-size:15px;letter-spacing:.08em;color:#a59eb3;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#cdb88e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M3 9v6M21 9v6"/></svg>震動 ON</span>
+      <span style="display:flex;align-items:center;gap:9px;font-size:15px;letter-spacing:.08em;color:#a59eb3;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#cdb88e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.5 9 4.5 4.5 0 0 0 7 19z"/><path d="M12 12v6M9.5 15.5 12 18l2.5-2.5"/></svg>儲存進度</span>
+    </div>
+
+    <!-- RIGHT SOCIAL PANEL -->
+    <div data-screen-label="社群面板" style="position:absolute;right:24px;top:30px;width:476px;display:flex;flex-direction:column;gap:14px;">
+      <!-- STORIES -->
+      <div style="border-radius:16px;background:rgba(20,16,28,.66);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);padding:16px 18px 18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <span style="font-size:19px;font-weight:700;color:#f1ecf6;letter-spacing:.06em;">限時動態</span>
+          <span style="display:flex;align-items:center;gap:4px;font-size:13px;color:#9b94aa;cursor:pointer;">全部觀看<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:6px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px;">
+            <div style="position:relative;width:56px;height:56px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#64E9D6,#A370FF,#F465DD);background-size:200% 200%;animation:storyShimmer 5s linear infinite;">
+              <div style="width:100%;height:100%;border-radius:50%;border:2.5px solid #0a0812;background:linear-gradient(160deg,#3a2f4e,#241c33);display:flex;align-items:center;justify-content:center;overflow:hidden;"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,.32)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div>
+              <span style="position:absolute;right:-1px;bottom:-1px;width:20px;height:20px;border-radius:50%;background:#A370FF;border:2px solid #0a0812;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;line-height:1;">+</span>
+            </div>
+            <span style="font-size:12px;color:#c4bdd2;white-space:nowrap;">你的限動</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px;">
+            <div style="width:56px;height:56px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#64E9D6,#A370FF,#F465DD);"><div style="width:100%;height:100%;border-radius:50%;border:2.5px solid #0a0812;background:linear-gradient(160deg,#2e4a55,#1b2e38);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div></div>
+            <span style="font-size:12px;color:#c4bdd2;white-space:nowrap;">ray_run</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px;">
+            <div style="width:56px;height:56px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#F465DD,#A370FF,#64E9D6);"><div style="width:100%;height:100%;border-radius:50%;border:2.5px solid #0a0812;background:linear-gradient(160deg,#4a2f44,#2c1c2e);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div></div>
+            <span style="font-size:12px;color:#c4bdd2;white-space:nowrap;">kevin__k</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px;">
+            <div style="width:56px;height:56px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#A370FF,#F465DD,#64E9D6);"><div style="width:100%;height:100%;border-radius:50%;border:2.5px solid #0a0812;background:linear-gradient(160deg,#352f4e,#221c33);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div></div>
+            <span style="font-size:12px;color:#c4bdd2;white-space:nowrap;">yijun_</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:7px;width:62px;">
+            <div style="width:56px;height:56px;border-radius:50%;padding:2.5px;background:linear-gradient(135deg,#7E778D,#4a4459);"><div style="width:100%;height:100%;border-radius:50%;border:2.5px solid #0a0812;background:linear-gradient(160deg,#2c2838,#1c1926);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="30" height="30" viewBox="0 0 24 24" fill="rgba(255,255,255,.28)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div></div>
+            <span style="font-size:12px;color:#9d96ad;white-space:nowrap;">老吳</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div style="border-radius:16px;background:rgba(20,16,28,.66);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);padding:6px 18px;">
+        <!-- kevin -->
+        <div style="display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div style="width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(160deg,#2e4a55,#1b2e38);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="26" height="26" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div>
+          <div style="flex:1;min-width:0;"><div style="font-size:16px;font-weight:700;color:#eee9f4;">kevin__k</div><div style="font-size:13.5px;color:#a59eb3;margin-top:1px;">分享了你的限動。</div><div style="font-size:12px;color:#736c82;margin-top:3px;">2分鐘前</div></div>
+          <div style="width:62px;height:44px;border-radius:7px;flex:none;background:linear-gradient(135deg,#1c3a4a,#3a1c3a);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 0 12px rgba(100,233,214,.18);"></div>
+        </div>
+        <!-- yijun -->
+        <div style="display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06);">
+          <div style="width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(160deg,#352f4e,#221c33);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="26" height="26" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div>
+          <div style="flex:1;min-width:0;"><div style="font-size:16px;font-weight:700;color:#eee9f4;">yijun_</div><div style="font-size:13.5px;color:#a59eb3;margin-top:1px;">已看過你的限動。</div><div style="font-size:12px;color:#736c82;margin-top:3px;">8分鐘前</div></div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8c85a0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <!-- ann -->
+        <div style="display:flex;align-items:center;gap:13px;padding:13px 0;">
+          <div style="width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(160deg,#4a2f44,#2c1c2e);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="26" height="26" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div>
+          <div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:7px;"><span style="font-size:16px;font-weight:700;color:#eee9f4;">ann_0221</span><span style="width:7px;height:7px;border-radius:50%;background:#F465DD;animation:dotBlink 1.8s ease-in-out infinite;"></span></div><div style="font-size:13.5px;color:#a59eb3;margin-top:1px;">傳送了訊息給你。</div><div style="font-size:12px;color:#736c82;margin-top:3px;">12分鐘前</div></div>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8c85a0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.37 9 9 0 0 1-3.9-.9L3 20l1.1-3.3A8.38 8.38 0 0 1 3.5 11 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/></svg>
+        </div>
+      </div>
+
+      <!-- CHAT SNIPPET -->
+      <div style="border-radius:16px;background:rgba(16,13,22,.62);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08);padding:14px 18px 16px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8c85a0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:10px;"><path d="M15 6l-6 6 6 6"/></svg>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:14px;">
+          <div style="max-width:78%;">
+            <div style="background:rgba(54,48,68,.85);border:1px solid rgba(255,255,255,.06);padding:11px 15px;border-radius:16px 16px 16px 4px;font-size:15px;color:#ece8f2;line-height:1.4;">今天信義人好多，跑點來嗎？</div>
+            <div style="font-size:11px;color:#736c82;margin-top:4px;margin-left:4px;">20:47</div>
+          </div>
+          <div style="align-self:flex-end;display:flex;align-items:flex-end;gap:9px;">
+            <div style="text-align:right;"><div style="display:flex;align-items:center;gap:5px;justify-content:flex-end;color:#64E9D6;font-size:11px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12.5 6 16.5 13 8.5"/><path d="M9.5 14 11 15.5 18 7.5"/></svg>已讀</div><div style="font-size:11px;color:#736c82;margin-top:2px;">20:48</div></div>
+            <div style="width:34px;height:34px;border-radius:50%;flex:none;background:linear-gradient(160deg,#2e4a55,#1b2e38);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,.34)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATING APP NOTICE -->
+      <div style="border-radius:16px;background:rgba(20,16,28,.66);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.09);padding:15px 18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <span style="font-size:17px;font-weight:700;color:#e9e4f0;letter-spacing:.04em;">交友軟體</span>
+          <span style="font-size:12px;color:#736c82;">昨天</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:13px;opacity:.7;">
+          <div style="width:46px;height:46px;border-radius:50%;flex:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6f6880" stroke-width="1.5"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0" fill="none"/></svg></div>
+          <div><div style="font-size:16px;font-weight:700;color:#bdb6c9;">使用者已不存在</div><div style="font-size:13px;color:#7d7689;margin-top:2px;">無法查看此用戶檔案。</div></div>
+        </div>
+      </div>
+
+      <!-- SHARE CTA -->
+      <button style="display:flex;align-items:center;justify-content:center;gap:13px;width:100%;padding:15px;border-radius:14px;border:1px solid rgba(232,184,107,.4);background:rgba(20,16,28,.5);backdrop-filter:blur(10px);color:#fbf5ea;font-family:'Noto Sans TC',sans-serif;font-size:19px;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(232,184,107,.12);border:1px solid rgba(244,201,122,.7);box-shadow:0 0 24px rgba(232,184,107,.18);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B86B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>分享到你的限動
+      </button>
+    </div>
+
+    <!-- SETTINGS top-right (above panel) -->
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){ super(props); this.stageRef = React.createRef(); this._fit = this._fit.bind(this); }
+  componentDidMount(){ this._fit(); window.addEventListener('resize', this._fit); }
+  componentWillUnmount(){ window.removeEventListener('resize', this._fit); }
+  _fit(){
+    const el = this.stageRef.current; if(!el) return;
+    const s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    el.style.transform = 'scale('+s+')';
+  }
+  renderVals(){ return { stageRef: this.stageRef }; }
+}
+</script>
+</body>
+</html>
