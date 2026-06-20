@@ -15,6 +15,8 @@ var _text: Label
 var _advance: Button
 var _choices: Control
 var _hint: Control
+var _dev: Label
+var _ended := false
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -75,20 +77,49 @@ func _ready() -> void:
 	_hint = _make_hint()
 	add_child(_hint)
 
+	# Dev-only hidden-state overlay (F1 toggles). Hidden in normal play.
+	_dev = UI.label("", UI.tc(500, 0, 17), 17, Color(0.55, 1.0, 0.7, 0.92), 6)
+	_dev.position = Vector2(60, 88)
+	_dev.visible = false
+	add_child(_dev)
+
 	_dev_start()
 
 ## Dev: jump to a scene/beat via `-- --scene=N --beat=M` for screenshotting.
 func _dev_start() -> void:
 	var start := 0
 	var adv := 0
+	var auto := ""
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--scene="):
 			start = int(a.split("=")[1])
 		elif a.begins_with("--beat="):
 			adv = int(a.split("=")[1])
+		elif a.begins_with("--auto="):
+			auto = a.split("=")[1]
 	_load_scene(start)
 	for _k in adv:
 		_on_advance()
+	if auto != "":
+		_autoplay(auto)
+
+## Dev: drive straight through, picking L/R at each choice from `seq` (e.g. "RRRRRL").
+func _autoplay(seq: String) -> void:
+	_dev.visible = true
+	var ci := 0
+	var guard := 0
+	while not _ended and _si < _scenes.size() and guard < 2000:
+		guard += 1
+		var beat: Dictionary = _scenes[_si]["beats"][_bi]
+		if beat.has("choice"):
+			var d := "right"
+			if ci < seq.length():
+				d = "left" if seq[ci] == "L" else "right"
+			ci += 1
+			_choose(d)
+		else:
+			_on_advance()
+	_refresh_dev()
 
 # --- flow --------------------------------------------------------------------
 
@@ -132,12 +163,25 @@ func _on_advance() -> void:
 	else:
 		_show_beat()
 
-func _choose(_dir: String) -> void:
-	# Early choices don't branch (設計: 兩邊都沒差); both advance the story.
-	# _dir is recorded for later weighting once hidden state exists.
-	_load_scene(_si + 1)
+func _choose(dir: String) -> void:
+	# Apply this choice's hidden effects (總體參數／關係), set route, maybe branch.
+	var sid := "%02d" % (_si + 1)
+	var side: Dictionary = Opening.FLOW.get(sid, {}).get(dir, {})
+	if side.has("fx"):
+		RunState.apply(side["fx"])
+	if side.has("route"):
+		RunState.route = side["route"]
+	RunState.history.append(sid + ("←" if dir == "left" else "→"))
+	_refresh_dev()
+	if side.get("end", "") != "":
+		_show_end(side["end"])   # 路線分岔：序章在此收束
+	else:
+		_load_scene(_si + 1)
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F1:
+		_toggle_dev()
+		return
 	if _si >= _scenes.size():
 		return
 	var beat: Dictionary = _scenes[_si]["beats"][_bi]
@@ -148,6 +192,14 @@ func _input(event: InputEvent) -> void:
 			_choose("right")
 	elif event.is_action_pressed("ui_accept"):
 		_on_advance()
+
+func _toggle_dev() -> void:
+	_dev.visible = not _dev.visible
+	_refresh_dev()
+
+func _refresh_dev() -> void:
+	if _dev and _dev.visible:
+		_dev.text = RunState.snapshot()
 
 # --- builders ----------------------------------------------------------------
 
@@ -247,7 +299,8 @@ func _make_hint() -> Control:
 	tw.tween_property(h, "modulate:a", 1.0, 1.0)
 	return h
 
-func _show_end() -> void:
+func _show_end(kind := "") -> void:
+	_ended = true
 	_clear(_choices)
 	_advance.visible = false
 	_hint.visible = false
@@ -260,6 +313,14 @@ func _show_end() -> void:
 	col.set_anchors_preset(Control.PRESET_CENTER)
 	col.alignment = BoxContainer.ALIGNMENT_CENTER
 	col.name = "EndCard"
+	# 收束的一句話：憑路線（按下分享／滑掉／根本沒去），不出現任何數字。
+	var flavour := _ending_line(kind)
+	if flavour != "":
+		var f := UI.label(flavour, UI.tc(400, 0.06, 26), 26, Palette.TEXT_SOFT, 12)
+		f.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		f.autowrap_mode = TextServer.AUTOWRAP_WORD
+		f.custom_minimum_size = Vector2(1040, 0)
+		col.add_child(f)
 	var t := UI.with_shadow(UI.label(Opening.CHAPTER, UI.tc(900, 0.1, 64), 64, Palette.CREAM), Color(0, 0, 0, 0.6), 12)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(t)
@@ -277,6 +338,19 @@ func _show_end() -> void:
 	col.add_child(back)
 	add_child(col)
 	_fade_in(col)
+
+## One closing line that reflects the route the player took (no numbers).
+func _ending_line(kind := "") -> String:
+	var r: String = kind if kind != "" else RunState.route
+	match r:
+		"home":
+			return "你把那則限動關掉，照常去堤防跑你的。一樣的河，一樣的黑。手錶上的數字，還是只有你自己看。"
+		"post":
+			return "你按了下去。"
+		"lurk":
+			return "那顆按鈕，你看了很久，沒按。今晚先這樣。"
+		_:
+			return ""
 
 # --- helpers -----------------------------------------------------------------
 

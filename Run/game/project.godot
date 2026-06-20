@@ -1,5 +1,10 @@
-; 約跑團 Run With Me — Godot project
-; Vertical slice: 標題大廳 (title lobby) ported 1:1 from the design handoff.
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
@@ -9,11 +14,12 @@ config/name="約跑團 Run With Me"
 config/description="VN × Reigns 滑卡敘事。下班後，你決定今晚把自己交給誰。"
 run/main_scene="res://scenes/TitleScreen.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
 boot_splash/show_image=false
+config/icon="res://icon.svg"
 
 [autoload]
 
+RunState="*res://scripts/RunState.gd"
 SceneRouter="*res://scripts/SceneRouter.gd"
 Bootstrap="*res://scripts/Bootstrap.gd"
 
@@ -22,8 +28,6 @@ Bootstrap="*res://scripts/Bootstrap.gd"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
-window/subwindows/embed_subwindows=true
 
 [rendering]
 

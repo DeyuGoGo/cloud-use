@@ -13,7 +13,6 @@ func _ready() -> void:
 	_title_block()
 	_left_menu()
 	_rating()
-	_start_button()
 	_bottom_hints()
 	_social_panel()
 
@@ -36,8 +35,10 @@ func _scrims() -> void:
 	_place(UI.scrim(Color(d1, 0.7), Color(d1, 0), 1.0, false), Vector2(0, 0), Vector2(1920, 260))
 	# bottom band — dark by y=1080 (handoff line 31, bottom half)
 	_place(UI.scrim(Color(d1, 0), Color(d1, 0.72), 1.0, false), Vector2(0, 670), Vector2(1920, 410))
-	# right-edge wash behind the social panel (handoff line 32)
-	_place(UI.scrim(Color(d2, 0), Color(d2, 0.96), 0.78, true), Vector2(1220, 0), Vector2(700, 1080))
+	# right-edge wash behind the social panel. title_bg.png has the IG panel baked
+	# into the art, so ramp to fully opaque before the live panel's left edge
+	# (x≈1420) so the baked panel can't ghost through the live glass.
+	_place(UI.scrim(Color(d2, 0), Color(d2, 1.0), 0.37, true), Vector2(1100, 0), Vector2(820, 1080))
 	# top-right corner — behind the stories header (handoff line 33)
 	_place(UI.scrim(Color(d2, 0.92), Color(d2, 0), 1.0, false), Vector2(1360, 0), Vector2(560, 200))
 	# bottom-right corner — behind the share CTA (handoff line 34)
@@ -141,43 +142,6 @@ func _rating() -> void:
 	badge.add_child(bv)
 	col.add_child(badge)
 	col.add_child(UI.label("本遊戲包含成人內容，\n僅限 18 歲以上玩家遊玩。", UI.tc(400, 0.03, 13), 13, Color("8d8699"), 9))
-
-# --- center start ------------------------------------------------------------
-
-func _start_button() -> void:
-	# Warm floor light pooled under the ring (handoff floorGlow).
-	var glow := UI.radial_glow(Color(Palette.GOLD, 0.5), 0.7)
-	_place(glow, Vector2(610, 878), Vector2(300, 46))
-	var gtw := create_tween().set_loops().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	gtw.tween_property(glow, "modulate:a", 0.85, 1.7)
-	gtw.tween_property(glow, "modulate:a", 0.55, 1.7)
-
-	var b := Button.new()
-	b.focus_mode = Control.FOCUS_NONE
-	b.pressed.connect(SceneRouter.new_game)
-	var normal := UI.glow(UI.box(Color(0.047, 0.035, 0.071, 0.18), 75, Color(Palette.GOLD_BRIGHT, 0.85), 2), Color(Palette.GOLD, 0.3), 22)
-	var hover := UI.glow(UI.box(Color(Palette.GOLD, 0.10), 75, Palette.GOLD_BRIGHT, 2), Color(Palette.GOLD, 0.45), 34)
-	b.add_theme_stylebox_override("normal", normal)
-	b.add_theme_stylebox_override("hover", hover)
-	b.add_theme_stylebox_override("pressed", hover)
-	_place(b, Vector2(580, 760), Vector2(360, 150))
-
-	var col := UI.vbox(8)
-	col.set_anchors_preset(Control.PRESET_CENTER)
-	col.alignment = BoxContainer.ALIGNMENT_CENTER
-	var big := UI.with_shadow(UI.label("觸碰開始", UI.tc(700, 0.5, 36), 36, Color("fdf6e9")), Color(Palette.GOLD, 0.6), 18)
-	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	col.add_child(big)
-	var small := UI.label("踏出第一步", UI.tc(400, 0.42, 15), 15, Color("d9c39c"))
-	small.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	col.add_child(small)
-	b.add_child(col)
-
-	# Breathing pulse — echoes the running 呼吸圈. Soft, never urgent.
-	b.pivot_offset = Vector2(180, 75)
-	var tw := create_tween().set_loops().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(b, "scale", Vector2(1.03, 1.03), 1.7)
-	tw.tween_property(b, "scale", Vector2(1.0, 1.0), 1.7)
 
 # --- bottom hints ------------------------------------------------------------
 

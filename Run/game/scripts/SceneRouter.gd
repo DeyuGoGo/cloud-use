@@ -15,7 +15,7 @@ func goto(path: String) -> void:
 		push_warning("SceneRouter: scene not found yet → %s" % path)
 
 func new_game() -> void:
-	# TODO(card-runner): start a fresh Ink story + run-state, then enter the card loop.
+	RunState.reset()  # fresh hidden parameters for a new run
 	goto(CARD_RUNNER)
 
 func continue_game() -> void:
