@@ -8,6 +8,7 @@ extends Node
 const TITLE := "res://scenes/TitleScreen.tscn"
 const CARD_RUNNER := "res://scenes/CardRunner.tscn"
 const MAIN_ROOM := "res://scenes/MainRoom.tscn"   # 每日主畫面：下班後「今晚你要做什麼？」的決策點
+const ALIVE_WALL := "res://scenes/AliveWall.tscn" # 手機裡的社交動態牆「alive」（從主房間打開手機進入）
 
 func goto(path: String) -> void:
 	if ResourceLoader.exists(path):
@@ -27,6 +28,9 @@ func continue_game() -> void:
 
 func goto_main_room() -> void:
 	goto(MAIN_ROOM)
+
+func goto_alive_wall() -> void:
+	goto(ALIVE_WALL)
 
 func back_to_title() -> void:
 	goto(TITLE)

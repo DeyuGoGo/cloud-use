@@ -352,7 +352,7 @@ func _toast() -> void:
 func _phone_panel() -> void:
 	var b := _glass_button(Vector2(264, 298))
 	b.position = Vector2(1600, 642)
-	b.pressed.connect(_todo)
+	b.pressed.connect(SceneRouter.goto_alive_wall)
 	add_child(b)
 
 	var red := UI.disc(11, Palette.ALERT)
