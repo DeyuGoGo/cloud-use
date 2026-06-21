@@ -5,6 +5,9 @@ extends Node
 
 func _ready() -> void:
 	var user_args := OS.get_cmdline_user_args()
+	for arg in OS.get_cmdline_args():
+		if not user_args.has(arg):
+			user_args.append(arg)
 	if "--screenshot" not in user_args:
 		return
 	await get_tree().create_timer(1.4).timeout

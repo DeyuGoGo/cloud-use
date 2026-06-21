@@ -37,6 +37,7 @@ const SHARE_LABEL := Color("fbf5ea")    # 分享到你的限動
 const TEAL := Color("64E9D6")
 const PURPLE := Color("A370FF")
 const PINK := Color("F465DD")
+const ALERT := Color("FF3C78")   # the blinking red "找你" signal dot (邀約 / 通知 / 手機)
 
 # 18+ rating
 const RED := Color("d94b5a")

@@ -7,6 +7,7 @@ extends Node
 
 const TITLE := "res://scenes/TitleScreen.tscn"
 const CARD_RUNNER := "res://scenes/CardRunner.tscn"
+const MAIN_ROOM := "res://scenes/MainRoom.tscn"   # 每日主畫面：下班後「今晚你要做什麼？」的決策點
 
 func goto(path: String) -> void:
 	if ResourceLoader.exists(path):
@@ -19,8 +20,13 @@ func new_game() -> void:
 	goto(CARD_RUNNER)
 
 func continue_game() -> void:
-	# TODO(save): load the last save, then resume the card loop.
-	goto(CARD_RUNNER)
+	# TODO(save): load the last save, then resume from where it left off.
+	# Until there's a save system + prologue→loop hand-off, "繼續遊戲" drops you
+	# straight into the daily hub so the main room is reachable from the title.
+	goto_main_room()
+
+func goto_main_room() -> void:
+	goto(MAIN_ROOM)
 
 func back_to_title() -> void:
 	goto(TITLE)

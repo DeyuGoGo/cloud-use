@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#050409;overflow:hidden}
+  @keyframes phoneGlow{0%,100%{box-shadow:0 0 18px rgba(100,233,214,.45),inset 0 0 16px rgba(100,233,214,.18)}50%{box-shadow:0 0 30px rgba(100,233,214,.75),inset 0 0 22px rgba(100,233,214,.3)}}
+  @keyframes redBlink{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes dotPulse{0%,100%{box-shadow:0 0 8px rgba(100,233,214,.7)}50%{box-shadow:0 0 16px rgba(100,233,214,1)}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;background:#050409;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans TC',sans-serif;">
+  <div ref="{{ stageRef }}" style="position:relative;flex:none;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:#0a0812;">
+
+    <!-- BACKGROUND PLATE (clean room, no UI) -->
+    <img src="assets/room_bg.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;"/>
+
+    <!-- legibility scrims -->
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,5,12,.88) 0%,rgba(6,5,12,.62) 30%,rgba(6,5,12,.12) 50%,rgba(6,5,12,0) 64%);pointer-events:none;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,5,12,.7) 0%,rgba(6,5,12,0) 18%,rgba(6,5,12,0) 80%,rgba(6,5,12,.66) 100%);pointer-events:none;"></div>
+    <div style="position:absolute;top:0;right:0;bottom:0;width:520px;background:linear-gradient(90deg,rgba(6,5,12,0),rgba(6,5,12,.5));pointer-events:none;"></div>
+
+    <!-- ===== TOP-LEFT: DAY + STATS ===== -->
+    <div style="position:absolute;left:54px;top:46px;display:flex;align-items:flex-end;gap:54px;">
+      <div>
+        <div style="font-family:'Noto Serif TC',serif;font-weight:300;font-size:30px;line-height:1;color:#e9e4ef;letter-spacing:.04em;">Day</div>
+        <div style="font-family:'Noto Serif TC',serif;font-weight:300;font-size:104px;line-height:.86;color:#fbf9fd;letter-spacing:.01em;text-shadow:0 4px 24px rgba(0,0,0,.6);">23</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="font-size:19px;color:#c2bfc9;letter-spacing:.1em;">精力</span>
+          <span style="display:flex;gap:9px;">
+            <span style="width:15px;height:15px;border-radius:50%;background:#64E9D6;animation:dotPulse 3s ease-in-out infinite;"></span>
+            <span style="width:15px;height:15px;border-radius:50%;background:#64E9D6;animation:dotPulse 3s ease-in-out infinite .4s;"></span>
+            <span style="width:15px;height:15px;border-radius:50%;background:transparent;border:1.5px solid rgba(255,255,255,.28);"></span>
+          </span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums;">
+          <span style="font-size:24px;color:#8b8694;font-weight:500;">$</span>
+          <span style="font-size:26px;color:#f3f1f6;font-weight:500;letter-spacing:.03em;">18,650</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- divider -->
+    <div style="position:absolute;left:56px;top:188px;width:496px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.32),rgba(255,255,255,0));"></div>
+
+    <!-- ===== PROMPT ===== -->
+    <div style="position:absolute;left:56px;top:212px;font-size:30px;font-weight:700;color:#f4f2f7;letter-spacing:.05em;text-shadow:0 2px 12px rgba(0,0,0,.7);">今晚你要做什麼？</div>
+
+    <!-- ===== CHOICE LIST ===== -->
+    <div style="position:absolute;left:54px;top:272px;width:612px;display:flex;flex-direction:column;gap:12px;">
+
+      <!-- ACTIVE: 河濱跑步 -->
+      <div style="position:relative;display:flex;align-items:center;gap:20px;padding:18px 24px;border-radius:14px;background:linear-gradient(90deg,rgba(100,233,214,.12),rgba(100,233,214,.03));border:1px solid rgba(100,233,214,.5);box-shadow:0 0 26px rgba(100,233,214,.1);cursor:pointer;">
+        <span style="position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:#64E9D6;box-shadow:0 0 10px rgba(100,233,214,.8);"></span>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#7df0e1" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="13" cy="4" r="1.8"/><path d="M11 7.5 8 10l3 2.5-1.5 5.5"/><path d="M11 12.5 14 14l1.5 4.5"/><path d="M8 10 5 9"/><path d="M14 9.5 17 11"/></svg>
+        <div style="flex:1;min-width:0;"><div style="font-size:23px;font-weight:700;color:#fbfdfc;letter-spacing:.03em;">一個人去河濱跑步</div><div style="font-size:14px;color:#9aa6a3;margin-top:3px;letter-spacing:.02em;">整理思緒，讓汗水帶走雜念</div></div>
+        <div style="text-align:right;flex:none;"><div style="font-size:15px;color:#aaa5b4;letter-spacing:.04em;">精力 -1</div></div>
+      </div>
+
+      <!-- 加班工作 -->
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;border-radius:14px;background:rgba(28,24,38,.66);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(40,34,53,.72);border:1px solid rgba(255,255,255,.16);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8c3d2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 20h20"/><path d="M8.5 10.5 11 8l2 2 2.5-3"/></svg>
+        <div style="flex:1;min-width:0;"><div style="font-size:23px;font-weight:700;color:#efecf4;letter-spacing:.03em;">加班工作</div><div style="font-size:14px;color:#8f8a99;margin-top:3px;letter-spacing:.02em;">把今天沒做完的事補完，也把空虛延後</div></div>
+        <div style="text-align:right;flex:none;"><div style="font-size:15px;color:#aaa5b4;letter-spacing:.04em;">精力 -1</div><div style="font-size:14px;color:#64E9D6;margin-top:4px;letter-spacing:.04em;">$ +少量</div></div>
+      </div>
+
+      <!-- 滑短影音 -->
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;border-radius:14px;background:rgba(28,24,38,.66);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(40,34,53,.72);border:1px solid rgba(255,255,255,.16);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8c3d2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="6" y="2.5" width="12" height="19" rx="2.4"/><path d="M10.5 9.2v5.6l4.5-2.8z" fill="#c8c3d2" stroke="none"/></svg>
+        <div style="flex:1;min-width:0;"><div style="font-size:23px;font-weight:700;color:#efecf4;letter-spacing:.03em;">滑短影音</div><div style="font-size:14px;color:#8f8a99;margin-top:3px;letter-spacing:.02em;">明明很累，還是停不下來</div></div>
+        <div style="text-align:right;flex:none;"><div style="font-size:15px;color:#aaa5b4;letter-spacing:.04em;">精力 -1</div><div style="font-size:14px;color:#A370FF;margin-top:4px;letter-spacing:.04em;">可能觸發動態</div></div>
+      </div>
+
+      <!-- 睡覺 -->
+      <div style="display:flex;align-items:center;gap:20px;padding:18px 24px;border-radius:14px;background:rgba(28,24,38,.66);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:all .15s ease-out;" style-hover="background:rgba(40,34,53,.72);border:1px solid rgba(255,255,255,.16);">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8c3d2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M3 18v-5a2 2 0 0 1 2-2h10a4 4 0 0 1 4 4v3"/><path d="M3 14h18"/><path d="M3 18v2M21 17v3"/><path d="M6.5 11V9a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 12.5 9v2"/></svg>
+        <div style="flex:1;min-width:0;"><div style="font-size:23px;font-weight:700;color:#efecf4;letter-spacing:.03em;">睡覺</div><div style="font-size:14px;color:#8f8a99;margin-top:3px;letter-spacing:.02em;">不想再想了，直接結束這一天</div></div>
+        <div style="text-align:right;flex:none;"><div style="font-size:15px;color:#64E9D6;letter-spacing:.04em;">精力回復</div></div>
+      </div>
+    </div>
+
+    <!-- ===== 今晚邀約 PANEL ===== -->
+    <div style="position:absolute;left:54px;top:728px;width:612px;border-radius:14px;background:rgba(20,17,28,.72);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.09);padding:18px 24px 14px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
+        <span style="font-size:20px;font-weight:700;color:#f1eef6;letter-spacing:.06em;">今晚邀約</span>
+        <span style="min-width:24px;height:24px;padding:0 7px;border-radius:1000px;background:rgba(100,233,214,.16);border:1px solid rgba(100,233,214,.5);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#7df0e1;">2</span>
+        <span style="flex:1;"></span>
+      </div>
+      <!-- row 1 -->
+      <div style="display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+        <span style="font-size:17px;color:#c2bfc9;font-variant-numeric:tabular-nums;letter-spacing:.02em;width:54px;flex:none;">22:30</span>
+        <span style="width:42px;height:42px;border-radius:50%;flex:none;background:linear-gradient(160deg,#4a2f55,#2b1c33);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,.36)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></span>
+        <span style="font-size:18px;font-weight:700;color:#eee9f4;width:78px;flex:none;">小雨</span>
+        <span style="flex:1;font-size:15px;color:#9c96a8;letter-spacing:.02em;">她說想去信義走走</span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF3C78;box-shadow:0 0 8px rgba(255,60,120,.7);flex:none;animation:redBlink 1.8s ease-in-out infinite;"></span>
+      </div>
+      <!-- row 2 -->
+      <div style="display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);">
+        <span style="font-size:17px;color:#c2bfc9;font-variant-numeric:tabular-nums;letter-spacing:.02em;width:54px;flex:none;">23:00</span>
+        <span style="width:42px;height:42px;border-radius:50%;flex:none;background:linear-gradient(160deg,#2e4150,#1b2a33);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,.36)"><circle cx="12" cy="8.5" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg></span>
+        <span style="font-size:18px;font-weight:700;color:#eee9f4;width:78px;flex:none;">Duncan</span>
+        <span style="flex:1;font-size:15px;color:#9c96a8;letter-spacing:.02em;">他傳來一個位置</span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF3C78;box-shadow:0 0 8px rgba(255,60,120,.7);flex:none;animation:redBlink 1.8s ease-in-out infinite .6s;"></span>
+      </div>
+      <!-- footer -->
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-top:13px;cursor:pointer;color:#aaa5b4;" style-hover="color:#e9e4ef;">
+        <span style="font-size:15px;letter-spacing:.04em;">查看全部邀約</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+
+    <!-- version -->
+    <div style="position:absolute;left:56px;bottom:34px;font-size:15px;color:#6f6980;letter-spacing:.08em;">v0.9.1</div>
+
+    <!-- ===== TOP-RIGHT TOAST ===== -->
+    <div style="position:absolute;right:46px;top:84px;width:392px;display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:16px;background:rgba(18,15,24,.84);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 40px rgba(0,0,0,.45);cursor:pointer;" style-hover="border:1px solid rgba(100,233,214,.45);">
+      <span style="position:relative;width:46px;height:46px;border-radius:50%;flex:none;background:rgba(100,233,214,.1);border:1px solid rgba(100,233,214,.32);display:flex;align-items:center;justify-content:center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9aa6a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        <span style="position:absolute;top:-1px;right:-1px;width:11px;height:11px;border-radius:50%;background:#FF3C78;border:2px solid #14101a;animation:redBlink 1.8s ease-in-out infinite;"></span>
+      </span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:18px;font-weight:700;color:#f1eef6;letter-spacing:.03em;">阿軒傳來訊息</div>
+        <div style="font-size:14.5px;color:#9c96a8;margin-top:2px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">今天累嗎？要不要出來透透氣？</div>
+      </div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7e778d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+    <!-- ===== OPEN PHONE PANEL ===== -->
+    <div style="position:absolute;right:64px;top:556px;width:264px;border-radius:18px;background:rgba(16,13,22,.74);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1);box-shadow:0 16px 50px rgba(0,0,0,.5);padding:34px 24px 28px;display:flex;flex-direction:column;align-items:center;cursor:pointer;" style-hover="border:1px solid rgba(100,233,214,.45);">
+      <span style="position:absolute;top:16px;right:16px;width:10px;height:10px;border-radius:50%;background:#FF3C78;box-shadow:0 0 9px rgba(255,60,120,.8);animation:redBlink 1.8s ease-in-out infinite;"></span>
+      <div style="width:96px;height:96px;border-radius:24px;border:2px solid rgba(100,233,214,.85);display:flex;align-items:center;justify-content:center;animation:phoneGlow 3.2s ease-in-out infinite;">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#8ff0e3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+      </div>
+      <div style="font-size:23px;font-weight:700;color:#f6f4f9;letter-spacing:.1em;margin-top:22px;">打開手機</div>
+      <div style="display:flex;align-items:center;gap:5px;color:#9c96a8;margin-top:7px;">
+        <span style="font-size:14.5px;letter-spacing:.04em;">查看動態與訊息</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+
+    <!-- ===== BOTTOM-RIGHT ACTIONS ===== -->
+    <div style="position:absolute;right:54px;bottom:30px;display:flex;align-items:center;gap:38px;">
+      <span style="display:flex;align-items:center;gap:11px;cursor:pointer;color:#c2bfc9;" style-hover="color:#fff;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 10l4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <span style="font-size:19px;letter-spacing:.1em;">存檔</span>
+      </span>
+      <span style="display:flex;align-items:center;gap:11px;cursor:pointer;color:#c2bfc9;" style-hover="color:#fff;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.81 1.17V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span style="font-size:19px;letter-spacing:.1em;">設定</span>
+      </span>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){ super(props); this.stageRef = React.createRef(); this._fit = this._fit.bind(this); }
+  componentDidMount(){ this._fit(); window.addEventListener('resize', this._fit); }
+  componentWillUnmount(){ window.removeEventListener('resize', this._fit); }
+  _fit(){
+    const el = this.stageRef.current; if(!el) return;
+    const s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    el.style.transform = 'scale('+s+')';
+  }
+  renderVals(){ return { stageRef: this.stageRef }; }
+}
+</script>
+</body>
+</html>

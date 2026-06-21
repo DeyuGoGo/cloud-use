@@ -14,6 +14,7 @@ func _ready() -> void:
 	_left_menu()
 	_rating()
 	_bottom_hints()
+	_top_settings_button()
 	_social_panel()
 
 # --- background + legibility washes -----------------------------------------
@@ -35,10 +36,9 @@ func _scrims() -> void:
 	_place(UI.scrim(Color(d1, 0.7), Color(d1, 0), 1.0, false), Vector2(0, 0), Vector2(1920, 260))
 	# bottom band — dark by y=1080 (handoff line 31, bottom half)
 	_place(UI.scrim(Color(d1, 0), Color(d1, 0.72), 1.0, false), Vector2(0, 670), Vector2(1920, 410))
-	# right-edge wash behind the social panel. title_bg.png has the IG panel baked
-	# into the art, so ramp to fully opaque before the live panel's left edge
-	# (x≈1420) so the baked panel can't ghost through the live glass.
-	_place(UI.scrim(Color(d2, 0), Color(d2, 1.0), 0.37, true), Vector2(1100, 0), Vector2(820, 1080))
+	# right-edge wash behind the live social stack. The source background still
+	# has an older social mockup baked in, so this masks it before we redraw UI.
+	_place(UI.scrim(Color(d2, 0), Color(d2, 1.0), 0.25, true), Vector2(1320, 0), Vector2(600, 1080))
 	# top-right corner — behind the stories header (handoff line 33)
 	_place(UI.scrim(Color(d2, 0.92), Color(d2, 0), 1.0, false), Vector2(1360, 0), Vector2(560, 200))
 	# bottom-right corner — behind the share CTA (handoff line 34)
@@ -125,23 +125,34 @@ func _menu_item(icon_name: String, title: String, subtitle: String, active: bool
 # --- 18+ rating --------------------------------------------------------------
 
 func _rating() -> void:
-	var col := UI.vbox(12)
-	_place(col, Vector2(56, 888))
+	var col := Control.new()
+	_place(col, Vector2(56, 848), Vector2(220, 152))
+
 	var badge := Panel.new()
 	badge.custom_minimum_size = Vector2(74, 74)
+	badge.size = Vector2(74, 74)
+	badge.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	badge.add_theme_stylebox_override("panel", UI.glow(UI.box(Color(0.078, 0.031, 0.047, 0.5), 10, Palette.RED, 3), Color(Palette.RED, 0.25), 16))
-	var bv := UI.vbox(3)
-	bv.set_anchors_preset(Control.PRESET_CENTER)
-	bv.alignment = BoxContainer.ALIGNMENT_CENTER
-	var n := UI.label("18+", UI.tc(900, 0, 27), 27, Color("f0e9ef"))
-	n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	bv.add_child(n)
-	var r := UI.label("限制級", UI.tc(700, 0.1, 12), 12, Color("e0a9b0"))
-	r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	bv.add_child(r)
-	badge.add_child(bv)
 	col.add_child(badge)
-	col.add_child(UI.label("本遊戲包含成人內容，\n僅限 18 歲以上玩家遊玩。", UI.tc(400, 0.03, 13), 13, Color("8d8699"), 9))
+
+	var n := UI.label("18+", UI.tc(900, 0, 30), 30, Color("f0e9ef"))
+	n.position = Vector2(0, 13)
+	n.size = Vector2(74, 34)
+	n.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	n.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge.add_child(n)
+
+	var r := UI.label("限制級", UI.tc(700, 0.1, 12), 12, Color("e0a9b0"))
+	r.position = Vector2(0, 44)
+	r.size = Vector2(74, 18)
+	r.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	r.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge.add_child(r)
+
+	var desc := UI.label("本遊戲包含成人內容，\n僅限 18 歲以上玩家遊玩。", UI.tc(400, 0.03, 13), 13, Color("8d8699"), 9)
+	desc.position = Vector2(0, 88)
+	desc.size = Vector2(210, 54)
+	col.add_child(desc)
 
 # --- bottom hints ------------------------------------------------------------
 
@@ -160,11 +171,34 @@ func _hint(icon_name: String, text: String) -> Control:
 	h.add_child(UI.label(text, UI.tc(400, 0.08, 15), 15, Color("a59eb3")))
 	return h
 
+# --- top-right quick settings ------------------------------------------------
+
+func _top_settings_button() -> void:
+	var b := Button.new()
+	b.custom_minimum_size = Vector2(116, 44)
+	b.size = Vector2(116, 44)
+	b.focus_mode = Control.FOCUS_NONE
+	b.pressed.connect(_todo)
+	var normal := UI.box(Color(0.078, 0.063, 0.110, 0.54), 6, Color(1, 1, 1, 0.16), 1)
+	var hover := UI.box(Color(1, 1, 1, 0.08), 6, Color(Palette.GOLD, 0.4), 1)
+	b.add_theme_stylebox_override("normal", normal)
+	b.add_theme_stylebox_override("hover", hover)
+	b.add_theme_stylebox_override("pressed", hover)
+	b.add_theme_stylebox_override("focus", normal)
+
+	var row := UI.hbox(10)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.set_anchors_preset(Control.PRESET_FULL_RECT)
+	row.add_child(UI.icon("gear", 20, Color("d8d1e1")))
+	row.add_child(UI.label("設定", UI.tc(700, 0.1, 17), 17, Color("f1ecf6")))
+	b.add_child(row)
+	_place(b, Vector2(1774, 30), Vector2(116, 44))
+
 # --- social panel ------------------------------------------------------------
 
 func _social_panel() -> void:
 	var panel := SocialPanel.build()
-	_place(panel, Vector2(1420, 30))
+	_place(panel, Vector2(1484, 90))
 	# ann's unread dot: a slow heartbeat, the one thing on screen quietly asking.
 	var dot := panel.find_child("UnreadDot", true, false)
 	if dot:

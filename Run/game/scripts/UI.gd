@@ -3,6 +3,7 @@ class_name UI
 ## not like boilerplate. Everything here is presentation-only and stateless.
 
 const FONT_TC := preload("res://fonts/NotoSansTC.ttf")
+const FONT_SERIF_TC := preload("res://fonts/NotoSerifTC.ttf")
 const FONT_SAIRA := preload("res://fonts/Saira.ttf")
 const FONT_STENCIL := preload("res://fonts/SairaStencilOne-Regular.ttf")
 
@@ -15,6 +16,14 @@ const ICONS := "res://art/icons/"
 static func tc(weight: int = 400, letter_em: float = 0.0, font_size: int = 16) -> FontVariation:
 	var fv := FontVariation.new()
 	fv.base_font = FONT_TC
+	fv.variation_opentype = {"wght": weight}
+	if letter_em != 0.0:
+		fv.spacing_glyph = int(round(letter_em * font_size))
+	return fv
+
+static func serif_tc(weight: int = 400, letter_em: float = 0.0, font_size: int = 16) -> FontVariation:
+	var fv := FontVariation.new()
+	fv.base_font = FONT_SERIF_TC
 	fv.variation_opentype = {"wght": weight}
 	if letter_em != 0.0:
 		fv.spacing_glyph = int(round(letter_em * font_size))
@@ -99,6 +108,9 @@ static func icon(name: String, size: int, color: Color) -> TextureRect:
 	var t := TextureRect.new()
 	t.texture = load(ICONS + name + ".svg")
 	t.custom_minimum_size = Vector2(size, size)
+	t.size = Vector2(size, size)
+	t.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	t.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	t.modulate = color
@@ -109,6 +121,9 @@ static func icon(name: String, size: int, color: Color) -> TextureRect:
 static func disc(diameter: int, color: Color, child: Control = null, border_col: Color = Color(0, 0, 0, 0), border_w: int = 0) -> Control:
 	var c := Control.new()
 	c.custom_minimum_size = Vector2(diameter, diameter)
+	c.size = Vector2(diameter, diameter)
+	c.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	c.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var p := Panel.new()
 	p.set_anchors_preset(Control.PRESET_FULL_RECT)
