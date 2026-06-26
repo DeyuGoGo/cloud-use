@@ -49,9 +49,14 @@ var _knob_span := 0.0
 var _in_feedback := false
 var _feedback_next: Callable
 
+# --- 目前這張選擇卡（後果掛在選項上，見 Opening storylet）---
+var _current_choice: Dictionary = {}
+var _left_enabled := true
+var _right_enabled := true
+
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
-	_scenes = Opening.scenes()
+	_scenes = Opening.storylets()
 
 	var base := ColorRect.new()
 	base.color = Palette.BG
@@ -176,6 +181,7 @@ func _show_beat() -> void:
 	_progress.text = "%02d / %02d" % [_si + 1, _scenes.size()]
 
 	if beat.has("choice"):
+		_current_choice = beat["choice"]
 		_advance.visible = false
 		_hint.visible = false
 		_card.visible = false
@@ -184,6 +190,7 @@ func _show_beat() -> void:
 		_sprite_layer.visible = false
 		_build_choice_card(beat["choice"], sc.get("loc", ""))
 	else:
+		_current_choice = {}
 		_swipe_active = false
 		_clear(_choices)
 		_title.visible = true
@@ -214,9 +221,10 @@ func _on_advance() -> void:
 
 func _choose(dir: String) -> void:
 	var sid := "%02d" % (_si + 1)
-	var side: Dictionary = Opening.FLOW.get(sid, {}).get(dir, {})
+	var raw = _current_choice.get(dir, {})
+	var side: Dictionary = raw if raw is Dictionary else {}
 	if side.has("fx"):
-		RunState.apply(side["fx"])
+		Effects.apply(RunState, side["fx"])
 	if side.has("route"):
 		RunState.route = side["route"]
 	RunState.history.append(sid + ("←" if dir == "left" else "→"))
@@ -294,11 +302,17 @@ func _opt(v) -> Dictionary:
 		return {"label": v.get("label", ""), "sub": v.get("sub", ""), "icon": v.get("icon", "")}
 	return {"label": str(v), "sub": "", "icon": ""}
 
+func _side_req(choice: Dictionary, dir: String) -> Dictionary:
+	var s = choice.get(dir, {})
+	return s.get("requires", {}) if s is Dictionary else {}
+
 func _build_choice_card(choice: Dictionary, loc_key: String) -> void:
 	_clear(_choices)
 	_swipe_active = true
 	_swiping = false
 	_swipe_dx = 0.0
+	_left_enabled = Cond.eval(RunState, _side_req(choice, "left"))
+	_right_enabled = Cond.eval(RunState, _side_req(choice, "right"))
 	var L := _opt(choice["left"])
 	var R := _opt(choice["right"])
 	var q := _choice_prompt(choice, L, R)
@@ -365,30 +379,8 @@ func _build_choice_card(choice: Dictionary, loc_key: String) -> void:
 	tw.tween_property(hint, "modulate:a", 1.0, 1.1)
 
 func _choice_prompt(choice: Dictionary, _L: Dictionary, _R: Dictionary) -> String:
-	var q := str(choice.get("q", ""))
-	if q != "":
-		return q
-	match "%02d" % (_si + 1):
-		"02":
-			return "今晚要多跑一點嗎？"
-		"04":
-			return "要不要點進去看？"
-		"05":
-			return "Jason 的話，要接下去嗎？"
-		"06":
-			return "要不要再點開那個跑團？"
-		"08":
-			return "要怎麼面對 Jason？"
-		"09":
-			return "要不要往前走？"
-		"10":
-			return "要把這個人放進心裡嗎？"
-		"11":
-			return "要不要多問她一句？"
-		"13":
-			return "要不要分享到限動？"
-		_:
-			return "這一刻，你要怎麼選？"
+	# 問題文字單一來源：Opening.gd 的 choice.q。沒帶就不顯示（例如場 13 刻意留白）。
+	return str(choice.get("q", ""))
 
 func _choice_visual_loc(choice: Dictionary, loc_key: String) -> String:
 	return str(choice.get("card_loc", loc_key))
@@ -407,53 +399,6 @@ func _choice_backdrop(loc_key: String) -> Control:
 		c.add_child(bg)
 	return c
 
-func _split_choice_backdrop() -> Control:
-	var c := _full_layer()
-	c.add_child(_choice_backdrop_image("xinyi", Color(0.58, 0.62, 0.76, 0.86)))
-	c.add_child(_choice_backdrop_clip("embankment", Vector2(0, 0), Vector2(950, 1080), Color(0.48, 0.62, 0.76, 0.86)))
-	var seam := UI.scrim(Color(Palette.BG, 0), Color(Palette.BG, 0.44), 1.0, true)
-	seam.position = Vector2(720, 0)
-	seam.size = Vector2(360, 1080)
-	c.add_child(seam)
-	var seam_r := UI.scrim(Color(Palette.BG, 0.44), Color(Palette.BG, 0), 1.0, true)
-	seam_r.position = Vector2(940, 0)
-	seam_r.size = Vector2(360, 1080)
-	c.add_child(seam_r)
-	return c
-
-func _choice_backdrop_clip(loc_key: String, pos: Vector2, sz: Vector2, tint: Color) -> Control:
-	var half := Control.new()
-	half.position = pos
-	half.size = sz
-	half.clip_contents = true
-	half.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var tex = _png_texture("res://art/bg/%s.png" % loc_key)
-	if tex:
-		var bg := TextureRect.new()
-		bg.texture = tex
-		bg.position = Vector2.ZERO
-		bg.size = Vector2(1920, 1080)
-		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		bg.modulate = tint
-		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		half.add_child(bg)
-	return half
-
-func _choice_backdrop_image(loc_key: String, tint: Color) -> Control:
-	var c := _full_layer()
-	var tex = _png_texture("res://art/bg/%s.png" % loc_key)
-	if tex:
-		var bg := TextureRect.new()
-		bg.texture = tex
-		bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		bg.modulate = tint
-		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		c.add_child(bg)
-	return c
-
 func _tint(c: Color) -> ColorRect:
 	var r := ColorRect.new()
 	r.color = Color(c, 0.0)
@@ -463,7 +408,7 @@ func _tint(c: Color) -> ColorRect:
 
 ## The glass card: event image + one question. Protagonist art is intentionally
 ## omitted until the lead character design is final.
-func _choice_card_texture_path(choice: Dictionary, loc_key: String) -> String:
+func _choice_card_texture_path(choice: Dictionary, _loc_key: String) -> String:
 	var art := str(choice.get("card_art", ""))
 	if art != "":
 		if art.begins_with("res://"):
@@ -473,47 +418,12 @@ func _choice_card_texture_path(choice: Dictionary, loc_key: String) -> String:
 		return "res://art/ui/%s.png" % art
 
 	var card_loc := str(choice.get("card_loc", ""))
-	var card_type := str(choice.get("card_type", ""))
 	if card_loc != "":
 		var explicit_loc := "res://art/bg/%s.png" % card_loc
 		if FileAccess.file_exists(explicit_loc):
 			return explicit_loc
-	elif card_type == "loc" or card_type == "location" or card_type == "event":
-		var event_loc := "res://art/bg/%s.png" % loc_key
-		if FileAccess.file_exists(event_loc):
-			return event_loc
-
-	var card_char := str(choice.get("card_char", choice.get("card_person", "")))
-	if card_char != "":
-		var char_card := "res://art/card/%s.png" % card_char
-		if FileAccess.file_exists(char_card):
-			return char_card
 
 	return DEFAULT_CHOICE_CARD
-
-func _rounded_card_material() -> ShaderMaterial:
-	var shader := Shader.new()
-	shader.code = """
-shader_type canvas_item;
-uniform vec2 rect_size = vec2(592.0, 760.0);
-uniform float radius = 34.0;
-
-void fragment() {
-	vec2 p = UV * rect_size;
-	vec2 half_size = rect_size * 0.5;
-	vec2 d = abs(p - half_size) - (half_size - vec2(radius));
-	float outside = length(max(d, vec2(0.0))) - radius;
-	if (outside > 0.0) {
-		discard;
-	}
-	COLOR *= texture(TEXTURE, UV);
-}
-"""
-	var mat := ShaderMaterial.new()
-	mat.shader = shader
-	mat.set_shader_parameter("rect_size", Vector2(CHOICE_CARD_W, CHOICE_CARD_H))
-	mat.set_shader_parameter("radius", 34.0)
-	return mat
 
 func _choice_card(q: String, choice: Dictionary, loc_key: String) -> Control:
 	var card := Control.new()
@@ -605,21 +515,6 @@ func _choice_card(q: String, choice: Dictionary, loc_key: String) -> Control:
 	_knob_span = 170.0
 	card.add_child(_knob)
 	return card
-
-func _corner_ticks(card: Control, sz: Vector2) -> void:
-	var c := Color(Palette.GOLD_BRIGHT, 0.9)
-	for cx in [true, false]:
-		for cy in [true, false]:
-			var ox := 14.0 if cx else sz.x - 14.0 - 22.0
-			var oy := 14.0 if cy else sz.y - 14.0 - 2.0
-			var h := ColorRect.new()
-			h.color = c; h.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			h.position = Vector2(ox, 14.0 if cy else sz.y - 16.0); h.size = Vector2(22, 2)
-			card.add_child(h)
-			var v := ColorRect.new()
-			v.color = c; v.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			v.position = Vector2(14.0 if cx else sz.x - 16.0, 14.0 if cy else sz.y - 36.0); v.size = Vector2(2, 22)
-			card.add_child(v)
 
 func _orb_group(accent: Color, is_left: bool) -> Control:
 	var g := Control.new()
@@ -831,6 +726,9 @@ func _snap_back() -> void:
 func _commit_swipe(dir: String) -> void:
 	if not _swipe_active:
 		return
+	if (dir == "left" and not _left_enabled) or (dir == "right" and not _right_enabled):
+		_snap_back()
+		return
 	_swipe_active = false
 	_swiping = false
 	if not _swipe_node:
@@ -952,6 +850,18 @@ func _show_end(kind := "") -> void:
 	var s := UI.label("·  待續  ·", UI.tc(400, 0.5, 22), 22, Palette.GOLD_SUB)
 	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(s)
+	# 走出去的路線（post/lurk）接日常循環；home 是乾淨收束，只回標題。
+	var route_now: String = kind if kind != "" else RunState.route
+	if route_now != "home":
+		var cont := Button.new()
+		cont.text = "繼續 ▸ 走進隔天"
+		cont.focus_mode = Control.FOCUS_NONE
+		cont.custom_minimum_size = Vector2(220, 52)
+		cont.add_theme_stylebox_override("normal", UI.box(Color(Palette.GOLD, 0.16), 10, Palette.GOLD, 1))
+		cont.add_theme_stylebox_override("hover", UI.box(Color(Palette.GOLD, 0.26), 10, Palette.GOLD, 1))
+		cont.add_theme_stylebox_override("pressed", UI.box(Color(Palette.GOLD, 0.26), 10, Palette.GOLD, 1))
+		cont.pressed.connect(SceneRouter.enter_daily_loop)
+		col.add_child(cont)
 	var back := Button.new()
 	back.text = "回標題"
 	back.focus_mode = Control.FOCUS_NONE
@@ -966,15 +876,7 @@ func _show_end(kind := "") -> void:
 
 func _ending_line(kind := "") -> String:
 	var r: String = kind if kind != "" else RunState.route
-	match r:
-		"home":
-			return "你把那則限動關掉，照常去堤防跑你的。一樣的河，一樣的黑。手錶上的數字，還是只有你自己看。"
-		"post":
-			return "你按了下去。"
-		"lurk":
-			return "那顆按鈕，你看了很久，沒按。今晚先這樣。"
-		_:
-			return ""
+	return str(Opening.ENDINGS.get(r, ""))
 
 # --- helpers -----------------------------------------------------------------
 

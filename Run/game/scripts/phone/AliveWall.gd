@@ -8,15 +8,15 @@ const PHONE_W := 430.0
 const PHONE_H := 932.0
 
 # --- 顏色（直接抄自設計稿）-----------------------------------------------------
-const C_BACKDROP := Color("050409")          # 螢幕外的暗底（body）
-const C_STAGE := Color("0c0a12")             # 手機底
-const C_STAGE_GLOW := Color("150f20")        # 頂部 radial 暈
-const C_CARD := Color(0.129, 0.106, 0.180, 0.5)  # rgba(33,27,46,.5)
-const C_BORDER := Color(1, 1, 1, 0.06)
+const C_BACKDROP := Color("03030a")          # 螢幕外的暗底（body）
+const C_STAGE := Color("05060d")             # 手機底
+const C_STAGE_GLOW := Color("11152a")        # 頂部 radial 暈
+const C_CARD := Color(0.026, 0.031, 0.073, 0.86)
+const C_BORDER := Color(0.24, 0.26, 0.36, 0.58)
 const C_HAIRLINE := Color(1, 1, 1, 0.07)
-const C_NAME := Color("f3f1f6")
-const C_SUB := Color("86808f")
-const C_BODY := Color("e7e3ee")
+const C_NAME := Color("fbf9ff")
+const C_SUB := Color("aaa4b6")
+const C_BODY := Color("f5f2fb")
 const C_LIKE := Color("cfc6e4")
 const C_SEND := Color("a39db0")
 const C_WHITE := Color("ffffff")
@@ -103,6 +103,28 @@ class Glyph:
 				draw_rect(Rect2(u * 0.7, u * 0.5, 22 * u, 12 * u), col, false, w)
 				draw_rect(Rect2(u * 2.6, u * 2.4, 14 * u, 8.2 * u), col, true)
 				draw_rect(Rect2(u * 23.2, u * 4.0, 1.6 * u, 5 * u), col, true)
+			"message":
+				# Draw at the requested Control size; the source SVG's 64px canvas otherwise
+				# overwhelms this compact header affordance.
+				var inset := s * 0.12
+				var left := inset
+				var right := s - inset
+				var top := s * 0.16
+				var bottom := s * 0.73
+				var radius := s * 0.16
+				draw_line(Vector2(left + radius, top), Vector2(right - radius, top), col, w, true)
+				draw_arc(Vector2(right - radius, top + radius), radius, -PI * 0.5, 0.0, 8, col, w, true)
+				draw_line(Vector2(right, top + radius), Vector2(right, bottom - radius), col, w, true)
+				draw_arc(Vector2(right - radius, bottom - radius), radius, 0.0, PI * 0.5, 8, col, w, true)
+				draw_line(Vector2(right - radius, bottom), Vector2(s * 0.53, bottom), col, w, true)
+				draw_line(Vector2(s * 0.53, bottom), Vector2(s * 0.34, s * 0.93), col, w, true)
+				draw_line(Vector2(s * 0.34, s * 0.93), Vector2(s * 0.37, bottom), col, w, true)
+				draw_line(Vector2(s * 0.37, bottom), Vector2(left + radius, bottom), col, w, true)
+				draw_arc(Vector2(left + radius, bottom - radius), radius, PI * 0.5, PI, 8, col, w, true)
+				draw_line(Vector2(left, bottom - radius), Vector2(left, top + radius), col, w, true)
+				draw_arc(Vector2(left + radius, top + radius), radius, PI, PI * 1.5, 8, col, w, true)
+				for x in [0.36, 0.50, 0.64]:
+					draw_circle(Vector2(s * x, s * 0.46), s * 0.045, col)
 
 
 # =====================================================================
@@ -180,7 +202,6 @@ func _ready() -> void:
 	_feed()
 	_bottom_fade()
 	_fab()
-	_back_affordance()
 
 # --- 暗底 + 點兩側離開 ---------------------------------------------------------
 
@@ -255,14 +276,15 @@ func _status_bar() -> void:
 
 func _header() -> void:
 	var mark := UI.label("alive", UI.saira(700, 0.01, 30), 30, C_WORDMARK)
-	_at(mark, Vector2(20, 56), Vector2(120, 38))
+	_at(mark, Vector2(20, 34), Vector2(120, 38))
 
 	# 私訊鈕：40 圓 + hover 底 + 未讀徽章
 	var btn := _round_button(40)
-	btn.position = Vector2(370, 55)
+	btn.position = Vector2(370, 47)
+	btn.pressed.connect(SceneRouter.goto_chat_list)
 	_stage.add_child(btn)
-	var msg := UI.icon("message", 26, C_HEADER_MSG)
-	msg.position = Vector2(7, 7)
+	var msg := Glyph.new("message", 36, C_HEADER_MSG, 1.55)
+	msg.position = Vector2(2, -6)
 	btn.add_child(msg)
 
 	var badge := Panel.new()
@@ -280,7 +302,7 @@ func _header() -> void:
 # --- 限時動態 -----------------------------------------------------------------
 
 func _stories() -> void:
-	var y := 110.0
+	var y := 94.0
 	var purple := Palette.PURPLE
 	var pink := Palette.PINK
 	var gray := Color(1, 1, 1, 0.22)
@@ -293,11 +315,11 @@ func _stories() -> void:
 		{"name": "Mia", "avatar": "ann", "a": purple, "b": pink, "nc": C_STORY_ON, "online": true},
 		{"name": "阿哲", "avatar": "ray", "a": purple, "b": pink, "nc": C_STORY_ON, "online": true},
 		{"name": "Nina", "avatar": "yijun", "a": purple, "b": pink, "nc": C_STORY_ON, "online": true},
-		{"name": "小芸", "avatar": "", "a": gray, "b": gray, "nc": C_STORY_OFF, "online": false},
-		{"name": "Ken", "avatar": "", "a": gray, "b": gray, "nc": C_STORY_OFF, "online": false},
+		{"name": "小芸", "avatar": "yijun", "a": gray, "b": gray, "nc": C_STORY_OFF, "online": false},
+		{"name": "Ken", "avatar": "kevin", "a": gray, "b": gray, "nc": C_STORY_OFF, "online": false},
 	]
 	for i in stories.size():
-		_story_cell(Vector2(98 + float(i) * 78.0, y), stories[i])
+		_story_cell(Vector2(92 + float(i) * 73.0, y), stories[i])
 
 func _story_add(pos: Vector2) -> void:
 	var ring := DashedRing.new(64, Color(1, 1, 1, 0.28), 1.5)
@@ -314,7 +336,7 @@ func _story_add(pos: Vector2) -> void:
 	_stage.add_child(plus)
 	var nm := UI.label("新增動態", UI.tc(400, 0, 12), 12, C_ADD_LABEL)
 	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_at(nm, pos + Vector2(-4, 73), Vector2(72, 18))
+	_at(nm, pos + Vector2(-4, 63), Vector2(72, 18))
 
 func _story_cell(pos: Vector2, s: Dictionary) -> void:
 	var ring := GradientRing.new(64, s["a"], s["b"], 2.5)  # 對齊設計的 2.5px 環，留出環與頭像間的暗縫
@@ -328,6 +350,8 @@ func _story_cell(pos: Vector2, s: Dictionary) -> void:
 	var name_row := UI.hbox(5)
 	name_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	var nm := UI.label(str(s["name"]), UI.tc(400, 0, 12), 12, s["nc"])
+	nm.custom_minimum_size = Vector2(48, 18)
+	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	nm.clip_text = true
 	name_row.add_child(nm)
 	if s["online"]:
@@ -340,26 +364,26 @@ func _story_cell(pos: Vector2, s: Dictionary) -> void:
 		name_row.add_child(dot)
 		_pulse_alpha(dot, 0.4, 1.0, 1.3)
 	name_row.size = Vector2(72, 18)
-	name_row.position = pos + Vector2(-4, 73)
+	name_row.position = pos + Vector2(-4, 63)
 	_stage.add_child(name_row)
 
 # --- 動態 feed ----------------------------------------------------------------
 
 func _feed() -> void:
 	# 三張卡（高度依設計算出；最後一張被底部漸層蓋住一截，符合 overflow:hidden 的「半露」）
-	_feed_card(212, {
+	_feed_card(182, {
 		"avatar": "ann", "border": Color(Palette.PURPLE, 0.5),
 		"name": "Mia", "sub": "23:48 · 信義街口",
 		"body": "今晚風好大，但還是跑完了。",
 		"photo": "xinyi", "photo_h": 178, "action_h": 52, "divider": true,
 	})
-	_feed_card(556, {
+	_feed_card(526, {
 		"avatar": "ray", "border": Color(1, 1, 1, 0.12),
 		"name": "阿哲", "sub": "21:36 · 河堤公園",
 		"body": "明天河堤有人要一起慢跑嗎？",
 		"photo": "embankment", "photo_h": 120, "action_h": 52, "divider": true,
 	})
-	_feed_card(842, {
+	_feed_card(812, {
 		"avatar": "yijun", "border": Color(1, 1, 1, 0.12),
 		"name": "Nina", "sub": "20:15 · 家裡",
 		"body": "今天什麼都不想做，只想放空。",
@@ -367,8 +391,8 @@ func _feed() -> void:
 	})
 
 func _feed_card(y: float, d: Dictionary) -> void:
-	var x := 14.0
-	var w := 402.0
+	var x := 10.0
+	var w := 410.0
 	var pad := 16.0
 	var content_w := w - pad * 2.0
 
@@ -399,14 +423,14 @@ func _feed_card(y: float, d: Dictionary) -> void:
 	_in(card, body, Vector2(pad + 2, 67), Vector2(content_w - 4, 28))
 
 	# 貼文照片（設計為佔位；此處填入主題相符的既有背景圖，圓角裁切）
-	var post := _photo(str(d["photo"]), content_w, post_h)
-	post.position = Vector2(pad, post_y)
+	var post := _photo(str(d["photo"]), w - 16.0, post_h)
+	post.position = Vector2(8, post_y)
 	card.add_child(post)
 
 	# 互動列：按讚 ｜ 發訊息
-	_card_actions(card, w, pad, action_y, action_h, bool(d["divider"]))
+	_card_actions(card, w, pad, action_y, action_h, bool(d["divider"]), str(d["name"]))
 
-func _card_actions(card: Panel, w: float, pad: float, ay: float, ah: float, divider: bool) -> void:
+func _card_actions(card: Panel, w: float, pad: float, ay: float, ah: float, divider: bool, person: String) -> void:
 	var inner_w := w - pad * 2.0
 	var like_w := 62.0
 	var send_w := 82.0
@@ -422,14 +446,14 @@ func _card_actions(card: Panel, w: float, pad: float, ay: float, ah: float, divi
 		var left_c := pad + inner_w * 0.25
 		var right_c := pad + inner_w * 0.75
 		_like_group(card, Vector2(left_c - like_w / 2.0, cy))
-		_send_group(card, Vector2(right_c - send_w / 2.0, cy))
+		_send_group(card, Vector2(right_c - send_w / 2.0, cy), person)
 	else:
 		# flex1 | 120 spacer | flex1
 		var flex := (inner_w - 120.0) / 2.0
 		var left_c := pad + flex * 0.5
 		var right_c := pad + flex + 120.0 + flex * 0.5
 		_like_group(card, Vector2(left_c - like_w / 2.0, cy))
-		_send_group(card, Vector2(right_c - send_w / 2.0, cy))
+		_send_group(card, Vector2(right_c - send_w / 2.0, cy), person)
 
 func _like_group(card: Panel, pos: Vector2) -> void:
 	var btn := _flat_button(Vector2(62, 30))
@@ -441,10 +465,10 @@ func _like_group(card: Panel, pos: Vector2) -> void:
 	btn.add_child(h)
 	_in(btn, UI.label("按讚", UI.tc(400, 0, 15), 15, C_LIKE), Vector2(32, 6), Vector2(30, 20))
 
-func _send_group(card: Panel, pos: Vector2) -> void:
+func _send_group(card: Panel, pos: Vector2, person: String) -> void:
 	var btn := _flat_button(Vector2(82, 30))
 	btn.position = pos
-	btn.pressed.connect(_stub.bind("發訊息"))
+	btn.pressed.connect(SceneRouter.open_chat.bind(person))
 	card.add_child(btn)
 	var s := Glyph.new("send", 22, C_SEND, 1.6)
 	s.position = Vector2(0, 4)

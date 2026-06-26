@@ -5,15 +5,17 @@ class_name Opening
 ## turning points are ←/→ swipe events. Everything else (incl. witness scenes 03/12)
 ## is narration you tap through.
 ##
-## A scene = { title, loc, sprite, beats[] }. A beat is either:
-##   {"say": "..."}                       → tap to advance
-##   {"choice": {"left": "...", "right": "..."}}  → swipe event (always last beat)
-## `loc`    → res://art/bg/<loc>.png   (placeholder w/ label if missing)
-## `sprite` → res://art/char/<sprite>.png (named placeholder if missing); "" = none
+## 一個 storylet（此處＝一場）= { title, loc, sprite, beats[] }。beat 是：
+##   {"say": "..."}                                       → 點擊前進
+##   {"choice": {q?, card_loc?, card_art?, left, right}}  → 滑卡（永遠是最後一拍）
+## 每個選項 side = {label, sub?, icon?, fx?, route?, end?, fb?, requires?}：
+##   後果直接掛在選項上（fx 由 Effects 套用、requires 由 Cond 判斷），不再用獨立 FLOW 表。
+## `loc`    → res://art/bg/<loc>.png   （缺圖顯示佔位）
+## `sprite` → res://art/char/<sprite>.png（缺圖顯示具名佔位）；"" = 無
 
 const CHAPTER := "第一章 〈那盞燈〉"
 
-static func scenes() -> Array:
+static func storylets() -> Array:
 	return [
 		{
 			"title": "01 ／ 一般般的禮拜二", "loc": "office", "sprite": "",
@@ -21,7 +23,9 @@ static func scenes() -> Array:
 				{"say": "禮拜二，六點半。手上的東西做到一半，你存檔、關機——不是做不完，是「明天再說也不會怎樣」。"},
 				{"say": "起身，跟旁邊的同事點個頭，他盯著螢幕，手指沒停。一路走出辦公室，電梯裡只有你。"},
 				{"say": "手機在口袋震個不停，你還以為有人找你。拿出來——又是那幾個群組在洗版：早安圖、貼圖、明天幾點開會。沒一則是找你的。"},
-				{"choice": {"q": "手機一直在響——理它嗎？", "left": {"label": "鎖起來", "sub": "算了，不理"}, "right": {"label": "回兩句", "sub": "跟著回一下"}}},
+				{"choice": {"q": "手機一直在響——理它嗎？",
+					"left": {"label": "鎖起來", "sub": "算了，不理", "fx": {"clean": 1}, "fb": "你把螢幕關掉，塞回口袋。暗下來的玻璃上，映出你自己的臉。"},
+					"right": {"label": "回兩句", "sub": "跟著回一下", "fx": {"seen": 1}, "fb": "你跟著回了個貼圖，丟出去——立刻被新的洗版蓋過去，沒人接話。"}}},
 			],
 		},
 		{
@@ -31,7 +35,9 @@ static func scenes() -> Array:
 				{"say": "基隆河堤，晚上，風很大。路燈隔得遠，亮一下、暗一下，把城市的聲音切成一段一段。你跑得不快，喘得很誠實。"},
 				{"say": "工程師的毛病改不掉，手錶還是跳著距離、配速、心率。你站在護欄邊喘，汗沿著下巴滴下來，把那幾個數字滑了一遍。畫面停在「分享」。"},
 				{"say": "手指懸在那裡。傳出去好像也不會怎樣，也許有人會按個讚，也許沒人看見。你笑了一下，覺得自己像是在跟一個不存在的人討拍。"},
-				{"choice": {"q": "這段路，要不要再往前一點？", "left": "到這裡就好", "right": "再沿著河多跑一段"}},
+				{"choice": {"q": "這段路，要不要再往前一點？",
+					"left": {"label": "到這裡就好"},
+					"right": {"label": "再沿著河多跑一段", "fx": {"clean": 1, "nerve": 1}}}},
 			],
 		},
 		{
@@ -50,7 +56,9 @@ static func scenes() -> Array:
 				{"say": "回到家，躺床上滑手機。演算法大概抓到你常在信義那帶跑，塞了一則限動給你：一群人在信義夜跑，自己帶音響、邊跑邊笑，剪得有夠熱血，配字「跑步也可以很潮」。"},
 				{"say": "鏡頭一直繞著中間那個男的轉——團長，叫 Ray。他每講一句就側半張臉對著鏡頭，下巴抬一點點，剛剛好。你看了三秒，心裡一句：想紅的網紅仔喔。"},
 				{"say": "其實人也沒幾個啦，十幾個吧，但剪得有夠浮誇。你滑掉了。"},
-				{"choice": {"left": "滑掉，睡了", "right": "點進去看他們是誰"}},
+				{"choice": {"q": "要不要點進去看？",
+					"left": {"label": "滑掉，睡了", "fx": {"clean": 1}},
+					"right": {"label": "點進去看他們是誰", "fx": {"seen": 1}}}},
 			],
 		},
 		{
@@ -59,7 +67,9 @@ static func scenes() -> Array:
 				{"say": "隔天茶水間，等咖啡機那幾秒，你順口跟 Jason 提了一句那個跑團。"},
 				{"say": "Jason 鼻子哼一聲：「信義那個喔？我知道啊，一群想紅的，邊跑邊直播，是在跑健康的還是跑流量的？」你笑笑：「對啊，就一群想紅的網紅仔嘛。」"},
 				{"say": "Jason 跟你同梯，升得比你快。他端著咖啡走了，回頭補一句：「他們好像市府站集合，二號出口吧。」"},
-				{"choice": {"left": "附和兩句就走", "right": "多問一句「你去過喔？」"}},
+				{"choice": {"q": "Jason 的話，要接下去嗎？",
+					"left": {"label": "附和兩句就走"},
+					"right": {"label": "多問一句「你去過喔？」", "fx": {"bond": {"jason": 1}}}}},
 			],
 		},
 		{
@@ -67,7 +77,9 @@ static func scenes() -> Array:
 			"beats": [
 				{"say": "下班一回到家，你癱在沙發上滑了一下交友軟體，配對到一個還不錯的，你想了三分鐘，只敢打一個字：「hi」。"},
 				{"say": "十分鐘後，對話框上面那行字變了：對方已解除配對。那個「hi」還在，下面再也送不出去。你把手機蓋在臉上，笑了一下——一個 hi 是能多嚇人。"},
-				{"choice": {"left": "算了，睡", "right": "鬼使神差，又點開那個跑團的限動"}},
+				{"choice": {"q": "要不要再點開那個跑團？",
+					"left": {"label": "算了，睡", "fx": {"clean": 1}},
+					"right": {"label": "鬼使神差，又點開那個跑團的限動", "fx": {"seen": 1, "nerve": 1}}}},
 			],
 		},
 		{
@@ -77,7 +89,9 @@ static func scenes() -> Array:
 				{"say": "你馬上開始找理由：信義那種地方紅綠燈一堆，根本不能跑啦。而且你昨天才嫌過人家。"},
 				{"say": "但你已經把鞋換好了，手心有點汗。你跟自己說，就去看看嘛，不行就回家——反正也沒人認得你。"},
 				{"say": "出門，手按在電燈開關上，停了一下，沒按。讓它亮著。鎖門，走了。"},
-				{"choice": {"q": "今天要不要去信義？", "card_loc": "xinyi", "card_art": "card_xinyi_night.png", "left": {"label": "河濱夜跑", "sub": "一個人，安靜地跑", "icon": "run"}, "right": {"label": "信義約跑", "sub": "也許，會遇見誰", "icon": "message"}}},
+				{"choice": {"q": "今天要不要去信義？", "card_loc": "xinyi", "card_art": "card_xinyi_night.png",
+					"left": {"label": "河濱夜跑", "sub": "一個人，安靜地跑", "icon": "run", "fx": {"clean": 2}, "route": "home", "end": "home"},
+					"right": {"label": "信義約跑", "sub": "也許，會遇見誰", "icon": "message", "fx": {"seen": 2, "nerve": 2}}}},
 			],
 		},
 		{
@@ -86,7 +100,9 @@ static func scenes() -> Array:
 				{"say": "市府站二號出口，比你想的小一團，十幾個人，有人在拉筋、有人在喬音響。沒有 IG 上那麼潮，有點……普通欸。你站在出口邊，手不知道要往哪擺——"},
 				{"say": "然後你看到 Jason。穿著跑衣，正像個老鳥一樣到處跟人打招呼。他一轉頭看到你，眼睛先飛快往你手上瞄了一下——空的，沒舉手機——肩膀才鬆下來，笑著走過來。"},
 				{"say": "「……你怎麼也在？」你問。「啊就……朋友硬揪的，給個面子嘛。」他說，眼神飄了一下，往別的地方看。"},
-				{"choice": {"left": "「你不是說一群想紅的？」——把話抽回來", "right": "「我也朋友揪的」——一起裝，混進去"}},
+				{"choice": {"q": "要怎麼面對 Jason？",
+					"left": {"label": "「你不是說一群想紅的？」——把話抽回來", "fx": {"clean": 1, "bond": {"jason": -1}}},
+					"right": {"label": "「我也朋友揪的」——一起裝，混進去", "fx": {"seen": 1, "bond": {"jason": 1}}}}},
 			],
 		},
 		{
@@ -95,7 +111,9 @@ static func scenes() -> Array:
 				{"say": "集合時 Ray 在前面講話，聲音不大，但大家都在聽。你站在最邊邊，雙手插口袋，等著看這群人怎麼出糗。他目光在人群裡找了一下，落在你身上：「喔，新朋友？第一次來吼？」幾顆頭轉過來，你下意識想退半步。"},
 				{"say": "他已經走過來了，問你叫什麼、平常都在哪跑。你說堤防。「喔～堤防練出來的喔。」他回頭跟旁邊的人說：「欸這個有練的。」然後拍拍你的肩，「別客氣啦，往前面來。」"},
 				{"say": "你站直了一點。"},
-				{"choice": {"left": "「我隨便看看就好」", "right": "跟上他"}},
+				{"choice": {"q": "要不要往前走？",
+					"left": {"label": "「我隨便看看就好」", "fx": {"clean": 1}},
+					"right": {"label": "跟上他", "fx": {"seen": 1, "bond": {"ray": 1}}}}},
 			],
 		},
 		{
@@ -104,7 +122,9 @@ static func scenes() -> Array:
 				{"say": "跑到一半在路口等紅燈，一個男生湊過來跟你並排，很自然地就聊起來。他叫凱文。"},
 				{"say": "「欸你剛說堤防喔？」他湊過來，「那邊晚上是不是都沒人？我也想找個沒人的地方跑欸。」就一個紅燈，你講的話大概比今天一整天加起來還多。他真的在聽，連你隨口提的都接得住。"},
 				{"say": "後面有人喊他去前面，他「喔好、來了」應著，視線卻還在你這邊，像有點不好意思先走。綠燈，他笑著拍你一下，「下次見啦堤防。」被人半推著往前去了。你回頭——他已經跟並上來的下一個人聊開了，一樣的湊近、一樣的好聊。"},
-				{"choice": {"left": "沒多想，繼續跑", "right": "多看了那個背影一眼"}},
+				{"choice": {"q": "要把這個人放進心裡嗎？",
+					"left": {"label": "沒多想，繼續跑"},
+					"right": {"label": "多看了那個背影一眼", "fx": {"seen": 1, "bond": {"kevin": 1}}}}},
 			],
 		},
 		{
@@ -113,7 +133,9 @@ static func scenes() -> Array:
 				{"say": "半路你跟一個女生並到一起，她瞄你一眼，你也瞄她一眼。你認得——就是堤防上老是超過你的那個。兩個人同時「啊」了一聲。"},
 				{"say": "「你不是都在河堤跑？」她問。「對啊，你也是喔。」你說。她瞄一眼那排音響，「同事硬拉的。」頓了一下，「這也叫跑步喔。」"},
 				{"say": "她叫怡君。兩個堤防來的，就跟在這群音響後面慢慢跑，誰也沒多講話。跑了一段，她眼睛掃過前面那幾支舉著的手機，掃完才開口：「等等記得喔，跑完先閃，不要被拉去拍照。」講得跟在交代逃生路線一樣。"},
-				{"choice": {"left": "「對啊我也覺得跑不了」——一起吐槽", "right": "「那你還來？」——虧她"}},
+				{"choice": {"q": "要不要多問她一句？",
+					"left": {"label": "「對啊我也覺得跑不了」——一起吐槽", "fx": {"bond": {"yijun": 1}}},
+					"right": {"label": "「那你還來？」——虧她", "fx": {"bond": {"yijun": 1}, "nerve": 1}}}},
 			],
 		},
 		{
@@ -132,34 +154,12 @@ static func scenes() -> Array:
 				{"say": "手機震一下。群組，早安圖、轉發、99+。你滑到底——還是別人。你把手機翻過來蓋在棉被上。"},
 				{"say": "過一下又翻回來，點開 IG——Ray 追蹤了你，還在限動 tag 了今晚的合照，一群人裡，邊邊有個你。底下「分享到你的限動」，按鈕亮著。"},
 				{"say": "你從來沒 po 過自己跑步。手指停在那個亮著的按鈕上。你今天早上自己才講的那句，還在嘴邊：想紅的網紅仔。"},
-				{"choice": {"left": "滑掉，睡了", "right": "按下去"}},
+				{"choice": {
+					"left": {"label": "滑掉，睡了", "fx": {"clean": 2}, "route": "lurk"},
+					"right": {"label": "按下去", "fx": {"seen": 3, "self_first": 1}, "route": "post"}}},
 			],
 		},
 	]
-
-# Choice consequences, keyed by scene id ("01".."13") then side ("left"/"right").
-# `fx`    → hidden parameter deltas applied to RunState (總體參數 / 關係).
-# `route` → sets the run's trajectory flag (序章收束的路線).
-# `end`   → ends the prologue right here on a branch (路線真的分岔), value = end kind.
-# A side with no entry just advances linearly with no effect (早期「沒差」由此體現).
-const FLOW := {
-	"01": {
-		"left": {"fx": {"clean": 1}, "fb": "你把螢幕關掉，塞回口袋。暗下來的玻璃上，映出你自己的臉。"},
-		"right": {"fx": {"seen": 1}, "fb": "你跟著回了個貼圖，丟出去——立刻被新的洗版蓋過去，沒人接話。"},
-	},
-	"02": {"right": {"fx": {"clean": 1, "nerve": 1}}},
-	"04": {"left": {"fx": {"clean": 1}}, "right": {"fx": {"seen": 1}}},
-	"05": {"right": {"fx": {"bond": {"jason": 1}}}},
-	"06": {"left": {"fx": {"clean": 1}}, "right": {"fx": {"seen": 1, "nerve": 1}}},
-	# 07 = 真正的路線分岔：不去＝乾淨路線，序章就此安靜收束；出門＝主線。
-	"07": {"left": {"fx": {"clean": 2}, "route": "home", "end": "home"}, "right": {"fx": {"seen": 2, "nerve": 2}}},
-	"08": {"left": {"fx": {"clean": 1, "bond": {"jason": -1}}}, "right": {"fx": {"seen": 1, "bond": {"jason": 1}}}},
-	"09": {"left": {"fx": {"clean": 1}}, "right": {"fx": {"seen": 1, "bond": {"ray": 1}}}},
-	"10": {"right": {"fx": {"seen": 1, "bond": {"kevin": 1}}}},
-	"11": {"left": {"fx": {"bond": {"yijun": 1}}}, "right": {"fx": {"bond": {"yijun": 1}, "nerve": 1}}},
-	# 13 = 決定性的一拍：按下分享＝往「被看見」傾、引擎上膛；滑掉＝乾淨。兩邊都收束序章。
-	"13": {"left": {"fx": {"clean": 2}, "route": "lurk"}, "right": {"fx": {"seen": 3, "self_first": 1}, "route": "post"}},
-}
 
 # Display names for placeholder sprites (when art is missing) = the 缺圖清單.
 const NAMES := {
@@ -181,4 +181,11 @@ const LOC := {
 	"xinyi": {"label": "信義夜跑", "tint": Color("1a1426")},
 	"pantry": {"label": "公司茶水間", "tint": Color("16181a")},
 	"store": {"label": "便利商店前", "tint": Color("1a1d16")},
+}
+
+# 序章三種收束的結語（依 route / end kind）。所有章節文本都集中在這個檔。
+const ENDINGS := {
+	"home": "你把那則限動關掉，照常去堤防跑你的。一樣的河，一樣的黑。手錶上的數字，還是只有你自己看。",
+	"post": "你按了下去。",
+	"lurk": "那顆按鈕，你看了很久，沒按。今晚先這樣。",
 }

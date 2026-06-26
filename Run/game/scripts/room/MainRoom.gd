@@ -3,10 +3,7 @@ extends Control
 
 const BG := preload("res://art/bg/main_room.png")
 
-const DAY := 23
-const ENERGY := 2
-const ENERGY_MAX := 3
-const MONEY := "18,650"
+# 天數 / 精力 / 錢都從 RunState 讀（看得到的資源），不再寫死。
 
 const ACTIONS := [
 	{
@@ -142,17 +139,18 @@ func _top_left() -> void:
 	var day := UI.label("Day", UI.serif_tc(300, 0.04, 30), 30, Color("e9e4ef"))
 	_place(day, Vector2(60, 54), Vector2(100, 34))
 
-	var num := UI.with_shadow(UI.label(str(DAY), UI.serif_tc(300, 0.0, 104), 104, Color("fbf9fd")), Color(0, 0, 0, 0.62), 24, Vector2(0, 4))
+	var num := UI.with_shadow(UI.label(str(RunState.day), UI.serif_tc(300, 0.0, 104), 104, Color("fbf9fd")), Color(0, 0, 0, 0.62), 24, Vector2(0, 4))
 	_place(num, Vector2(58, 86), Vector2(126, 92))
 
 	var energy := UI.hbox(14)
 	energy.add_child(_centered(UI.label("精力", UI.tc(400, 0.1, 19), 19, Color("c2bfc9"))))
 	var dots := UI.hbox(9)
 	dots.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	for i in ENERGY_MAX:
-		var d := UI.disc(15, Palette.TEAL if i < ENERGY else Color(0, 0, 0, 0), null, Color(1, 1, 1, 0.30), 2 if i >= ENERGY else 0)
+	for i in RunState.ENERGY_MAX:
+		var lit := i < RunState.energy
+		var d := UI.disc(15, Palette.TEAL if lit else Color(0, 0, 0, 0), null, Color(1, 1, 1, 0.30), 0 if lit else 2)
 		dots.add_child(d)
-		if i < ENERGY:
+		if lit:
 			_pulse_alpha(d, 0.65, 1.0, 1.7 + float(i) * 0.22)
 	energy.add_child(dots)
 	_place(energy, Vector2(270, 130), Vector2(154, 26))
@@ -163,7 +161,7 @@ func _top_left() -> void:
 
 	var money := UI.hbox(12)
 	money.add_child(_centered(UI.label("$", UI.tc(500, 0, 24), 24, Color("c5bfcc"))))
-	money.add_child(_centered(UI.label(MONEY, UI.saira(500, 0.05, 26), 26, Color("f3f1f6"))))
+	money.add_child(_centered(UI.label(_format_money(RunState.money), UI.saira(500, 0.05, 26), 26, Color("f3f1f6"))))
 	_place(money, Vector2(496, 126), Vector2(172, 34))
 
 	_place(UI.scrim(Color(Palette.TEAL, 0.90), Color(1, 1, 1, 0.22), 1.0, true), Vector2(56, 202), Vector2(496, 1))
@@ -242,7 +240,10 @@ func _select(index: int) -> void:
 
 func _on_action(index: int) -> void:
 	_select(index)
-	print("[主房間] 今晚 → %s (%s)" % [ACTIONS[index]["title"], ACTIONS[index]["id"]])
+	# 套用今晚行動 → 過一天、寫進 RunState、存檔，再重載大廳呈現新的一天。
+	await get_tree().create_timer(0.16).timeout
+	RunState.do_action(str(ACTIONS[index]["id"]))
+	SceneRouter.goto_main_room()
 
 func _cost_color(kind: String) -> Color:
 	match kind:
@@ -386,7 +387,7 @@ func _bottom_actions() -> void:
 	line.color = Color(1, 1, 1, 0.16)
 	_place(line, Vector2(1325, 982), Vector2(538, 1))
 
-	var save := _bottom_button("save", "存檔")
+	var save := _bottom_button("save", "存檔", _save_game)
 	save.position = Vector2(1542, 1014)
 	add_child(save)
 
@@ -394,15 +395,15 @@ func _bottom_actions() -> void:
 	split.color = Color(1, 1, 1, 0.16)
 	_place(split, Vector2(1688, 1019), Vector2(1, 30))
 
-	var gear := _bottom_button("gear", "設定")
+	var gear := _bottom_button("gear", "設定", _todo)
 	gear.position = Vector2(1735, 1014)
 	add_child(gear)
 
-func _bottom_button(icon_name: String, text: String) -> Button:
+func _bottom_button(icon_name: String, text: String, cb: Callable) -> Button:
 	var b := _flat_button()
 	b.size = Vector2(128, 38)
 	b.custom_minimum_size = b.size
-	b.pressed.connect(_todo)
+	b.pressed.connect(cb)
 	var icon := _line_icon(icon_name, 28, Color("c2bfc9"), 2.1)
 	icon.position = Vector2(0, 5)
 	b.add_child(icon)
@@ -513,5 +514,29 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		SceneRouter.back_to_title()
 
+func _save_game() -> void:
+	RunState.save()
+	_flash_saved()
+
+func _flash_saved() -> void:
+	var t := UI.label("已存檔 ✓", UI.tc(700, 0.06, 18), 18, Palette.TEAL)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_place(t, Vector2(1392, 1019), Vector2(132, 26))
+	var tw := create_tween()
+	tw.tween_property(t, "modulate:a", 0.0, 1.6).from(1.0)
+	tw.tween_callback(t.queue_free)
+
+## 把整數金額加上千分位（例：18650 → "18,650"）。
+func _format_money(n: int) -> String:
+	var s := str(absi(n))
+	var out := ""
+	var c := 0
+	for i in range(s.length() - 1, -1, -1):
+		out = s[i] + out
+		c += 1
+		if c % 3 == 0 and i > 0:
+			out = "," + out
+	return ("-" if n < 0 else "") + out
+
 func _todo() -> void:
-	print("[主房間] 入口尚未接線：邀約 / 手機 / 存檔 / 設定")
+	print("[主房間] 入口尚未接線：邀約 / 手機 / 設定")

@@ -1,0 +1,18 @@
+# Ann LoRA 資料集設定 (kohya sd-scripts)
+# 美術交付的訓練圖 + 同名 .txt caption 放進 dataset/ 即可。
+[general]
+shuffle_caption = false      # 不打亂，保證 trigger 永遠在最前
+caption_extension = ".txt"
+keep_tokens = 1              # 第一個 token (annrunvn) 永遠保留在最前
+
+[[datasets]]
+resolution = 1024            # SDXL 標準；啟用 bucketing 自動分桶
+batch_size = 1               # 8GB 必須
+enable_bucket = true
+min_bucket_reso = 640
+max_bucket_reso = 1536
+bucket_reso_steps = 64
+
+  [[datasets.subsets]]
+  image_dir = "C:/Users/deyuhuang/Work/Fun/cloud-use/Run/training/lora/ann/dataset"
+  num_repeats = 6           # ~20 張 × 6 repeats × 10 epoch ≈ 1200 步 (角色 LoRA 甜蜜點)
