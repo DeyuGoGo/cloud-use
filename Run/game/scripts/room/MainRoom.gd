@@ -108,7 +108,19 @@ func _ready() -> void:
 	_toast()
 	_phone_panel()
 	_bottom_actions()
-	_select(0)
+	_select(_default_action())
+	# 每日重載時整體淡入，過一天不再硬切。
+	modulate.a = 0.0
+	create_tween().tween_property(self, "modulate:a", 1.0, 0.3)
+
+## 預設反白的行動：有精力選第一個；沒精力直接停在「睡覺」。
+func _default_action() -> int:
+	if RunState.energy > 0:
+		return 0
+	for i in ACTIONS.size():
+		if str(ACTIONS[i]["id"]) == "sleep":
+			return i
+	return 0
 
 # --- background --------------------------------------------------------------
 
@@ -178,6 +190,10 @@ func _action_list() -> void:
 		card.position = Vector2(ACTION_X, ACTION_Y + float(i) * (ACTION_H + ACTION_GAP))
 		card.size = Vector2(ACTION_W, ACTION_H)
 		card.custom_minimum_size = card.size
+		# 精力歸零時只剩「睡覺」能選——讓看得到的資源真的產生取捨。
+		if RunState.energy <= 0 and str(ACTIONS[i]["id"]) != "sleep":
+			card.disabled = true
+			card.modulate.a = 0.42
 		_cards.append(card)
 		add_child(card)
 
@@ -230,7 +246,7 @@ func _select(index: int) -> void:
 			24 if active else 12
 		)
 		var hover := UI.glow(UI.box(Color(Palette.TEAL, 0.14) if active else Color(0.092, 0.098, 0.120, 0.78), 12, Color(Palette.TEAL, 0.62) if active else Color(1, 1, 1, 0.20), 1), Color(Palette.TEAL, 0.14), 20)
-		for state in ["normal", "focus"]:
+		for state in ["normal", "focus", "disabled"]:
 			b.add_theme_stylebox_override(state, normal)
 		for state in ["hover", "pressed"]:
 			b.add_theme_stylebox_override(state, hover)

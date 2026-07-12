@@ -97,8 +97,8 @@ func do_action(id: String) -> void:
 			energy = maxi(0, energy - 1)
 		"sleep":
 			energy = ENERGY_MAX
-	day += 1
 	history.append("D%d·%s" % [day, id])
+	day += 1
 	save()
 
 # --- 存檔 --------------------------------------------------------------------
@@ -139,12 +139,14 @@ func load_game() -> bool:
 		push_warning("RunState: 存檔格式毀損，忽略")
 		return false
 	reset()
+	# key 全開放：reset() 已鋪好預設 key，這裡把存檔裡「所有」key 讀回來，
+	# 內容自創的參數／角色才不會在讀檔時默默消失。
 	var saved_params: Dictionary = data.get("params", {})
-	for k in PARAM_KEYS:
-		params[k] = float(saved_params.get(k, 0.0))
+	for k in saved_params:
+		params[k] = float(saved_params[k])
 	var saved_bond: Dictionary = data.get("bond", {})
-	for k in BOND_KEYS:
-		bond[k] = float(saved_bond.get(k, 0.0))
+	for k in saved_bond:
+		bond[k] = float(saved_bond[k])
 	flags = data.get("flags", {})
 	seen_storylets = data.get("seen_storylets", {})
 	route = str(data.get("route", ""))

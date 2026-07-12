@@ -23,10 +23,12 @@ VN × Reigns 滑卡敘事手遊。引擎 **Godot 4.6.3**，目標 Steam（成人
 
 ## 怎麼跑
 
-用 Godot 4.6.3 開 `project.godot` 後按 F5，或從 CLI：
+最簡單：直接雙擊上層的 `開始遊戲.bat`（Godot 放在 `%USERPROFILE%\Tools\Godot463\`）。
+
+或用 Godot 4.6.3 開 `project.godot` 後按 F5，或從 CLI（在 `Run/` 目錄下）：
 
 ```sh
-"C:\Users\deyuhuang\Tools\Godot463\Godot_v4.6.3-stable_win64.exe" --path "C:\Users\deyuhuang\Work\Fun\Run\game"
+"%USERPROFILE%\Tools\Godot463\Godot_v4.6.3-stable_win64.exe" --path game
 ```
 
 截一張預覽圖（開窗約 1.5 秒後自動存 `res://_preview.png` 並關閉）：
@@ -65,6 +67,7 @@ scripts/
 art/
   title_bg.png              標題背景（沿用）；title_bg_clean.png 為備用乾淨版，目前未啟用
   bg/ char/ avatar/ ui/     背景・立繪・頭像・卡片 UI
+  ui/cards/*.png            序章各場滑卡專屬卡圖（codex 產，缺圖時退回該場背景）
   icons/*.svg               lucide 線性圖示（白描邊，用 modulate 上色）
 fonts/                      Noto Sans TC / Noto Serif TC / Saira / Saira Stencil One（OFL，可出貨）
 ```

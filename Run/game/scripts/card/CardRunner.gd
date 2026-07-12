@@ -354,7 +354,12 @@ func _build_choice_card(choice: Dictionary, loc_key: String) -> void:
 	_swipe_node.rotation = _swipe_rest_rotation
 	_choices.add_child(_swipe_node)
 	_swipe_home = _swipe_node.position
-	_fade_in(_swipe_node)
+	# 進場：卡片從稍低處浮上來＋淡入，比原地出現順。
+	_swipe_node.modulate.a = 0.0
+	_swipe_node.position.y = _swipe_home.y + 26.0
+	var enter := create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	enter.parallel().tween_property(_swipe_node, "modulate:a", 1.0, 0.3)
+	enter.parallel().tween_property(_swipe_node, "position:y", _swipe_home.y, 0.3)
 
 	# bottom hint
 	var hint := UI.hbox(20)
@@ -408,20 +413,27 @@ func _tint(c: Color) -> ColorRect:
 
 ## The glass card: event image + one question. Protagonist art is intentionally
 ## omitted until the lead character design is final.
-func _choice_card_texture_path(choice: Dictionary, _loc_key: String) -> String:
+func _choice_card_texture_path(choice: Dictionary, loc_key: String) -> String:
 	var art := str(choice.get("card_art", ""))
 	if art != "":
-		if art.begins_with("res://"):
-			return art
-		if art.get_extension().to_lower() == "png":
-			return "res://art/ui/%s" % art
-		return "res://art/ui/%s.png" % art
+		var art_path := art
+		if not art.begins_with("res://"):
+			art_path = "res://art/ui/%s" % art if art.get_extension().to_lower() == "png" else "res://art/ui/%s.png" % art
+		if FileAccess.file_exists(art_path):
+			return art_path
+		# 指定卡圖還沒生出來 → 往下退，別讓缺圖卡死畫面。
 
 	var card_loc := str(choice.get("card_loc", ""))
 	if card_loc != "":
 		var explicit_loc := "res://art/bg/%s.png" % card_loc
 		if FileAccess.file_exists(explicit_loc):
 			return explicit_loc
+
+	# 退而求其次用「這一場的背景」當卡圖——至少對景，不會辦公室的選擇配河堤。
+	if loc_key != "":
+		var scene_loc := "res://art/bg/%s.png" % loc_key
+		if FileAccess.file_exists(scene_loc):
+			return scene_loc
 
 	return DEFAULT_CHOICE_CARD
 
@@ -616,7 +628,12 @@ func _card_texture(path: String) -> Texture2D:
 	_apply_rounded_alpha(out, 34.0)
 	return ImageTexture.create_from_image(out)
 
+# 內容固定（只依賴卡片尺寸），建一次就好——每張選擇卡重算是 45 萬次 set_pixel。
+static var _lower_tex_cache: Texture2D = null
+
 func _card_lower_texture() -> Texture2D:
+	if _lower_tex_cache:
+		return _lower_tex_cache
 	var w: int = int(CHOICE_CARD_W)
 	var h: int = int(CHOICE_CARD_H)
 	var img: Image = Image.create_empty(w, h, false, Image.FORMAT_RGBA8)
@@ -626,18 +643,24 @@ func _card_lower_texture() -> Texture2D:
 		for x in w:
 			var a: float = 0.78 * t * _rounded_alpha_factor(x, y, w, h, 34.0)
 			img.set_pixel(x, y, Color(0.004, 0.004, 0.010, a))
-	return ImageTexture.create_from_image(img)
+	_lower_tex_cache = ImageTexture.create_from_image(img)
+	return _lower_tex_cache
 
 func _apply_rounded_alpha(img: Image, radius: float) -> void:
+	# 只有四個角落的 radius×radius 方塊會被修到 alpha，其餘 factor 恆為 1，
+	# 不必逐點掃全圖（592×760 全掃 vs 四角各 ~34×34）。
 	var w: int = img.get_width()
 	var h: int = img.get_height()
-	for y in h:
-		for x in w:
-			var a: float = _rounded_alpha_factor(x, y, w, h, radius)
-			if a < 1.0:
-				var px: Color = img.get_pixel(x, y)
-				px.a *= a
-				img.set_pixel(x, y, px)
+	var r: int = mini(int(ceilf(radius)) + 1, mini(w, h))
+	for corner_y in [0, h - r]:
+		for corner_x in [0, w - r]:
+			for y in range(corner_y, corner_y + r):
+				for x in range(corner_x, corner_x + r):
+					var a: float = _rounded_alpha_factor(x, y, w, h, radius)
+					if a < 1.0:
+						var px: Color = img.get_pixel(x, y)
+						px.a *= a
+						img.set_pixel(x, y, px)
 
 func _rounded_alpha_factor(x: int, y: int, w: int, h: int, radius: float) -> float:
 	var fx := float(x)
@@ -887,10 +910,16 @@ func _full_layer() -> Control:
 	return c
 
 func _swap(layer: Control, content: Control) -> void:
-	for ch in layer.get_children():
-		ch.queue_free()
+	# 交叉淡化：新內容疊在舊內容上淡入，淡完才移除舊的——換場不再閃底色。
+	var old: Array = layer.get_children()
 	layer.add_child(content)
-	_fade_in(content)
+	content.modulate.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(content, "modulate:a", 1.0, 0.3)
+	tw.tween_callback(func() -> void:
+		for ch in old:
+			if is_instance_valid(ch):
+				ch.queue_free())
 
 func _fade_in(node: CanvasItem) -> void:
 	node.modulate.a = 0.0
