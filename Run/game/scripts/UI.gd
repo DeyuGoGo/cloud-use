@@ -16,7 +16,7 @@ const ICONS := "res://art/icons/"
 static func tc(weight: int = 400, letter_em: float = 0.0, font_size: int = 16) -> FontVariation:
 	var fv := FontVariation.new()
 	fv.base_font = FONT_TC
-	fv.variation_opentype = {"wght": weight}
+	fv.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): weight}
 	if letter_em != 0.0:
 		fv.spacing_glyph = int(round(letter_em * font_size))
 	return fv
@@ -24,7 +24,7 @@ static func tc(weight: int = 400, letter_em: float = 0.0, font_size: int = 16) -
 static func serif_tc(weight: int = 400, letter_em: float = 0.0, font_size: int = 16) -> FontVariation:
 	var fv := FontVariation.new()
 	fv.base_font = FONT_SERIF_TC
-	fv.variation_opentype = {"wght": weight}
+	fv.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): weight}
 	if letter_em != 0.0:
 		fv.spacing_glyph = int(round(letter_em * font_size))
 	return fv
@@ -32,7 +32,7 @@ static func serif_tc(weight: int = 400, letter_em: float = 0.0, font_size: int =
 static func saira(weight: int = 500, letter_em: float = 0.0, font_size: int = 16) -> FontVariation:
 	var fv := FontVariation.new()
 	fv.base_font = FONT_SAIRA
-	fv.variation_opentype = {"wght": weight}
+	fv.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): weight}
 	if letter_em != 0.0:
 		fv.spacing_glyph = int(round(letter_em * font_size))
 	return fv

@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="約跑團 Run With Me"
-config/description="VN × Reigns 滑卡敘事。下班後，你決定今晚把自己交給誰。"
-run/main_scene="res://scenes/TitleScreen.tscn"
+config/description="場景式互動敘事。有人挪了位置，你就坐下來了。"
+run/main_scene="res://scenes/EveningTitle.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://icon.svg"

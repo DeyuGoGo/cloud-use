@@ -1,88 +1,69 @@
-# 約跑團 Run With Me — Godot 專案
+# 約跑團 — Godot 專案
 
-VN × Reigns 滑卡敘事手遊。引擎 **Godot 4.6.3**，目標 Steam（成人版）。
+目前入口為 M1〈第一晚，真的被接住〉，Godot 4.6.3，1920×1080 邏輯畫布，canvas_items 縮放；已以 1280×720 與 1920×1080 取樣檢查。
 
-> 架構備註：序章目前以**純 GDScript** 實作（劇情／分支／隱藏數值都在 `Opening.gd` + `RunState`），
-> 尚未導入 Ink。是否要在第 2 章之前改用 Ink 仍是**待決的架構決定**（見根目錄 06 §7）。
+## 執行
 
-## 目前進度（可玩）
+在上層雙擊 `開始遊戲.bat`，或打開 `project.godot` 按 F5。
 
-從標題到結局是一條**完整可玩的垂直切片**：
+啟動檔會先匯入素材；Godot 路徑依序採用第一個參數、`GODOT_EXE` 環境變數、本機既有的 `Tools/Godot463` 位置、PATH 的 `godot.exe`／`godot4.exe`。換機可把 Godot 執行檔拖到啟動檔上，不必修改檔案。
 
-```
-標題大廳 →（新遊戲）→ 第一章序章〈那盞燈〉13 張滑卡 → 三種收束之一
-                                                     ├─ home：乾淨停在這（回標題）
-                                                     └─ post / lurk →（繼續）→ 日常大廳循環
+```powershell
+& "$env:USERPROFILE/Tools/Godot463/Godot_v4.6.3-stable_win64_console.exe" --path game
 ```
 
-- **標題大廳**：設計 handoff（`約跑團大廳.dc.html`）1:1 搬進 Godot，可跑、可互動。
-- **序章 CardRunner**：13 場全有敘事＋滑卡選擇，隱藏數值（seen/clean/nerve/self_first＋五條關係）會累積，三種結局。F1 開發者數值面板。
-- **日常大廳 MainRoom**：天數 / 精力 / 錢從 `RunState` 讀；選今晚行動會套用效果、過一天、自動存檔，並重載呈現新的一天。
-- **存檔**：`RunState` 以 JSON 存到 `user://run_save.json`；標題「繼續遊戲」會讀回上次的日常進度。
-- **動態牆 AliveWall**：IG 風格手機動態（從大廳打開手機進入）；目前互動（按讚/發訊息等）仍為佔位。
+## 新版結構
 
-## 怎麼跑
+- `scenes/EveningTitle.tscn`：標題與新版存檔入口。
+- `scenes/FirstEvening.tscn`：新版完整序章。
+- `scripts/evening/EveningRunner.gd`：呈現、條件分支、閱讀紀錄、手機、暫停與場景邊界存讀。
+- `scripts/evening/EveningAlive.gd`：Alive 動態牆、私訊、收藏與照片放大；只建立已到達的內容。
+- `scripts/evening/EveningRunRecord.gd`：可重用跑後紀錄、河岸／街區示意路線與可選成績。
+- `scripts/evening/EveningTitle.gd`：標題版式。
+- `scripts/evening/EveningSave.gd`：版本化獨立 JSON 存檔、atomic 寫入與備份退回。
+- `scripts/evening/EveningSound.gd`：程序合成環境／物件／通知音，無外部音效依賴。
+- `story/first_evening.json`：新版文本與演出資料的執行來源；逐句閱讀稿位於根目錄 `開場對白-潤稿用.md`。
+- `art/m1/`：新版超商群像與兩張可選合照。
+- `art/m1/store_actions.png`：四格連續鏡頭，供坐下與接水前後使用。
+- `visual`／`visual_data`：單拍的跑步紀錄、集合卡、舊團照、照片預覽與所選照片；空字拍也可前進、存讀及查閱紀錄。
 
-最簡單：直接雙擊上層的 `開始遊戲.bat`（Godot 放在 `%USERPROFILE%\Tools\Godot463\`）。
+主線演出使用 GDScript，章節內容為 JSON。沒有導入 Ink。舊 `CardRunner`、`Opening.gd`、日常大廳與手機原型保留，但不接在新版序章尾端；後續內容待 M2。
 
-或用 Godot 4.6.3 開 `project.godot` 後按 F5，或從 CLI（在 `Run/` 目錄下）：
+## 存檔
 
-```sh
-"%USERPROFILE%\Tools\Godot463\Godot_v4.6.3-stable_win64.exe" --path game
+新版：`user://first_evening_v1.json`、`.bak` 與寫入中使用的 `.tmp`。保存 cursor、choices、complete、settings、social 和 version。social 保存 Alive 按讚／收藏；舊 v1 沒有此欄位仍可繼續。新遊戲按下第一個段落的前進後才保存，返回標題不會自動覆寫尚未推進的新局。
+
+舊版：`user://run_save.json`，不刪除、不轉換，也不把新版的游標混進舊日常循環。M1 的「繼續」只讀新版檔案。
+
+## 驗證
+
+在專案上層：
+
+兩個 PowerShell 測試入口都可加 `-GodotPath 'C:/你的路徑/Godot.exe'`。流程測試先匯入素材，因此沒有 `.godot` 快取的工作副本也能執行；測試使用隔離的 APPDATA，不改玩家進度。
+
+```powershell
+# 隔離 APPDATA 的存檔／聲音測試
+& ./game/tests/run_evening_systems.ps1
+
+# 真實推進、焦點、路由和保存的整合測試
+& ./game/tests/run_evening_flow.ps1
+
+# 八種選法的完整呈現檢查；此模式不寫玩家存檔
+& "$env:USERPROFILE/Tools/Godot463/Godot_v4.6.3-stable_win64_console.exe" --headless --path game res://scenes/FirstEvening.tscn -- --m1-test
 ```
 
-截一張預覽圖（開窗約 1.5 秒後自動存 `res://_preview.png` 並關閉）：
+截圖測試（需圖形環境，測試模式不寫玩家存檔）：
 
-```sh
-Godot... --path game -- --screenshot
+```powershell
+& "$env:USERPROFILE/Tools/Godot463/Godot_v4.6.3-stable_win64_console.exe" --path game --resolution 1280x720 res://scenes/FirstEvening.tscn -- --m1-shot --m1-beat=store_14 --m1-out=res://../Design/m1/store720.png
 ```
 
-序章可用開發參數腳本化測試（從某場開始 / 自動滑）：
+可用 `--m1-choice=photo_choice:candid` 設置截圖用分支，或 `--m1-index=0` 指定段落。沒有這些參數時為正常玩家模式。
 
-```sh
-Godot... --path game --scene=res://scenes/CardRunner.tscn -- --scene=6 --auto=RLRR
-```
+在手機拍可加 `--m1-alive=feed`／`--m1-alive=inbox` 拍攝瀏覽狀態，或 `--m1-alive-zoom=phone_photo_candid` 拍攝已解鎖照片的放大層。這些參數只在 `--m1-shot` 中生效。Windows 若限制視窗尺寸，1080p 截圖以 `--fullscreen --resolution 1920x1080` 取得，並核對 PNG 實際尺寸。
 
-## 結構
+在 store_02／store_04 加 `--m1-action-after`，會透過實際前進入口完成互動，再拍攝坐下／接水後的畫面；不寫玩家存檔。
 
-```
-project.godot              1920×1080, canvas_items 拉伸, gl_compatibility
-scenes/
-  TitleScreen.tscn         主場景（標題大廳）
-  CardRunner.tscn          序章滑卡 VN runner（核心循環，可玩）
-  MainRoom.tscn            下班後日常大廳（今晚你要做什麼）
-  AliveWall.tscn           手機社交動態牆
-scripts/
-  RunState.gd     (autoload) 隱藏數值＋看得到的資源（精力/錢/天數）＋存讀檔
-  SceneRouter.gd  (autoload) 全域場景流：標題→序章→（繼續）→日常大廳
-  Bootstrap.gd    (autoload) 開發用截圖（--screenshot）
-  Palette.gd                設計 handoff 的色票，單一來源
-  UI.gd                     styled Control 工廠（字重/letter-spacing/icon/scrim）
-  story/Opening.gd          第一章〈那盞燈〉內容：scenes / FLOW / ENDINGS（章節文本單一來源）
-  card/CardRunner.gd        滑卡 runner（敘事拍＋拖曳選卡＋結局）
-  room/MainRoom.gd          日常大廳版面與循環
-  phone/AliveWall.gd        動態牆
-  title/TitleScreen.gd      標題版面（座標對齊 handoff）
-  title/SocialPanel.gd      右側 diegetic 社交面板
-art/
-  title_bg.png              標題背景（沿用）；title_bg_clean.png 為備用乾淨版，目前未啟用
-  bg/ char/ avatar/ ui/     背景・立繪・頭像・卡片 UI
-  ui/cards/*.png            序章各場滑卡專屬卡圖（codex 產，缺圖時退回該場背景）
-  icons/*.svg               lucide 線性圖示（白描邊，用 modulate 上色）
-fonts/                      Noto Sans TC / Noto Serif TC / Saira / Saira Stencil One（OFL，可出貨）
-```
+## 限制
 
-## 與 handoff 的差異（刻意近似）
-
-- **backdrop blur**：Godot Control 無 CSS 毛玻璃，面板用半透明實色近似。
-- **限動彩圈**：IG 多段漸層環用單一強調色 + 內底近似。
-- **active 選單底**：水平漸層用近似單色填充（StyleBoxFlat 無漸層）。
-- **標題紫色外光暈**：38px 紫光省略（Label 僅支援單一 shadow），保留白色描邊。
-
-## 下一步（尚未做）
-
-- **日常循環內容**：目前每日行動只動數值＋過天，還沒有「夜晚事件」的真正劇情拍（第 2 章寫作）。
-- **邀約系統**：MainRoom 的「今晚邀約」目前是裝飾資料，尚未接成可執行的約定卡。
-- **動態牆互動**：AliveWall 的按讚 / 發訊息 / 發布仍為佔位。
-- **〈同步〉跑步段 + cleanliness shader**：核心設計賭注，建議先做獨立 A/B 原型再決定是否進主循環（SceneRouter 尚未有 run/sync 場景常數）。
-- **主線第 2–7 拍**：序章之後的「溫度怎麼掉」尚未開寫。
+依實玩回饋重修後，單一路線約 2,400 漢字，另有畫面段落，不再為原先估時補文字。場景採插畫、站位與轉場，非全動畫；音效為合成的第一版，沒有角色配音。新版實際閱讀時間與人物投入感待再次試玩；自動測試只驗證功能。

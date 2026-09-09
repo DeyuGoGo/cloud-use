@@ -1,0 +1,1610 @@
+{
+  "title": "序章〈那盞燈〉",
+  "version": 1,
+  "beats": [
+    {
+      "id": "office_01",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "六點半，你把明天要接著做的地方留了註記，關掉電腦。"
+    },
+    {
+      "id": "office_02",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "「我先走了。」同事隔著螢幕抬了下手。你把識別證收進包裡，去等電梯。"
+    },
+    {
+      "id": "office_03",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "手機震了一下。工作群組又在改明天開會的時間，你滑回去看前面幾則。"
+    },
+    {
+      "id": "office_04",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "不是才改過……"
+    },
+    {
+      "id": "office_05",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你回了個收到，把手機收起來。電梯到一樓，你跟著前面的人走出去。"
+    },
+    {
+      "id": "office_06",
+      "scene": "office",
+      "time": "週二 18:32",
+      "bg": "office",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "便當店老闆問你是不是一樣。你點頭，站在櫃台旁等，順手把找回來的零錢放進口袋。"
+    },
+    {
+      "id": "office_07",
+      "scene": "home",
+      "time": "週二 19:10",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "吃完飯，你在沙發上坐了一會。電視還開著，沒什麼在看。你拿起遙控器關掉，去找跑步的衣服。"
+    },
+    {
+      "id": "office_08",
+      "scene": "home",
+      "time": "週二 19:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你換上跑衣，裝好水，在玄關坐下來拉開鞋帶。",
+      "action": "穿上跑鞋"
+    },
+    {
+      "id": "river_01",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "河邊還有不少人。你繞過散步的阿伯，沿著熟悉的路往橋下跑。"
+    },
+    {
+      "id": "river_02",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "耳機換到下一首歌，你按了暫停。手錶震了一下，剛好一公里。"
+    },
+    {
+      "id": "river_03",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "今天跑到橋下就好。"
+    },
+    {
+      "id": "river_04",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你把耳機收進口袋，放慢一點，讓呼吸順下來。"
+    },
+    {
+      "id": "river_05",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "後面有人靠近。你回頭看了一眼，是最近常在這裡遇到的短髮女生。"
+    },
+    {
+      "id": "river_06",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "怡君",
+      "text": "借過。謝啦。"
+    },
+    {
+      "id": "river_07",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你往右讓。她從旁邊跑過，轉進橋下。你跟了幾步，還是照自己的速度跑。"
+    },
+    {
+      "id": "river_08",
+      "scene": "river",
+      "time": "週二 20:06",
+      "bg": "embankment",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "折返時，她從對面抬手向你打招呼。你也抬起手，她已經跑過去了。"
+    },
+    {
+      "id": "river_09",
+      "scene": "river",
+      "time": "週二 20:22",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "",
+      "visual": "run_record",
+      "visual_data": {
+        "title": "河邊，跑一小段",
+        "distance": "3.2",
+        "unit": "km",
+        "log_label": "跑步紀錄",
+        "date": "週二",
+        "time": "20:22",
+        "location": "河堤",
+        "duration": "22:24",
+        "pace": "7:00 /km",
+        "company": "自己跑",
+        "note": "到橋下就折返",
+        "terrain": "river"
+      }
+    },
+    {
+      "id": "before_01",
+      "scene": "home",
+      "time": "週二 22:48",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "洗完澡，你滑到一段夜跑影片。有人揹著音響，邊跑邊放歌。"
+    },
+    {
+      "id": "before_02",
+      "scene": "home",
+      "time": "週二 22:48",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "",
+      "visual": "invite",
+      "visual_data": {
+        "host": "約跑團",
+        "title": "週五一起跑",
+        "day": "週五",
+        "time": "19:30",
+        "location": "市府站 2 號出口",
+        "note": "新手可以直接來，不用報名。",
+        "log_label": "週五集合資訊"
+      }
+    },
+    {
+      "id": "before_03",
+      "scene": "home",
+      "time": "週二 22:48",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "還帶音響喔。"
+    },
+    {
+      "id": "before_04",
+      "scene": "home",
+      "time": "週二 22:48",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "",
+      "visual": "feed",
+      "visual_data": {
+        "author": "約跑團",
+        "caption": "上週五，跑完繼續聊。",
+        "image": "res://art/m1/group_feed.png",
+        "log_label": "入團前看到的舊貼文"
+      }
+    },
+    {
+      "id": "before_05",
+      "scene": "home",
+      "time": "週二 22:48",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "底下有人問新手能不能來。回覆說不用報名，直接到集合點就好。你把集合資訊存進收藏。"
+    },
+    {
+      "id": "pantry_01",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "隔天早上，你在茶水間等咖啡。Jason 拿著杯子進來，站到你旁邊。"
+    },
+    {
+      "id": "pantry_02",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "欸，你有看過信義那個跑團嗎？會帶音響的。"
+    },
+    {
+      "id": "pantry_03",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "有啊。那邊紅燈那麼多，是要怎麼跑。"
+    },
+    {
+      "id": "pantry_04",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你點點頭，等咖啡滴完。「可是看起來滿多人的。你有朋友在裡面？」"
+    },
+    {
+      "id": "pantry_05",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "有啊，之前有找我。"
+    },
+    {
+      "id": "pantry_06",
+      "scene": "office",
+      "time": "週三 10:17",
+      "bg": "pantry",
+      "cast": [
+        "jason_office"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "他端起咖啡，又補一句：「週五七點半，二號出口。你要去就直接過去。」你抬頭看他，他已經往辦公室走了。"
+    },
+    {
+      "id": "before_06",
+      "scene": "river",
+      "time": "週四 20:21",
+      "bg": "embankment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "禮拜四，橋下圍了三角錐，路燈正在修。你繞過那一段，跑完就回家了。今天沒遇到她。"
+    },
+    {
+      "id": "before_07",
+      "scene": "home",
+      "time": "週五 18:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "週五下班，你先吃根香蕉墊肚子。手機跳出配對通知，你看了看對方的自介，傳了句招呼。"
+    },
+    {
+      "id": "before_08",
+      "scene": "home",
+      "time": "週五 18:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "洗衣機停了。你把手機放在桌上，去陽台晾衣服。回來時還沒有回覆。"
+    },
+    {
+      "id": "before_09",
+      "scene": "home",
+      "time": "週五 18:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你看了一下時間，打開收藏的集合資訊，再查去市府站的路線。"
+    },
+    {
+      "id": "before_10",
+      "scene": "home",
+      "time": "週五 18:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "去看看好了。"
+    },
+    {
+      "id": "before_11",
+      "scene": "home",
+      "time": "週五 18:38",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你換好跑衣，帶上手機和鑰匙。出門前，手碰到電燈開關，停了一下。那盞燈留著。",
+      "action": "帶上鑰匙出門"
+    },
+    {
+      "id": "station_01",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "到了二號出口，你往旁邊站，拿出手機再確認一次地點。"
+    },
+    {
+      "id": "station_02",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "十幾個人聚在出口旁，有人在拉筋，有人還在換鞋。音響斷斷續續，兩個人蹲著研究連線。"
+    },
+    {
+      "id": "station_03",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "「你先斷線，換我的看看。」你順著聲音看過去。Jason 穿著深藍跑衣，正把音響拿起來。音樂接上時，你們剛好對到眼。"
+    },
+    {
+      "id": "station_04",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "……欸，你來了喔。"
+    },
+    {
+      "id": "station_05",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "他把音響交給旁邊的人，走過來。「朋友找的啦。」你看了一眼他穿好的跑鞋，又看回他。"
+    },
+    {
+      "id": "jason_choice",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Jason 壓低聲音：「幹嘛，你也是自己來的喔？」",
+      "choices": [
+        {
+          "label": "「不是說這裡沒辦法跑？」",
+          "value": "tease"
+        },
+        {
+          "label": "「其實我有點緊張。」",
+          "value": "admit"
+        }
+      ]
+    },
+    {
+      "id": "jason_tease_01",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "紅燈是真的多啊。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "tease"
+      }
+    },
+    {
+      "id": "jason_tease_02",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你看著他，他沒再解釋，朝人群偏了下頭。「走，帶你認識一下。」你把手機收起來，跟他往裡面走。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "tease"
+      }
+    },
+    {
+      "id": "jason_admit_01",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "我第一次來也不認識人。在這邊站了半天，還是 Ann 先來叫我。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "admit"
+      }
+    },
+    {
+      "id": "jason_admit_02",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "他朝人群偏了下頭。「走啦，我帶你過去。」你把手機收起來，跟著他走。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "admit"
+      }
+    },
+    {
+      "id": "station_06",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "一個戴帽子的男生走過來。Jason 朝你偏了一下頭：「我同事，立翔。平常自己跑河堤。」"
+    },
+    {
+      "id": "station_07",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "你好，我 Ray。今天跟我們這組，五公里，可以嗎？"
+    },
+    {
+      "id": "station_08",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "我平常才跑三、四公里，不知道跟不跟得上。"
+    },
+    {
+      "id": "station_09",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "路口都會等，跟不上就喊一聲。"
+    },
+    {
+      "id": "station_10",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "有人在後面叫 Ray。他回頭應了聲，往人少的那邊指：「先站這裡，我等下過來。」"
+    },
+    {
+      "id": "station_11",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "背包先拿下來吧，背著跑很熱。"
+    },
+    {
+      "id": "station_12",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你轉過頭。她指指路邊的車：「我是 Ann，可以先放我車上。等下會跑回來這邊。」"
+    },
+    {
+      "id": "station_13",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你把包交給她，把手機和鑰匙留在身上。Ann 開車門讓你放好，等你確認過才關上。"
+    },
+    {
+      "id": "station_14",
+      "scene": "station",
+      "time": "週五 19:22",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "立翔，好了就過來暖一下。今天最後那段我昨天去繞過，晚上滿好看的。"
+    },
+    {
+      "id": "run_01",
+      "scene": "run",
+      "time": "週五 19:43",
+      "bg": "xinyi",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "綠燈亮了，前面的人開始跑。你跟在 Jason 後面，還不太習慣周圍這麼多人。"
+    },
+    {
+      "id": "run_02",
+      "scene": "run",
+      "time": "週五 19:43",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "前面轉紅燈，你怕被隔開，正想加快。Ray 回頭往下壓了壓手，停在路口等。"
+    },
+    {
+      "id": "run_03",
+      "scene": "run",
+      "time": "週五 19:43",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "不用追，我們等下一個。剛剛的速度可以嗎？"
+    },
+    {
+      "id": "run_04",
+      "scene": "run",
+      "time": "週五 19:43",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "可以，我剛才以為要跟上。"
+    },
+    {
+      "id": "run_05",
+      "scene": "run",
+      "time": "週五 19:43",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ray 說不用急，往旁邊站了一點。你停到他身邊，喝口水，等下一次綠燈。"
+    },
+    {
+      "id": "run_water",
+      "scene": "run",
+      "time": "週五 19:48",
+      "bg": "xinyi",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "瓶蓋滑到地上，滾到 Ray 腳邊。他幫你撿起來，用水沖一下再遞過來。「謝謝。」你接好，這次轉緊了。"
+    },
+    {
+      "id": "run_06",
+      "scene": "run",
+      "time": "週五 19:55",
+      "bg": "xinyi",
+      "cast": [
+        "kevin"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "後面一個男生跑到你旁邊。「我凱文。你河堤都跑哪一段啊？我想換條路跑。」你告訴他從哪個水門下去。"
+    },
+    {
+      "id": "run_07",
+      "scene": "run",
+      "time": "週五 19:55",
+      "bg": "xinyi",
+      "cast": [
+        "kevin"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "有人喊凱文，他應了一聲，又轉回來：「下去左轉，對不對？」你點頭。他說改天去看看，才跟上前面的人。"
+    },
+    {
+      "id": "run_08",
+      "scene": "run",
+      "time": "週五 20:02",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "怡君",
+      "text": "欸，是你喔。"
+    },
+    {
+      "id": "run_09",
+      "scene": "run",
+      "time": "週五 20:02",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你轉頭，是河邊那個短髮女生。她放慢一點，跟你並排。"
+    },
+    {
+      "id": "run_10",
+      "scene": "run",
+      "time": "週五 20:02",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "你也會來這邊跑？"
+    },
+    {
+      "id": "run_11",
+      "scene": "run",
+      "time": "週五 20:02",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "怡君",
+      "text": "偶爾。我怡君。剛剛沒聽清楚，你叫什麼？"
+    },
+    {
+      "id": "run_12",
+      "scene": "run",
+      "time": "週五 20:08",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你說了名字，問她昨天有沒有去河邊。「有，但我從另一頭跑。」你說橋下還在施工，她皺了一下眉。"
+    },
+    {
+      "id": "run_13",
+      "scene": "run",
+      "time": "週五 20:14",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "怡君",
+      "text": "難怪那段一直沒亮。我最近都繞掉。你都這個時間跑？"
+    },
+    {
+      "id": "run_14",
+      "scene": "run",
+      "time": "週五 20:14",
+      "bg": "xinyi",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你說通常八點左右。她點頭：「我下班來得及，也差不多。」轉彎時她先讓一步，等你並上來。"
+    },
+    {
+      "id": "run_15",
+      "scene": "run",
+      "time": "週五 20:32",
+      "bg": "xinyi",
+      "cast": [
+        "ray",
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你按停手錶。怡君陪你往旁邊走了幾步。",
+      "visual": "run_record",
+      "visual_data": {
+        "title": "第一次跟大家跑",
+        "distance": "5.0",
+        "unit": "km",
+        "date": "週五",
+        "time": "20:32",
+        "location": "信義街區",
+        "duration": "49:00",
+        "duration_label": "經過時間",
+        "pace": "9:48 /km",
+        "company": "和約跑團",
+        "note": "含路口停等",
+        "terrain": "city",
+        "route": [
+          [
+            0.18,
+            0.2
+          ],
+          [
+            0.56,
+            0.2
+          ],
+          [
+            0.79,
+            0.32
+          ],
+          [
+            0.79,
+            0.65
+          ],
+          [
+            0.62,
+            0.82
+          ],
+          [
+            0.25,
+            0.82
+          ],
+          [
+            0.18,
+            0.53
+          ],
+          [
+            0.18,
+            0.2
+          ]
+        ],
+        "log_label": "第一次跟團的跑步紀錄"
+      }
+    },
+    {
+      "id": "store_01",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ann 把車上的背包拿還給你。你接過來，喝掉水壺裡最後一口水。她把腳邊的袋子挪開，叫你過去。"
+    },
+    {
+      "id": "store_02",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "坐這邊，這裡是乾的。",
+      "action": "在空位坐下"
+    },
+    {
+      "id": "store_03",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你把背包靠在腳邊。坐下以後，才發現小腿有點酸。"
+    },
+    {
+      "id": "store_04",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "她從袋子裡拿出一瓶水，朝你遞過來：「水要嗎？」",
+      "action": "接過水"
+    },
+    {
+      "id": "store_05",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "不用給我錢，今天我請。"
+    },
+    {
+      "id": "store_06",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "立翔",
+      "text": "那我下次請妳。"
+    },
+    {
+      "id": "store_07",
+      "scene": "store",
+      "time": "週五 20:36",
+      "bg": "store",
+      "cast": [
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "「好，我挑喔。有家豆漿店想去很久了。」你擰開瓶蓋，喝一口水，說好。"
+    },
+    {
+      "id": "store_08",
+      "scene": "store",
+      "time": "週五 20:40",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ray 把 Ann 落在店裡的手機拿過來。她接過去說了聲謝謝，他在旁邊坐下。"
+    },
+    {
+      "id": "store_09",
+      "scene": "store",
+      "time": "週五 20:40",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "剛剛最後那段會不會太快？"
+    },
+    {
+      "id": "store_10",
+      "scene": "store",
+      "time": "週五 20:40",
+      "bg": "store",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你說不會。「我平常跑完就回家了。」你看看旁邊，大家都還沒有要走的意思。"
+    },
+    {
+      "id": "store_11",
+      "scene": "store",
+      "time": "週五 20:40",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "我們通常還會在這裡坐一下。你要趕車的話就先走，不用等大家。"
+    },
+    {
+      "id": "store_12",
+      "scene": "store",
+      "time": "週五 20:40",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "他每次說坐一下，最後都最晚走。"
+    },
+    {
+      "id": "store_13",
+      "scene": "store",
+      "time": "週五 20:44",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "怡君拿著飯糰出來。「我坐這喔。」你把背包拉到另一邊，她坐到你旁邊。",
+      "shot": "together"
+    },
+    {
+      "id": "store_ann_break",
+      "scene": "store",
+      "time": "週五 20:44",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ann 把腿伸直，靠著牆休息。有人問衛生紙放哪，怡君指了一下袋子，繼續拆手上的飯糰。",
+      "shot": "together"
+    },
+    {
+      "id": "store_14",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "怡君",
+      "text": "你晚餐吃了沒？",
+      "shot": "together"
+    },
+    {
+      "id": "store_15",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "ray",
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你說只吃了一根香蕉。她看你一眼：「那你先去買點東西吃啊。」你起身進店裡，拿了一個飯糰。",
+      "shot": "together"
+    },
+    {
+      "id": "store_16",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "jason",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你坐回來時，Jason 正在剝茶葉蛋。他把包裝袋往旁邊收，空出一點地方。",
+      "shot": "together"
+    },
+    {
+      "id": "jason_recall_tease",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "怎樣，這邊還能跑吧？你剛剛跟得滿前面的耶。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "tease"
+      },
+      "shot": "together"
+    },
+    {
+      "id": "jason_recall_admit",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "jason"
+      ],
+      "kind": "scene",
+      "speaker": "Jason",
+      "text": "現在比較習慣了吧？下次到了就傳訊息給我。",
+      "when": {
+        "choice": "jason_choice",
+        "value": "admit"
+      },
+      "shot": "together"
+    },
+    {
+      "id": "store_17",
+      "scene": "store",
+      "time": "週五 20:49",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你點頭。「你來之前怎麼不講？」他低頭剝蛋，過一會才說：「就想說……你不一定想來啊。」",
+      "shot": "together"
+    },
+    {
+      "id": "store_18",
+      "scene": "store",
+      "time": "週五 20:52",
+      "bg": "store",
+      "cast": [
+        "laowu"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "「吳哥，掰。」Ann 朝路口揮手。你也抬了下手，那個一直坐在邊上的男人點點頭，先走了。",
+      "shot": "together"
+    },
+    {
+      "id": "store_19",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "要拍照的過來一下。不想拍沒關係，東西先放這邊。",
+      "shot": "together"
+    },
+    {
+      "id": "store_20",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "ray",
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ray 請旁邊的跑友幫忙拍。Ann 往旁邊挪，留出你的位置。怡君搖搖手，留在階梯上吃飯糰。",
+      "action": "站進合照"
+    },
+    {
+      "id": "store_21",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "",
+      "visual": "photo_preview",
+      "visual_data": {
+        "photo": "posed",
+        "log_label": "合照・第一張"
+      }
+    },
+    {
+      "id": "store_22",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "這張也可以，沒關係。",
+      "visual": "photo_preview",
+      "visual_data": {
+        "photo": "candid",
+        "log_label": "合照・第二張"
+      }
+    },
+    {
+      "id": "photo_choice",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "立翔，你覺得哪張好？",
+      "choices": [
+        {
+          "label": "這張",
+          "value": "posed"
+        },
+        {
+          "label": "這張",
+          "value": "candid"
+        }
+      ]
+    },
+    {
+      "id": "photo_posed_01",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ray",
+      "text": "好，那就這張。",
+      "when": {
+        "choice": "photo_choice",
+        "value": "posed"
+      },
+      "visual": "selected_photo",
+      "visual_data": {
+        "log_label": "選下的合照"
+      }
+    },
+    {
+      "id": "photo_candid_01",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray",
+        "ann"
+      ],
+      "kind": "scene",
+      "speaker": "Ann",
+      "text": "傳給我，我也要。",
+      "when": {
+        "choice": "photo_choice",
+        "value": "candid"
+      },
+      "visual": "selected_photo",
+      "visual_data": {
+        "log_label": "選下的合照"
+      }
+    },
+    {
+      "id": "store_23",
+      "scene": "store",
+      "time": "週五 20:54",
+      "bg": "store",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ray 問能不能標你的帳號。你把 Alive 頁面給他看，他把名字念了一遍，跟你確認。",
+      "action": "把帳號給 Ray"
+    },
+    {
+      "id": "store_join",
+      "scene": "store",
+      "time": "週五 20:58",
+      "bg": "store",
+      "cast": [
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "Ray 開了 Alive 跑團群聊的邀請。加進去後，Ann 從成員名單找到你，傳來一個揮手貼圖。",
+      "action": "加入約跑團"
+    },
+    {
+      "id": "store_24",
+      "scene": "store",
+      "time": "週五 21:02",
+      "bg": "store",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "怡君起身拿好東西。「我要走了。河邊那段如果修好，你再跟我說，我不想白跑。」"
+    },
+    {
+      "id": "store_25",
+      "scene": "store",
+      "time": "週五 21:02",
+      "bg": "store",
+      "cast": [
+        "yijun_embankment"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你拿出手機，照她念的帳號在 Alive 開啟私訊。她收好手機，停了一下：「那河邊見。」你說好，看著她走向路口。"
+    },
+    {
+      "id": "store_26",
+      "scene": "store",
+      "time": "週五 21:05",
+      "bg": "store",
+      "cast": [
+        "ann",
+        "ray"
+      ],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你幫 Ann 把空瓶收進回收袋。她說路上小心。你背好包，朝還在聊天的人揮手，去搭車。",
+      "action": "收好背包回家"
+    },
+    {
+      "id": "home_01",
+      "scene": "home",
+      "time": "週五 21:46",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "回到家，那盞燈還亮著。你把包放到椅子上，換下鞋。出門前晾的衣服還沒乾。"
+    },
+    {
+      "id": "home_02",
+      "scene": "home",
+      "time": "週五 21:46",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你把沒喝完的水放好，去洗手。回來時手機亮著，Alive 跳出一則標註通知。",
+      "action": "拿起手機"
+    },
+    {
+      "id": "phone_photo_posed",
+      "scene": "home",
+      "time": "週五 21:49",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "約跑團",
+      "speaker": "Ray",
+      "text": "今晚的合照，立翔幫忙挑的。",
+      "when": {
+        "choice": "photo_choice",
+        "value": "posed"
+      }
+    },
+    {
+      "id": "phone_photo_candid",
+      "scene": "home",
+      "time": "週五 21:49",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "約跑團",
+      "speaker": "Ray",
+      "text": "立翔選這張。其他的我晚點再放。",
+      "when": {
+        "choice": "photo_choice",
+        "value": "candid"
+      }
+    },
+    {
+      "id": "phone_ann",
+      "scene": "home",
+      "time": "週五 21:52",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ann",
+      "speaker": "Ann",
+      "text": "到家沒？"
+    },
+    {
+      "id": "phone_ann_reply",
+      "scene": "home",
+      "time": "週五 21:52",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ann",
+      "speaker": "立翔",
+      "text": "剛到\n謝謝妳幫我放包包",
+      "action": "回 Ann 一聲"
+    },
+    {
+      "id": "phone_ann_again",
+      "scene": "home",
+      "time": "週五 21:52",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ann",
+      "speaker": "Ann",
+      "text": "不會\n我先洗澡，明天還要早起"
+    },
+    {
+      "id": "phone_invite_ray",
+      "scene": "home",
+      "time": "週五 21:54",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ray",
+      "speaker": "Ray",
+      "text": "下週五一樣七點半\n有空再來，路線到時貼群組"
+    },
+    {
+      "id": "phone_invite_yijun",
+      "scene": "home",
+      "time": "週五 21:58",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "怡君",
+      "speaker": "怡君",
+      "text": "明天有跑嗎\n我大概八點到河邊"
+    },
+    {
+      "id": "reply_choice",
+      "scene": "home",
+      "time": "週五 22:00",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "跑後訊息",
+      "speaker": "旁白",
+      "text": "你看完兩則訊息，先回了一則。",
+      "choices": [
+        {
+          "label": "回 Ray：「下禮拜我也來。」",
+          "value": "ray"
+        },
+        {
+          "label": "回怡君：「明晚八點，河邊見。」",
+          "value": "yijun"
+        }
+      ]
+    },
+    {
+      "id": "reply_ray_01",
+      "scene": "home",
+      "time": "週五 22:00",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ray",
+      "speaker": "立翔",
+      "text": "下禮拜我也來\n照片原圖可以傳我嗎",
+      "when": {
+        "choice": "reply_choice",
+        "value": "ray"
+      }
+    },
+    {
+      "id": "reply_ray_02",
+      "scene": "home",
+      "time": "週五 22:00",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "Ray",
+      "speaker": "Ray",
+      "text": "傳了\n下週見",
+      "when": {
+        "choice": "reply_choice",
+        "value": "ray"
+      }
+    },
+    {
+      "id": "reply_yijun_01",
+      "scene": "home",
+      "time": "週五 22:00",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "怡君",
+      "speaker": "立翔",
+      "text": "有，八點橋前入口？\n我明天想跑慢一點",
+      "when": {
+        "choice": "reply_choice",
+        "value": "yijun"
+      }
+    },
+    {
+      "id": "reply_yijun_02",
+      "scene": "home",
+      "time": "週五 22:00",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "phone",
+      "thread": "怡君",
+      "speaker": "怡君",
+      "text": "好啊，我也沒要跑快\n入口見",
+      "when": {
+        "choice": "reply_choice",
+        "value": "yijun"
+      }
+    },
+    {
+      "id": "home_03",
+      "scene": "home",
+      "time": "週五 22:15",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你把手機放下，去拿換洗衣服。經過玄關時，順手把跑鞋並好。"
+    },
+    {
+      "id": "end_ray",
+      "scene": "home",
+      "time": "週五 22:15",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "洗完澡，你打開行事曆，翻到下週五。七點半，市府站。",
+      "when": {
+        "choice": "reply_choice",
+        "value": "ray"
+      },
+      "action": "記下下次集合"
+    },
+    {
+      "id": "end_yijun",
+      "scene": "home",
+      "time": "週五 22:15",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "洗完澡，你把手錶放到充電座旁。明晚八點，橋前入口。",
+      "when": {
+        "choice": "reply_choice",
+        "value": "yijun"
+      },
+      "action": "替手錶充電"
+    },
+    {
+      "id": "home_04",
+      "scene": "home",
+      "time": "週五 22:15",
+      "bg": "apartment",
+      "cast": [],
+      "kind": "scene",
+      "speaker": "旁白",
+      "text": "你關了玄關的燈，回房間躺下。手機接上充電，放在床頭。"
+    }
+  ]
+}
