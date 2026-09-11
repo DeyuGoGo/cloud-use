@@ -5,12 +5,43 @@
     {
       "id": "office_01",
       "scene": "office",
-      "time": "週二 18:32",
+      "time": "週二 18:32–19:38",
       "bg": "office",
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "六點半，你把明天要接著做的地方留了註記，關掉電腦。"
+      "text": "",
+      "comic": {
+        "through": "office_08",
+        "atlas": "res://art/m1/comic_departure_v2.png",
+        "title": "普通的下班",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "立翔",
+            "text": "先走了。",
+            "alt": "週二下班，立翔合上電腦。"
+          },
+          {
+            "frame": 1,
+            "speaker": "老闆",
+            "text": "一樣？",
+            "alt": "熟悉的便當店老闆把外帶便當遞給立翔。"
+          },
+          {
+            "frame": 2,
+            "speaker": "",
+            "text": "",
+            "alt": "回到家，吃完的便當盒擱在桌上，電視還開著。"
+          },
+          {
+            "frame": 3,
+            "speaker": "",
+            "text": "",
+            "alt": "立翔換上跑衣，在玄關綁好鞋帶；水壺、手機與鑰匙放在旁邊。"
+          }
+        ]
+      }
     },
     {
       "id": "office_02",
@@ -20,7 +51,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "「我先走了。」同事隔著螢幕抬了下手。你把識別證收進包裡，去等電梯。"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_03",
@@ -30,7 +62,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "手機震了一下。工作群組又在改明天開會的時間，你滑回去看前面幾則。"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_04",
@@ -40,7 +73,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "不是才改過……"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_05",
@@ -50,7 +84,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你回了個收到，把手機收起來。電梯到一樓，你跟著前面的人走出去。"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_06",
@@ -60,7 +95,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "便當店老闆問你是不是一樣。你點頭，站在櫃台旁等，順手把找回來的零錢放進口袋。"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_07",
@@ -70,7 +106,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "吃完飯，你在沙發上坐了一會。電視還開著，沒什麼在看。你拿起遙控器關掉，去找跑步的衣服。"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "office_08",
@@ -80,18 +117,49 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你換上跑衣，裝好水，在玄關坐下來拉開鞋帶。",
-      "action": "穿上跑鞋"
+      "text": "",
+      "comic_parent": "office_01"
     },
     {
       "id": "river_01",
       "scene": "river",
-      "time": "週二 20:06",
+      "time": "週二 20:06–20:22",
       "bg": "embankment",
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "河邊還有不少人。你繞過散步的阿伯，沿著熟悉的路往橋下跑。"
+      "text": "",
+      "comic": {
+        "through": "river_08",
+        "atlas": "res://art/m1/comic_river_v2.png",
+        "title": "河邊那個人",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "立翔",
+            "text": "到橋下就好。",
+            "alt": "立翔沿著熟悉的河堤獨跑。"
+          },
+          {
+            "frame": 1,
+            "speaker": "",
+            "text": "",
+            "alt": "他摘下耳機，放慢呼吸。"
+          },
+          {
+            "frame": 2,
+            "speaker": "短髮女生",
+            "text": "借過，謝啦。",
+            "alt": "最近常遇見的短髮女生從旁邊超過，立翔讓出空間。"
+          },
+          {
+            "frame": 3,
+            "speaker": "",
+            "text": "",
+            "alt": "折返時兩人迎面遇上，互相抬手打招呼。"
+          }
+        ]
+      }
     },
     {
       "id": "river_02",
@@ -101,7 +169,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "耳機換到下一首歌，你按了暫停。手錶震了一下，剛好一公里。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_03",
@@ -111,7 +180,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "今天跑到橋下就好。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_04",
@@ -121,7 +191,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你把耳機收進口袋，放慢一點，讓呼吸順下來。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_05",
@@ -133,7 +204,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "後面有人靠近。你回頭看了一眼，是最近常在這裡遇到的短髮女生。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_06",
@@ -145,7 +217,8 @@
       ],
       "kind": "scene",
       "speaker": "怡君",
-      "text": "借過。謝啦。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_07",
@@ -157,7 +230,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你往右讓。她從旁邊跑過，轉進橋下。你跟了幾步，還是照自己的速度跑。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_08",
@@ -169,7 +243,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "折返時，她從對面抬手向你打招呼。你也抬起手，她已經跑過去了。"
+      "text": "",
+      "comic_parent": "river_01"
     },
     {
       "id": "river_09",
@@ -204,7 +279,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "洗完澡，你滑到一段夜跑影片。有人揹著音響，邊跑邊放歌。"
+      "text": "夜跑影片裡，有人邊跑邊放音樂。"
     },
     {
       "id": "before_02",
@@ -261,7 +336,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "底下有人問新手能不能來。回覆說不用報名，直接到集合點就好。你把集合資訊存進收藏。"
+      "text": "不用報名。你存下集合資訊。"
     },
     {
       "id": "pantry_01",
@@ -273,7 +348,38 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "隔天早上，你在茶水間等咖啡。Jason 拿著杯子進來，站到你旁邊。"
+      "text": "",
+      "comic": {
+        "through": "pantry_06",
+        "atlas": "res://art/m1/comic_pantry_v2.png",
+        "title": "隔天，茶水間",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "",
+            "text": "",
+            "alt": "週三早上，立翔與同事 Jason 在茶水間等咖啡。"
+          },
+          {
+            "frame": 1,
+            "speaker": "立翔",
+            "text": "你有看過信義那個跑團嗎？",
+            "alt": "立翔拿著杯子，問起昨晚看到的夜跑團。"
+          },
+          {
+            "frame": 2,
+            "speaker": "Jason",
+            "text": "紅燈那麼多，怎麼跑。",
+            "alt": "Jason 端著咖啡，先嫌起信義區的紅燈。"
+          },
+          {
+            "frame": 3,
+            "speaker": "Jason",
+            "text": "週五七點半，二號出口。",
+            "alt": "Jason 離開前卻補上集合時間與出口，立翔看著他走回辦公區。"
+          }
+        ]
+      }
     },
     {
       "id": "pantry_02",
@@ -285,7 +391,8 @@
       ],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "欸，你有看過信義那個跑團嗎？會帶音響的。"
+      "text": "",
+      "comic_parent": "pantry_01"
     },
     {
       "id": "pantry_03",
@@ -297,7 +404,8 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "有啊。那邊紅燈那麼多，是要怎麼跑。"
+      "text": "",
+      "comic_parent": "pantry_01"
     },
     {
       "id": "pantry_04",
@@ -309,7 +417,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你點點頭，等咖啡滴完。「可是看起來滿多人的。你有朋友在裡面？」"
+      "text": "",
+      "comic_parent": "pantry_01"
     },
     {
       "id": "pantry_05",
@@ -321,7 +430,8 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "有啊，之前有找我。"
+      "text": "",
+      "comic_parent": "pantry_01"
     },
     {
       "id": "pantry_06",
@@ -333,7 +443,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "他端起咖啡，又補一句：「週五七點半，二號出口。你要去就直接過去。」你抬頭看他，他已經往辦公室走了。"
+      "text": "",
+      "comic_parent": "pantry_01"
     },
     {
       "id": "before_06",
@@ -343,7 +454,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "禮拜四，橋下圍了三角錐，路燈正在修。你繞過那一段，跑完就回家了。今天沒遇到她。"
+      "text": "橋下在修路燈，今天繞道。"
     },
     {
       "id": "before_07",
@@ -353,7 +464,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "週五下班，你先吃根香蕉墊肚子。手機跳出配對通知，你看了看對方的自介，傳了句招呼。"
+      "text": "吃根香蕉，順手傳句招呼給新配對。"
     },
     {
       "id": "before_08",
@@ -363,7 +474,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "洗衣機停了。你把手機放在桌上，去陽台晾衣服。回來時還沒有回覆。"
+      "text": "晾完衣服，配對訊息還沒回。"
     },
     {
       "id": "before_09",
@@ -373,7 +484,20 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你看了一下時間，打開收藏的集合資訊，再查去市府站的路線。"
+      "text": "",
+      "comic": {
+        "through": "before_11",
+        "atlas": "res://art/m1/comic_home_v2.png",
+        "title": "週五，出門",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "立翔",
+            "text": "去看看好了。",
+            "alt": "查好集合地點後，立翔換上跑衣、帶著鑰匙出門，玄關的小燈留著。"
+          }
+        ]
+      }
     },
     {
       "id": "before_10",
@@ -383,7 +507,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "去看看好了。"
+      "text": "",
+      "comic_parent": "before_09"
     },
     {
       "id": "before_11",
@@ -393,8 +518,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你換好跑衣，帶上手機和鑰匙。出門前，手碰到電燈開關，停了一下。那盞燈留著。",
-      "action": "帶上鑰匙出門"
+      "text": "",
+      "comic_parent": "before_09"
     },
     {
       "id": "station_01",
@@ -404,7 +529,33 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "到了二號出口，你往旁邊站，拿出手機再確認一次地點。"
+      "text": "",
+      "comic": {
+        "through": "station_05",
+        "atlas": "res://art/m1/comic_station_v2.png",
+        "title": "二號出口",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "",
+            "text": "",
+            "alt": "立翔到了二號出口，拿手機確認集合地點；人群就在旁邊。"
+          },
+          {
+            "frame": 1,
+            "speaker": "Jason",
+            "text": "換我的看看。",
+            "alt": "Jason 蹲在音響旁，用自己的手機接上音樂。",
+            "caption_outside": true
+          },
+          {
+            "frame": 2,
+            "speaker": "Jason",
+            "text": "……你來了喔。",
+            "alt": "Jason 還蹲在音響旁，抬頭與立翔對到眼。"
+          }
+        ]
+      }
     },
     {
       "id": "station_02",
@@ -414,7 +565,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "十幾個人聚在出口旁，有人在拉筋，有人還在換鞋。音響斷斷續續，兩個人蹲著研究連線。"
+      "text": "",
+      "comic_parent": "station_01"
     },
     {
       "id": "station_03",
@@ -426,7 +578,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "「你先斷線，換我的看看。」你順著聲音看過去。Jason 穿著深藍跑衣，正把音響拿起來。音樂接上時，你們剛好對到眼。"
+      "text": "",
+      "comic_parent": "station_01"
     },
     {
       "id": "station_04",
@@ -438,7 +591,8 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "……欸，你來了喔。"
+      "text": "",
+      "comic_parent": "station_01"
     },
     {
       "id": "station_05",
@@ -450,7 +604,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "他把音響交給旁邊的人，走過來。「朋友找的啦。」你看了一眼他穿好的跑鞋，又看回他。"
+      "text": "",
+      "comic_parent": "station_01"
     },
     {
       "id": "jason_choice",
@@ -461,8 +616,8 @@
         "jason"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "Jason 壓低聲音：「幹嘛，你也是自己來的喔？」",
+      "speaker": "Jason",
+      "text": "你也是自己來的？",
       "choices": [
         {
           "label": "「不是說這裡沒辦法跑？」",
@@ -484,10 +639,23 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "紅燈是真的多啊。",
+      "text": "",
       "when": {
         "choice": "jason_choice",
         "value": "tease"
+      },
+      "comic": {
+        "through": "jason_tease_02",
+        "atlas": "res://art/m1/comic_station_v2.png",
+        "title": "一起走過去",
+        "panels": [
+          {
+            "frame": 3,
+            "speaker": "Jason",
+            "text": "紅燈多啊。走，帶你認識。",
+            "alt": "Jason 只替紅燈多辯了一句，起身帶立翔走向跑友。"
+          }
+        ]
       }
     },
     {
@@ -500,11 +668,12 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你看著他，他沒再解釋，朝人群偏了下頭。「走，帶你認識一下。」你把手機收起來，跟他往裡面走。",
+      "text": "",
       "when": {
         "choice": "jason_choice",
         "value": "tease"
-      }
+      },
+      "comic_parent": "jason_tease_01"
     },
     {
       "id": "jason_admit_01",
@@ -516,10 +685,23 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "我第一次來也不認識人。在這邊站了半天，還是 Ann 先來叫我。",
+      "text": "",
       "when": {
         "choice": "jason_choice",
         "value": "admit"
+      },
+      "comic": {
+        "through": "jason_admit_02",
+        "atlas": "res://art/m1/comic_station_v2.png",
+        "title": "一起走過去",
+        "panels": [
+          {
+            "frame": 3,
+            "speaker": "Jason",
+            "text": "我第一次也站很久。走啦。",
+            "alt": "立翔說有點緊張，Jason 提起自己第一次來也站了很久，帶他走向跑友。"
+          }
+        ]
       }
     },
     {
@@ -532,11 +714,12 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "他朝人群偏了下頭。「走啦，我帶你過去。」你把手機收起來，跟著他走。",
+      "text": "",
       "when": {
         "choice": "jason_choice",
         "value": "admit"
-      }
+      },
+      "comic_parent": "jason_admit_01"
     },
     {
       "id": "station_06",
@@ -549,7 +732,26 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "一個戴帽子的男生走過來。Jason 朝你偏了一下頭：「我同事，立翔。平常自己跑河堤。」"
+      "text": "",
+      "comic": {
+        "through": "station_10",
+        "atlas": "res://art/m1/comic_welcome_v2.png",
+        "title": "先跟這一組",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "Jason",
+            "text": "我同事，立翔。",
+            "alt": "Jason 把立翔介紹給戴帽子的 Ray。"
+          },
+          {
+            "frame": 1,
+            "speaker": "Ray",
+            "text": "我 Ray，這組跑五公里。",
+            "alt": "Ray 招呼立翔，指向準備出發的隊伍。"
+          }
+        ]
+      }
     },
     {
       "id": "station_07",
@@ -562,7 +764,8 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "你好，我 Ray。今天跟我們這組，五公里，可以嗎？"
+      "text": "",
+      "comic_parent": "station_06"
     },
     {
       "id": "station_08",
@@ -575,7 +778,8 @@
       ],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "我平常才跑三、四公里，不知道跟不跟得上。"
+      "text": "",
+      "comic_parent": "station_06"
     },
     {
       "id": "station_09",
@@ -587,7 +791,8 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "路口都會等，跟不上就喊一聲。"
+      "text": "",
+      "comic_parent": "station_06"
     },
     {
       "id": "station_10",
@@ -599,7 +804,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "有人在後面叫 Ray。他回頭應了聲，往人少的那邊指：「先站這裡，我等下過來。」"
+      "text": "",
+      "comic_parent": "station_06"
     },
     {
       "id": "station_11",
@@ -612,7 +818,26 @@
       ],
       "kind": "scene",
       "speaker": "Ann",
-      "text": "背包先拿下來吧，背著跑很熱。"
+      "text": "",
+      "comic": {
+        "through": "station_13",
+        "atlas": "res://art/m1/comic_welcome_v2.png",
+        "title": "背包先放著",
+        "panels": [
+          {
+            "frame": 2,
+            "speaker": "Ann",
+            "text": "我是 Ann，包先放我車上。",
+            "alt": "Ann 指向路邊的車，讓還背著包的立翔先寄放背包。"
+          },
+          {
+            "frame": 3,
+            "speaker": "Ann",
+            "text": "等下會跑回來這裡。",
+            "alt": "立翔把背包放進車內，手機與鑰匙留在身上，Ann 在車門旁等他放好。"
+          }
+        ]
+      }
     },
     {
       "id": "station_12",
@@ -625,7 +850,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你轉過頭。她指指路邊的車：「我是 Ann，可以先放我車上。等下會跑回來這邊。」"
+      "text": "",
+      "comic_parent": "station_11"
     },
     {
       "id": "station_13",
@@ -638,7 +864,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你把包交給她，把手機和鑰匙留在身上。Ann 開車門讓你放好，等你確認過才關上。"
+      "text": "",
+      "comic_parent": "station_11"
     },
     {
       "id": "station_14",
@@ -650,7 +877,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "立翔，好了就過來暖一下。今天最後那段我昨天去繞過，晚上滿好看的。"
+      "text": "最後那段我昨天跑過，滿好看的。"
     },
     {
       "id": "run_01",
@@ -660,7 +887,33 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "綠燈亮了，前面的人開始跑。你跟在 Jason 後面，還不太習慣周圍這麼多人。"
+      "text": "",
+      "comic": {
+        "through": "run_water",
+        "atlas": "res://art/m1/comic_run_v2.png",
+        "title": "跟著大家跑",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "",
+            "text": "",
+            "alt": "綠燈亮起，立翔跟著跑友穿過信義街區。"
+          },
+          {
+            "frame": 1,
+            "speaker": "Ray",
+            "text": "不用追，等下一個。",
+            "alt": "前方轉紅燈，Ray 示意停下，立翔也停在路口。"
+          },
+          {
+            "frame": 2,
+            "speaker": "立翔",
+            "text": "謝謝。",
+            "alt": "Ray 撿起立翔掉落的瓶蓋，立翔伸手接回。",
+            "caption_outside": true
+          }
+        ]
+      }
     },
     {
       "id": "run_02",
@@ -672,7 +925,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "前面轉紅燈，你怕被隔開，正想加快。Ray 回頭往下壓了壓手，停在路口等。"
+      "text": "",
+      "comic_parent": "run_01"
     },
     {
       "id": "run_03",
@@ -684,7 +938,8 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "不用追，我們等下一個。剛剛的速度可以嗎？"
+      "text": "",
+      "comic_parent": "run_01"
     },
     {
       "id": "run_04",
@@ -696,7 +951,8 @@
       ],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "可以，我剛才以為要跟上。"
+      "text": "",
+      "comic_parent": "run_01"
     },
     {
       "id": "run_05",
@@ -708,7 +964,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ray 說不用急，往旁邊站了一點。你停到他身邊，喝口水，等下一次綠燈。"
+      "text": "",
+      "comic_parent": "run_01"
     },
     {
       "id": "run_water",
@@ -720,7 +977,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "瓶蓋滑到地上，滾到 Ray 腳邊。他幫你撿起來，用水沖一下再遞過來。「謝謝。」你接好，這次轉緊了。"
+      "text": "",
+      "comic_parent": "run_01"
     },
     {
       "id": "run_06",
@@ -732,7 +990,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "後面一個男生跑到你旁邊。「我凱文。你河堤都跑哪一段啊？我想換條路跑。」你告訴他從哪個水門下去。"
+      "text": "「我凱文。你都跑哪段？」你說了水門，他說下次想換條路跑。"
     },
     {
       "id": "run_07",
@@ -744,7 +1002,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "有人喊凱文，他應了一聲，又轉回來：「下去左轉，對不對？」你點頭。他說改天去看看，才跟上前面的人。"
+      "text": "「下去左轉？」你點頭，他才跟上前面的人。"
     },
     {
       "id": "run_08",
@@ -756,7 +1014,20 @@
       ],
       "kind": "scene",
       "speaker": "怡君",
-      "text": "欸，是你喔。"
+      "text": "",
+      "comic": {
+        "through": "run_11",
+        "atlas": "res://art/m1/comic_run_v2.png",
+        "title": "原來也會來這裡",
+        "panels": [
+          {
+            "frame": 3,
+            "speaker": "怡君",
+            "text": "欸，是你。我怡君，你呢？",
+            "alt": "河堤遇過的短髮女生認出立翔，放慢一點，與他並跑。"
+          }
+        ]
+      }
     },
     {
       "id": "run_09",
@@ -768,7 +1039,8 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你轉頭，是河邊那個短髮女生。她放慢一點，跟你並排。"
+      "text": "",
+      "comic_parent": "run_08"
     },
     {
       "id": "run_10",
@@ -780,7 +1052,8 @@
       ],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "你也會來這邊跑？"
+      "text": "",
+      "comic_parent": "run_08"
     },
     {
       "id": "run_11",
@@ -792,7 +1065,8 @@
       ],
       "kind": "scene",
       "speaker": "怡君",
-      "text": "偶爾。我怡君。剛剛沒聽清楚，你叫什麼？"
+      "text": "",
+      "comic_parent": "run_08"
     },
     {
       "id": "run_12",
@@ -804,7 +1078,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你說了名字，問她昨天有沒有去河邊。「有，但我從另一頭跑。」你說橋下還在施工，她皺了一下眉。"
+      "text": "「立翔。」你提起橋下還在施工。"
     },
     {
       "id": "run_13",
@@ -816,7 +1090,7 @@
       ],
       "kind": "scene",
       "speaker": "怡君",
-      "text": "難怪那段一直沒亮。我最近都繞掉。你都這個時間跑？"
+      "text": "我最近都繞掉。你都幾點跑？"
     },
     {
       "id": "run_14",
@@ -828,7 +1102,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你說通常八點左右。她點頭：「我下班來得及，也差不多。」轉彎時她先讓一步，等你並上來。"
+      "text": "你說八點。她點頭：「我也差不多。」"
     },
     {
       "id": "run_15",
@@ -841,7 +1115,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你按停手錶。怡君陪你往旁邊走了幾步。",
+      "text": "",
       "visual": "run_record",
       "visual_data": {
         "title": "第一次跟大家跑",
@@ -903,7 +1177,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ann 把車上的背包拿還給你。你接過來，喝掉水壺裡最後一口水。她把腳邊的袋子挪開，叫你過去。"
+      "text": "Ann 還你背包。水壺也剛好空了。"
     },
     {
       "id": "store_02",
@@ -927,8 +1201,8 @@
         "ann"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "你把背包靠在腳邊。坐下以後，才發現小腿有點酸。"
+      "speaker": "立翔",
+      "text": "腿有點酸。"
     },
     {
       "id": "store_04",
@@ -939,8 +1213,8 @@
         "ann"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "她從袋子裡拿出一瓶水，朝你遞過來：「水要嗎？」",
+      "speaker": "Ann",
+      "text": "水要嗎？",
       "action": "接過水"
     },
     {
@@ -953,7 +1227,7 @@
       ],
       "kind": "scene",
       "speaker": "Ann",
-      "text": "不用給我錢，今天我請。"
+      "text": "今天我請。"
     },
     {
       "id": "store_06",
@@ -965,7 +1239,7 @@
       ],
       "kind": "scene",
       "speaker": "立翔",
-      "text": "那我下次請妳。"
+      "text": "那下次換我。"
     },
     {
       "id": "store_07",
@@ -977,7 +1251,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "「好，我挑喔。有家豆漿店想去很久了。」你擰開瓶蓋，喝一口水，說好。"
+      "text": "「我挑喔，有家豆漿店想去。」你開蓋喝水。"
     },
     {
       "id": "store_08",
@@ -990,7 +1264,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ray 把 Ann 落在店裡的手機拿過來。她接過去說了聲謝謝，他在旁邊坐下。"
+      "text": "Ray 帶回 Ann 落在店裡的手機，也坐下來。"
     },
     {
       "id": "store_09",
@@ -1003,7 +1277,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "剛剛最後那段會不會太快？"
+      "text": "最後那段會不會太快？"
     },
     {
       "id": "store_10",
@@ -1014,8 +1288,8 @@
         "ray"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "你說不會。「我平常跑完就回家了。」你看看旁邊，大家都還沒有要走的意思。"
+      "speaker": "立翔",
+      "text": "不會。我自己跑完就回家了。"
     },
     {
       "id": "store_11",
@@ -1028,7 +1302,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "我們通常還會在這裡坐一下。你要趕車的話就先走，不用等大家。"
+      "text": "我們會再坐一下，趕車就先走。"
     },
     {
       "id": "store_12",
@@ -1041,7 +1315,7 @@
       ],
       "kind": "scene",
       "speaker": "Ann",
-      "text": "他每次說坐一下，最後都最晚走。"
+      "text": "他每次都最後走。"
     },
     {
       "id": "store_13",
@@ -1054,8 +1328,25 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "怡君拿著飯糰出來。「我坐這喔。」你把背包拉到另一邊，她坐到你旁邊。",
-      "shot": "together"
+      "text": "",
+      "shot": "together",
+      "comic": {
+        "through": "store_ann_break",
+        "atlas": "res://art/m1/store_together.png",
+        "grid": [
+          1,
+          1
+        ],
+        "title": "旁邊多一個人",
+        "panels": [
+          {
+            "frame": 0,
+            "speaker": "怡君",
+            "text": "我坐這喔。",
+            "alt": "怡君坐到立翔旁邊，彎身整理鞋帶；Ann 與 Ray 也在台階上歇腳。"
+          }
+        ]
+      }
     },
     {
       "id": "store_ann_break",
@@ -1068,8 +1359,9 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ann 把腿伸直，靠著牆休息。有人問衛生紙放哪，怡君指了一下袋子，繼續拆手上的飯糰。",
-      "shot": "together"
+      "text": "",
+      "shot": "together",
+      "comic_parent": "store_13"
     },
     {
       "id": "store_14",
@@ -1096,7 +1388,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你說只吃了一根香蕉。她看你一眼：「那你先去買點東西吃啊。」你起身進店裡，拿了一個飯糰。",
+      "text": "「只有香蕉。」你起身去買飯糰。",
       "shot": "together"
     },
     {
@@ -1110,7 +1402,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你坐回來時，Jason 正在剝茶葉蛋。他把包裝袋往旁邊收，空出一點地方。",
+      "text": "Jason 在剝茶葉蛋，替你挪了點位置。",
       "shot": "together"
     },
     {
@@ -1123,7 +1415,7 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "怎樣，這邊還能跑吧？你剛剛跟得滿前面的耶。",
+      "text": "怎樣，這邊還能跑吧？",
       "when": {
         "choice": "jason_choice",
         "value": "tease"
@@ -1140,7 +1432,7 @@
       ],
       "kind": "scene",
       "speaker": "Jason",
-      "text": "現在比較習慣了吧？下次到了就傳訊息給我。",
+      "text": "下次到了就傳訊息給我。",
       "when": {
         "choice": "jason_choice",
         "value": "admit"
@@ -1158,7 +1450,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你點頭。「你來之前怎麼不講？」他低頭剝蛋，過一會才說：「就想說……你不一定想來啊。」",
+      "text": "「怎麼沒說你也來？」他剝著蛋：「以為你沒興趣。」",
       "shot": "together"
     },
     {
@@ -1171,7 +1463,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "「吳哥，掰。」Ann 朝路口揮手。你也抬了下手，那個一直坐在邊上的男人點點頭，先走了。",
+      "text": "「吳哥，掰。」Ann 揮手，那男人點頭先走。",
       "shot": "together"
     },
     {
@@ -1185,7 +1477,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "要拍照的過來一下。不想拍沒關係，東西先放這邊。",
+      "text": "拍照的過來，不想拍也沒關係。",
       "shot": "together"
     },
     {
@@ -1200,7 +1492,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ray 請旁邊的跑友幫忙拍。Ann 往旁邊挪，留出你的位置。怡君搖搖手，留在階梯上吃飯糰。",
+      "text": "Ann 留了位置。怡君搖搖手，留在階梯上。",
       "action": "站進合照"
     },
     {
@@ -1232,7 +1524,7 @@
       ],
       "kind": "scene",
       "speaker": "Ann",
-      "text": "這張也可以，沒關係。",
+      "text": "這張也可以。",
       "visual": "photo_preview",
       "visual_data": {
         "photo": "candid",
@@ -1250,7 +1542,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "立翔，你覺得哪張好？",
+      "text": "哪張？",
       "choices": [
         {
           "label": "這張",
@@ -1273,7 +1565,7 @@
       ],
       "kind": "scene",
       "speaker": "Ray",
-      "text": "好，那就這張。",
+      "text": "就這張。",
       "when": {
         "choice": "photo_choice",
         "value": "posed"
@@ -1294,7 +1586,7 @@
       ],
       "kind": "scene",
       "speaker": "Ann",
-      "text": "傳給我，我也要。",
+      "text": "這張傳我。",
       "when": {
         "choice": "photo_choice",
         "value": "candid"
@@ -1313,8 +1605,8 @@
         "ray"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "Ray 問能不能標你的帳號。你把 Alive 頁面給他看，他把名字念了一遍，跟你確認。",
+      "speaker": "Ray",
+      "text": "能標你帳號嗎？",
       "action": "把帳號給 Ray"
     },
     {
@@ -1327,7 +1619,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "Ray 開了 Alive 跑團群聊的邀請。加進去後，Ann 從成員名單找到你，傳來一個揮手貼圖。",
+      "text": "Ray 傳來 Alive 群聊邀請。",
       "action": "加入約跑團"
     },
     {
@@ -1339,8 +1631,8 @@
         "yijun_embankment"
       ],
       "kind": "scene",
-      "speaker": "旁白",
-      "text": "怡君起身拿好東西。「我要走了。河邊那段如果修好，你再跟我說，我不想白跑。」"
+      "speaker": "怡君",
+      "text": "河邊修好再跟我說。我先走了。"
     },
     {
       "id": "store_25",
@@ -1352,7 +1644,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你拿出手機，照她念的帳號在 Alive 開啟私訊。她收好手機，停了一下：「那河邊見。」你說好，看著她走向路口。"
+      "text": "你用她念的帳號開啟 Alive 私訊。「河邊見。」"
     },
     {
       "id": "store_26",
@@ -1365,7 +1657,7 @@
       ],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你幫 Ann 把空瓶收進回收袋。她說路上小心。你背好包，朝還在聊天的人揮手，去搭車。",
+      "text": "你收好空瓶。「路上小心。」Ann 說。",
       "action": "收好背包回家"
     },
     {
@@ -1376,7 +1668,20 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "回到家，那盞燈還亮著。你把包放到椅子上，換下鞋。出門前晾的衣服還沒乾。"
+      "text": "",
+      "comic": {
+        "through": "home_02",
+        "atlas": "res://art/m1/comic_home_v2.png",
+        "title": "回到家",
+        "panels": [
+          {
+            "frame": 1,
+            "speaker": "旁白",
+            "text": "Alive 有人標了你。",
+            "alt": "玄關的小燈仍亮著。立翔回到家，手機收到 Alive 合照標註。"
+          }
+        ]
+      }
     },
     {
       "id": "home_02",
@@ -1386,8 +1691,8 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你把沒喝完的水放好，去洗手。回來時手機亮著，Alive 跳出一則標註通知。",
-      "action": "拿起手機"
+      "text": "",
+      "comic_parent": "home_01"
     },
     {
       "id": "phone_photo_posed",
@@ -1564,7 +1869,20 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你把手機放下，去拿換洗衣服。經過玄關時，順手把跑鞋並好。"
+      "text": "",
+      "comic": {
+        "through": "home_03",
+        "atlas": "res://art/m1/comic_home_v2.png",
+        "title": "睡前",
+        "panels": [
+          {
+            "frame": 2,
+            "speaker": "",
+            "text": "",
+            "alt": "放下手機，立翔把跑鞋並好，準備去洗澡。"
+          }
+        ]
+      }
     },
     {
       "id": "end_ray",
@@ -1574,7 +1892,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "洗完澡，你打開行事曆，翻到下週五。七點半，市府站。",
+      "text": "下週五，七點半。",
       "when": {
         "choice": "reply_choice",
         "value": "ray"
@@ -1589,7 +1907,7 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "洗完澡，你把手錶放到充電座旁。明晚八點，橋前入口。",
+      "text": "明晚八點，橋前入口。",
       "when": {
         "choice": "reply_choice",
         "value": "yijun"
@@ -1604,7 +1922,20 @@
       "cast": [],
       "kind": "scene",
       "speaker": "旁白",
-      "text": "你關了玄關的燈，回房間躺下。手機接上充電，放在床頭。"
+      "text": "",
+      "comic": {
+        "through": "home_04",
+        "atlas": "res://art/m1/comic_home_v2.png",
+        "title": "晚安",
+        "panels": [
+          {
+            "frame": 3,
+            "speaker": "",
+            "text": "",
+            "alt": "房裡的燈關了，手機接上充電，留在床頭。"
+          }
+        ]
+      }
     }
   ]
 }

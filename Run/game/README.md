@@ -19,12 +19,14 @@
 - `scripts/evening/EveningRunner.gd`：呈現、條件分支、閱讀紀錄、手機、暫停與場景邊界存讀。
 - `scripts/evening/EveningAlive.gd`：Alive 動態牆、私訊、收藏與照片放大；只建立已到達的內容。
 - `scripts/evening/EveningRunRecord.gd`：可重用跑後紀錄、河岸／街區示意路線與可選成績。
+- `scripts/evening/EveningComic.gd`：一至四格漫畫頁、圖片與短句排版，一次翻整頁。
 - `scripts/evening/EveningTitle.gd`：標題版式。
 - `scripts/evening/EveningSave.gd`：版本化獨立 JSON 存檔、atomic 寫入與備份退回。
 - `scripts/evening/EveningSound.gd`：程序合成環境／物件／通知音，無外部音效依賴。
 - `story/first_evening.json`：新版文本與演出資料的執行來源；逐句閱讀稿位於根目錄 `開場對白-潤稿用.md`。
 - `art/m1/`：新版超商群像與兩張可選合照。
 - `art/m1/store_actions.png`：四格連續鏡頭，供坐下與接水前後使用。
+- `art/m1/comic_*.png`：下班、河堤、茶水間、到站、接人、團跑與回家的七套四格分鏡。
 - `visual`／`visual_data`：單拍的跑步紀錄、集合卡、舊團照、照片預覽與所選照片；空字拍也可前進、存讀及查閱紀錄。
 
 主線演出使用 GDScript，章節內容為 JSON。沒有導入 Ink。舊 `CardRunner`、`Opening.gd`、日常大廳與手機原型保留，但不接在新版序章尾端；後續內容待 M2。
@@ -32,6 +34,8 @@
 ## 存檔
 
 新版：`user://first_evening_v1.json`、`.bak` 與寫入中使用的 `.tmp`。保存 cursor、choices、complete、settings、social 和 version。social 保存 Alive 按讚／收藏；舊 v1 沒有此欄位仍可繼續。新遊戲按下第一個段落的前進後才保存，返回標題不會自動覆寫尚未推進的新局。
+
+漫畫版保留原本 120 個來源 ID、索引和條件。起始拍的 `comic` 指定 `atlas`、`grid`（預設 `[2,2]`）、`panels`（frame／speaker／text／alt）、`through`；其餘同頁來源拍以 `comic_parent` 指回起點。下一頁跳過整組，舊 cursor 落在組內時回到該完整頁。分組不跨選擇、手機、原畫面拍或受保護的坐下／接水結果；記錄只收錄已到達的頁與所選分支。
 
 舊版：`user://run_save.json`，不刪除、不轉換，也不把新版的游標混進舊日常循環。M1 的「繼續」只讀新版檔案。
 
@@ -66,4 +70,4 @@
 
 ## 限制
 
-依實玩回饋重修後，單一路線約 2,400 漢字，另有畫面段落，不再為原先估時補文字。場景採插畫、站位與轉場，非全動畫；音效為合成的第一版，沒有角色配音。新版實際閱讀時間與人物投入感待再次試玩；自動測試只驗證功能。
+漫畫版每條路線 70 頁，可見正文與格內短句約 630–650 漢字，另有無字畫面，不為原先估時補文字。場景採插畫、分鏡、站位與轉場，非全動畫；音效為合成的第一版，沒有角色配音。新版實際閱讀時間與人物投入感待再次試玩；自動測試只驗證功能。

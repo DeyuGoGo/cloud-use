@@ -5,6 +5,7 @@ const STORY := "res://story/first_evening.json"
 const SaveStore := preload("res://scripts/evening/EveningSave.gd")
 const AliveView := preload("res://scripts/evening/EveningAlive.gd")
 const RunRecordView := preload("res://scripts/evening/EveningRunRecord.gd")
+const ComicView := preload("res://scripts/evening/EveningComic.gd")
 const STORE_CG := "res://art/m1/store_together.png"
 const STORE_ACTIONS := "res://art/m1/store_actions.png"
 const INK := Color("101817")
@@ -39,6 +40,10 @@ var _action_in_progress := false
 var _phone: Panel
 var _phone_browsing := false
 var _visual: Control
+var _comic: Control
+var _scrims: Array[Control] = []
+var _comic_anchor_for: Dictionary = {}
+var _comic_end_for: Dictionary = {}
 var _dialogue: Label
 var _speaker: Label
 var _place: Label
@@ -106,6 +111,64 @@ func _load_story() -> void:
 		var beat: Dictionary = context.duplicate(true)
 		beat.merge(raw, true)
 		beats.append(beat)
+	_compile_comics()
+
+func _compile_comics() -> void:
+	_comic_anchor_for.clear()
+	_comic_end_for.clear()
+	var ids: Dictionary = {}
+	for index in beats.size():
+		ids[str(beats[index].get("id", ""))] = index
+	for index in beats.size():
+		var beat: Dictionary = beats[index]
+		if not beat.get("comic") is Dictionary:
+			continue
+		var comic: Dictionary = beat["comic"]
+		var end := int(ids.get(str(comic.get("through", "")), -1))
+		var valid := end >= index and _valid_comic_panels(comic)
+		if valid:
+			for member in range(index, end + 1):
+				var source: Dictionary = beats[member]
+				if _comic_boundary(source) or source.get("when", {}) != beat.get("when", {}) or _comic_anchor_for.has(member):
+					valid = false
+					break
+				if member != index and (str(source.get("comic_parent", "")) != str(beat["id"]) or source.has("comic")):
+					valid = false
+					break
+		if not valid:
+			push_warning("Comic page ignored; reading source beats: " + str(beat.get("id", "")))
+			continue
+		_comic_end_for[index] = end
+		for member in range(index, end + 1):
+			_comic_anchor_for[member] = index
+
+func _valid_comic_panels(comic: Dictionary) -> bool:
+	var panels: Variant = comic.get("panels", [])
+	var grid: Variant = comic.get("grid", [2, 2])
+	if not panels is Array or panels.is_empty() or panels.size() > 4:
+		return false
+	if not grid is Array or grid.size() != 2:
+		return false
+	for axis in grid:
+		if not (axis is int or axis is float) or float(axis) != floorf(float(axis)) or int(axis) < 1 or int(axis) > 4:
+			return false
+	for panel in panels:
+		if not panel is Dictionary:
+			return false
+		var frame: Variant = panel.get("frame", 0)
+		if not (frame is int or frame is float) or float(frame) != floorf(float(frame)) or int(frame) < 0 or int(frame) >= int(grid[0]) * int(grid[1]):
+			return false
+	return true
+
+func _comic_boundary(beat: Dictionary) -> bool:
+	return not beat.get("choices", []).is_empty() or str(beat.get("kind", "")) == "phone" or not str(beat.get("visual", "")).is_empty() or str(beat.get("id", "")) in ["store_02", "store_03", "store_04", "store_05"]
+
+func _page_end(index: int) -> int:
+	return int(_comic_end_for.get(index, index))
+
+func _normalize_comic_cursor() -> void:
+	if _comic_anchor_for.has(cursor):
+		cursor = int(_comic_anchor_for[cursor])
 
 func _build() -> void:
 	_bg = TextureRect.new()
@@ -120,8 +183,9 @@ func _build() -> void:
 	_action_layer = Control.new()
 	_action_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_full(_action_layer)
-	_put(UI.scrim(Color(INK, 0.94), Color(INK, 0), 1.0, false), Vector2.ZERO, Vector2(1920,215))
-	_put(UI.scrim(Color(INK, 0), Color(INK, 0.98), 0.57, false), Vector2(0,580), Vector2(1920,500))
+	_scrims = [UI.scrim(Color(INK, 0.94), Color(INK, 0), 1.0, false), UI.scrim(Color(INK, 0), Color(INK, 0.98), 0.57, false)]
+	_put(_scrims[0], Vector2.ZERO, Vector2(1920,215))
+	_put(_scrims[1], Vector2(0,580), Vector2(1920,500))
 	_visual = Control.new()
 	_visual.name = "VisualBeat"
 	_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -198,23 +262,25 @@ func _matches(beat: Dictionary) -> bool:
 	return req.is_empty() or str(decisions.get(str(req.get("choice", "")), "")) == str(req.get("value", ""))
 
 func _rebuild_history() -> void:
+	_normalize_comic_cursor()
 	visited = []
-	for i in range(mini(cursor + 1, beats.size())):
+	for i in range(mini(_page_end(cursor) + 1, beats.size())):
 		if _matches(beats[i]):
 			visited.append(i)
 
 func _show_current() -> void:
 	_stop_action_transition()
+	_normalize_comic_cursor()
 	while cursor < beats.size() and not _matches(beats[cursor]):
 		cursor += 1
+	_rebuild_history()
 	if cursor >= beats.size():
 		finished = true
 		_persist()
 		_show_end()
 		return
 	_active = beats[cursor]
-	if not visited.has(cursor):
-		visited.append(cursor)
+	var is_comic := _comic_end_for.has(cursor)
 	var scene := str(_active.get("scene", "office"))
 	var visual_kind := str(_active.get("visual", ""))
 	var is_visual := visual_kind in VISUALS
@@ -230,7 +296,10 @@ func _show_current() -> void:
 	if action_frame >= 0:
 		path = STORE_ACTIONS
 	_set_background(path, is_phone or is_visual or is_photo_choice, action_frame)
-	_set_cast([] if together or action_frame >= 0 or is_phone or is_visual or is_photo_choice else _active.get("cast", []), str(_active.get("speaker", "旁白")))
+	_bg.visible = not is_comic
+	for scrim in _scrims:
+		scrim.visible = not is_comic
+	_set_cast([] if together or action_frame >= 0 or is_phone or is_visual or is_photo_choice or is_comic else _active.get("cast", []), str(_active.get("speaker", "旁白")))
 	if scene != _last_scene:
 		_last_scene = scene
 		_sound.set_place(scene)
@@ -240,13 +309,14 @@ func _show_current() -> void:
 		_phone.queue_free()
 		_phone = null
 	_clear(_visual)
-	_visual.visible = is_visual and not is_phone
+	_comic = null
+	_visual.visible = is_comic or (is_visual and not is_phone)
 	_phone_browsing=false
 	_choices.visible=true
 	var reaction := str(_active.get("text", ""))
-	_dialogue.visible = not is_phone and not reaction.is_empty()
-	_speaker.visible = not is_phone and not is_visual and not reaction.is_empty()
-	_typing = not is_phone and not is_visual and not reaction.is_empty()
+	_dialogue.visible = not is_comic and not is_phone and not reaction.is_empty()
+	_speaker.visible = not is_comic and not is_phone and not is_visual and not reaction.is_empty()
+	_typing = not is_comic and not is_phone and not is_visual and not reaction.is_empty()
 	_type_elapsed = 0.0
 	_speaker.text = "" if str(_active.get("speaker", "旁白")) == "旁白" else str(_active["speaker"])
 	_dialogue.text = _speaker.text + "　" + reaction if is_visual and not _speaker.text.is_empty() and not reaction.is_empty() else reaction
@@ -254,6 +324,10 @@ func _show_current() -> void:
 	_dialogue.size = Vector2(1440,68) if is_visual else Vector2(1690,127)
 	_dialogue.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER if is_visual else HORIZONTAL_ALIGNMENT_LEFT
 	_dialogue.visible_characters = 0 if _typing else -1
+	if is_comic:
+		_comic = ComicView.new()
+		_put(_comic, Vector2(90,150), Vector2(1740,800), _visual)
+		_comic.present(_active["comic"], _texture(path))
 	if is_visual and not is_phone:
 		_make_visual(visual_kind)
 	if is_phone:
@@ -262,11 +336,12 @@ func _show_current() -> void:
 	_clear(_choices)
 	var options: Array = _active.get("choices", [])
 	_advance.visible = options.is_empty()
-	_notice.visible = options.is_empty() and not is_visual and not is_phone
+	_notice.visible = options.is_empty() and not is_visual and not is_phone and not is_comic
 	_notice.text = "點擊文字或空白鍵閱讀 · 在段落邊界自動保存"
-	_advance.position = Vector2(1625,985) if is_visual else Vector2(1440,975)
-	_advance.size = Vector2(180,50) if is_visual else Vector2(365,64)
-	_advance.text = str(_active.get("action", "繼續")) + "  →"
+	_advance.position = Vector2(1625,985) if is_visual or is_comic else Vector2(1440,975)
+	_advance.size = Vector2(180,50) if is_visual or is_comic else Vector2(365,64)
+	_advance.text = "下一頁  →" if is_comic else str(_active.get("action", "繼續")) + "  →"
+	_style_advance(is_comic)
 	if not options.is_empty():
 		if str(_active.get("id", "")) == "photo_choice":
 			_make_photo_choices(options)
@@ -298,6 +373,18 @@ func _show_current() -> void:
 		hotspot.grab_focus()
 	if str(_active.get("id", "")) == "store_07":
 		_sound.cue("drink")
+	if is_comic:
+		_advance.grab_focus()
+
+func _style_advance(comic: bool) -> void:
+	_advance.add_theme_color_override("font_color", Color("292831") if comic else PAPER)
+	_advance.add_theme_color_override("font_hover_color", Color("292831") if comic else Color.WHITE)
+	_advance.add_theme_color_override("font_focus_color", Color("292831") if comic else PAPER)
+	_advance.add_theme_color_override("font_pressed_color", Color("292831") if comic else PAPER)
+	_advance.add_theme_color_override("font_hover_pressed_color", Color("292831") if comic else Color.WHITE)
+	_advance.add_theme_stylebox_override("normal", UI.box(Color("eee9de") if comic else Color("263b35"), 3 if comic else 8, Color("918a88") if comic else Color("63766b"), 1))
+	_advance.add_theme_stylebox_override("hover", UI.box(Color("fffaf1") if comic else Color("385247"), 3 if comic else 8, AMBER, 1))
+	_advance.add_theme_stylebox_override("pressed", UI.box(Color("ccc6bc") if comic else Color("182c25"), 3 if comic else 8, AMBER, 1))
 
 func _store_action_frame(id: String) -> int:
 	match id:
@@ -485,7 +572,7 @@ func _next() -> void:
 			_sound.cue("touch")
 		elif str(_active.get("id", "")) in ["office_08", "before_11", "store_02", "store_20", "store_26"]:
 			_sound.cue("footsteps")
-	cursor += 1
+	cursor = _page_end(cursor) + 1
 	_show_current()
 	_persist()
 	if completed_action in ["store_02", "store_04"]:
@@ -668,6 +755,8 @@ func _show_log() -> void:
 	var lines:=PackedStringArray()
 	for index in visited:
 		var beat: Dictionary=beats[index]
+		if _comic_anchor_for.has(index) and int(_comic_anchor_for[index]) != index:
+			continue
 		lines.append("%s　%s\n%s" % [beat.get("time",""),beat.get("speaker",""),_log_body(beat)])
 		if decisions.has(str(beat["id"])):
 			for option in beat.get("choices",[]):
@@ -680,6 +769,20 @@ func _show_log() -> void:
 	_scroll_bottom.call_deferred(scroll)
 
 func _log_body(beat: Dictionary) -> String:
+	if _comic_end_for.has(beats.find(beat)):
+		var comic: Dictionary = beat["comic"]
+		var lines := PackedStringArray()
+		lines.append("〔%s〕" % str(comic.get("title", "這一頁")))
+		for panel in comic.get("panels", []):
+			var description := str(panel.get("alt", "")).strip_edges()
+			var words := str(panel.get("text", "")).strip_edges()
+			var speaker := str(panel.get("speaker", "")).strip_edges()
+			var speech := speaker + "：" + words if not speaker.is_empty() and speaker != "旁白" and not words.is_empty() else words
+			if not description.is_empty() and description != words and description != speech:
+				lines.append(description)
+			if not speech.is_empty():
+				lines.append(speech)
+		return "\n".join(lines)
 	var body := str(beat.get("text",""))
 	var kind := str(beat.get("visual",""))
 	if kind not in VISUALS:
@@ -712,7 +815,11 @@ func _show_end() -> void:
 		_phone.queue_free()
 		_phone=null
 	_clear(_visual)
+	_comic = null
 	_visual.visible=false
+	_bg.visible = true
+	for scrim in _scrims:
+		scrim.visible = true
 	_set_background("res://art/bg/apartment.png",false)
 	_set_cast([], "")
 	_place.text="序章  /  那盞燈"
@@ -764,6 +871,7 @@ func _verify_all_paths() -> void:
 	var choice_beats: Array=[]
 	var ids: Dictionary={}
 	var failures:=0
+	var checked_comics: Dictionary = {}
 	for beat in beats:
 		if ids.has(str(beat["id"])):
 			push_error("Duplicate beat: "+str(beat["id"]))
@@ -788,15 +896,22 @@ func _verify_all_paths() -> void:
 		while cursor<beats.size() and hops<beats.size()+1:
 			_show_current()
 			await get_tree().process_frame
+			if _comic_end_for.has(cursor) and not checked_comics.has(cursor):
+				checked_comics[cursor] = true
+				var atlas_path := str(_active["comic"].get("atlas", ""))
+				var rendered_atlas: Texture2D = _comic.source_texture if is_instance_valid(_comic) else null
+				if atlas_path.is_empty() or not ResourceLoader.exists(atlas_path) or rendered_atlas == null or rendered_atlas.resource_path != atlas_path:
+					push_error("Comic atlas missing or failed to load: %s (%s)" % [_active.get("id", ""), atlas_path])
+					failures += 1
 			if _dialogue.visible and _dialogue.get_line_count()>3:
 				push_error("Dialogue needs >3 lines: "+str(_active.get("id","")))
 				failures+=1
-			cursor+=1
+			cursor=_page_end(cursor)+1
 			hops+=1
 		_show_current()
 		if not finished:
 			failures+=1
-		print("M1_PATH ",path+1,"/",count," beats=",visited.size()," complete=",finished)
+		print("M1_PATH ",path+1,"/",count," beats=",visited.size()," pages=",hops," complete=",finished)
 	print("M1_VERIFY failures=",failures," branches=",count," story_beats=",beats.size())
 	_sound.shutdown()
 	await get_tree().create_timer(0.15).timeout

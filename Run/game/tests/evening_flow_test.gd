@@ -27,6 +27,7 @@ func _run() -> void:
 	await _test_path({"jason_choice": "admit", "photo_choice": "posed", "reply_choice": "ray"}, false)
 	await _test_scene_actions()
 	await _test_alive_navigation()
+	await _test_comic_pages()
 	await _test_visual_transitions()
 	var audio_refs := _audio_refs(_runner._sound)
 	current_scene.queue_free()
@@ -59,11 +60,19 @@ func _test_new_game_and_controls() -> void:
 	_runner.set_process(false)
 	_runner._show_current()
 	_runner._advance.grab_focus()
-	await _press_key(KEY_SPACE)
-	_check(_runner.cursor == 0 and not _runner._typing, "Space on Continue first reveals current dialogue")
-	_check(FileAccess.get_file_as_string(Save.SAVE_PATH) == previous, "Revealing text does not overwrite progress")
-	await _press_key(KEY_SPACE)
-	_check(_runner.cursor == 1 and Save.read()["cursor"] == 1, "Second Space advances and saves the first clean beat")
+	if is_instance_valid(_runner._comic):
+		var first_page: Dictionary = _runner._active["comic"]
+		var next_index := _story_index(str(first_page["through"])) + 1
+		_check(not _runner._typing and not _runner._dialogue.visible, "Opening comic is ready without an extra text-reveal step")
+		_check(FileAccess.get_file_as_string(Save.SAVE_PATH) == previous, "Showing the opening comic preserves previous progress")
+		await _press_key(KEY_SPACE)
+		_check(_runner.cursor == next_index and Save.read()["cursor"] == next_index, "One Space advances and saves the complete opening page")
+	else:
+		await _press_key(KEY_SPACE)
+		_check(_runner.cursor == 0 and not _runner._typing, "Space on Continue first reveals current dialogue")
+		_check(FileAccess.get_file_as_string(Save.SAVE_PATH) == previous, "Revealing text does not overwrite progress")
+		await _press_key(KEY_SPACE)
+		_check(_runner.cursor == 1 and Save.read()["cursor"] == 1, "Second Space advances and saves the first clean beat")
 	var before: int = _runner.cursor
 	await _press_key(KEY_ESCAPE)
 	_check(_runner._paused, "Escape opens pause")
@@ -179,7 +188,10 @@ func _test_scene_actions() -> void:
 			action.grab_focus()
 			await _press_key(KEY_SPACE)
 		else:
+			var activations: Array[bool] = []
+			action.pressed.connect(func(): activations.append(true))
 			await _click_button(action)
+			_check(activations.size() == 1, "Mouse input activates the actual scene button exactly once: " + beat_id)
 		_check(_runner.cursor == index + 1 and _runner._active["id"] == step["next"], "One activation commits the next beat: " + beat_id)
 		_check(Save.read()["cursor"] == index + 1, "Action result is saved before the crossfade finishes: " + beat_id)
 		_check(_runner.decisions == prior_decisions and Save.read()["choices"] == prior_decisions, "Scene action does not add or alter decisions: " + beat_id)
@@ -294,6 +306,121 @@ func _test_completed_resume() -> void:
 	_check(FileAccess.get_file_as_string(Save.SAVE_PATH) == completed, "Loading completion does not rewrite the save")
 
 
+func _test_comic_pages() -> void:
+	var anchor := -1
+	for index in _runner.beats.size():
+		var beat: Dictionary = _runner.beats[index]
+		if beat.get("comic") is Dictionary and beat.get("when", {}).is_empty():
+			anchor = index
+			break
+	_check(anchor >= 0, "Story provides a real comic page to read and resume")
+	if anchor < 0:
+		return
+	var page: Dictionary = _runner.beats[anchor]["comic"]
+	var end_index := _story_index(str(page["through"]))
+	_check(end_index > anchor and end_index + 1 < _runner.beats.size(), "Comic page groups multiple source beats and has a following beat")
+	if end_index <= anchor or end_index + 1 >= _runner.beats.size():
+		return
+	var member := anchor + maxi(1, (end_index - anchor) / 2)
+	var legacy_choices := {"jason_choice":"tease"} if anchor > _story_index("jason_choice") else {}
+	_check(Save.write({"cursor":member,"choices":legacy_choices,"settings":{"muted":true}}), "Old progress inside a merged page can be written without a new save format")
+	_router.back_to_title()
+	await scene_changed
+	_find_button(current_scene, "繼續這個晚上").grab_focus()
+	await _press_key(KEY_ENTER)
+	_runner = current_scene
+	_check(_runner.cursor == anchor and _runner._active["id"] == _runner.beats[anchor]["id"], "An old member cursor resumes at its complete comic page")
+	_check(_runner.decisions == legacy_choices and _runner.settings["muted"], "Comic resume preserves existing choices and settings")
+	_check(is_instance_valid(_runner._comic), "Resumed comic creates its page renderer")
+	if not is_instance_valid(_runner._comic):
+		return
+	_check(not _runner._typing and not _runner._dialogue.visible and not _runner._speaker.visible, "Comic text is not duplicated by the old dialogue presentation")
+	var page_text := _visible_text(_runner._comic)
+	var written_panels := 0
+	for panel in page["panels"]:
+		var words := str(panel.get("text", ""))
+		if not words.is_empty():
+			written_panels += 1
+			_check(page_text.contains(words), "The whole comic presents panel text immediately: " + words.left(18))
+	_check(written_panels > 0, "Comic sample contains readable words alongside its images")
+	var image_count := 0
+	var distinct_images: Dictionary = {}
+	for picture in _runner._comic.find_children("*", "TextureRect", true, false):
+		if picture.is_visible_in_tree() and picture.texture != null:
+			image_count += 1
+			distinct_images[_image_hash(picture.texture)] = true
+	_check(image_count >= page["panels"].size() and image_count >= 2, "Comic renders multiple real images in the same page")
+	_check(distinct_images.size() >= 2, "Comic panels show different image content")
+	var first_panel := _runner._comic.find_child("ComicPanel0", true, false) as Control
+	_check(first_panel != null, "Comic exposes a visible first panel")
+	if first_panel != null:
+		await _click_at(first_panel.get_global_rect().get_center())
+		_check(_runner.cursor == anchor, "Clicking a comic panel does not skip its page")
+	for index in range(anchor, end_index + 1):
+		_check(_runner.visited.has(index), "The already visible page is marked read as one unit: " + str(_runner.beats[index]["id"]))
+	_check(not _runner.visited.any(func(index): return index > end_index), "Restoring a comic never marks later pages as read")
+	await _press_key(KEY_L)
+	_check(_runner._paused and _focus_inside_modal(), "Comic history moves focus into its modal")
+	var history := _visible_text(_runner._modal)
+	_check(history.contains(str(page["title"])), "History identifies the page that is actually on screen")
+	for panel in page["panels"]:
+		var summary := str(panel.get("alt", panel.get("text", "")))
+		if not summary.is_empty():
+			_check(history.contains(summary), "History describes an already visible panel: " + summary.left(18))
+		var words := str(panel.get("text", ""))
+		if not words.is_empty():
+			_check(history.contains(words), "History retains the comic's spoken words: " + words.left(18))
+	var future_body: String = _runner._log_body(_runner.beats[end_index + 1])
+	_check(not future_body.is_empty() and not history.contains(future_body), "History does not reveal the next unread page or beat")
+	for index in 4:
+		await _press_key(KEY_TAB)
+		_check(_focus_inside_modal(), "Tab stays within comic history (%d)" % index)
+	_runner._next()
+	_check(_runner.cursor == anchor, "Opening history cannot progress the comic")
+	await _press_key(KEY_ESCAPE)
+	_check(not _runner._paused and _runner.cursor == anchor, "Escape returns to the same complete comic page")
+	var old_page: WeakRef = weakref(_runner._comic)
+	_runner._advance.grab_focus()
+	await _press_key(KEY_SPACE)
+	_check(_runner.cursor == end_index + 1 and Save.read()["cursor"] == end_index + 1, "One input advances beyond the whole comic group and saves there")
+	_check(old_page.get_ref() == null, "Advancing removes the previous page rather than leaving its panels behind")
+	var hops := 0
+	while is_instance_valid(_runner._comic) and hops < _runner.beats.size():
+		_runner._next()
+		hops += 1
+		await process_frame
+	_check(not is_instance_valid(_runner._comic), "Leaving the comic sequence clears the page renderer")
+	_check(_runner.find_children("ComicPanel*", "", true, false).is_empty(), "The next non-comic scene has no leftover comic panels")
+	var branch_member := _story_index("jason_tease_02")
+	_check(branch_member >= 0, "Story retains the old selected-branch source ID")
+	if branch_member < 0:
+		return
+	Save.write({"cursor":branch_member,"choices":{"jason_choice":"tease"},"settings":{"muted":true}})
+	_router.back_to_title()
+	await scene_changed
+	_find_button(current_scene, "繼續這個晚上").grab_focus()
+	await _press_key(KEY_ENTER)
+	_runner = current_scene
+	_check(is_instance_valid(_runner._comic) and _runner._active["id"] == "jason_tease_01", "An old branch-member save restores the selected complete page")
+	_check(_runner.decisions.get("jason_choice") == "tease" and _runner.visited.has(branch_member) and not _runner.visited.has(_story_index("jason_admit_01")), "Branch-page resume preserves the choice without exposing the other response")
+	_runner._advance.grab_focus()
+	await _press_key(KEY_SPACE)
+	_check(_runner._active["id"] == "station_06" and Save.read()["choices"].get("jason_choice") == "tease", "One next leaves the selected branch page and skips its unchosen alternative")
+
+
+func _visible_text(node: Node) -> String:
+	var parts := PackedStringArray()
+	if node is Label and node.is_visible_in_tree():
+		parts.append(node.text)
+	elif node is RichTextLabel and node.is_visible_in_tree():
+		parts.append(node.text)
+	for child in node.get_children():
+		var words := _visible_text(child)
+		if not words.is_empty():
+			parts.append(words)
+	return "\n".join(parts)
+
+
 func _test_visual_transitions() -> void:
 	# 只在隔離流程中替換記憶體內容，確保新畫面類型不依賴指定 beat ID。
 	_runner.beats = [
@@ -306,6 +433,7 @@ func _test_visual_transitions() -> void:
 		{"id":"test_phone","scene":"home","bg":"apartment","kind":"phone","thread":"Ray","speaker":"Ray","text":"到了。"},
 		{"id":"test_silent_scene","scene":"home","bg":"apartment","speaker":"旁白","text":""},
 	]
+	_runner._compile_comics()
 	_runner.cursor = 0
 	_runner.finished = false
 	_runner.decisions = {"photo_choice":"candid"}
@@ -462,19 +590,24 @@ func _press_key(key: Key) -> void:
 
 
 func _click_button(button: Button) -> void:
-	var point := button.get_global_rect().get_center()
+	await _click_at(button.get_global_rect().get_center())
+
+
+func _click_at(point: Vector2) -> void:
+	# Input.parse_input_event 接受視窗座標；headless 視窗小於遊戲的設計 viewport。
+	var screen_point := root.get_final_transform() * point
 	var down := InputEventMouseButton.new()
 	down.button_index = MOUSE_BUTTON_LEFT
 	down.button_mask = MOUSE_BUTTON_MASK_LEFT
-	down.position = point
-	down.global_position = point
+	down.position = screen_point
+	down.global_position = screen_point
 	down.pressed = true
 	Input.parse_input_event(down)
 	await process_frame
 	var up := InputEventMouseButton.new()
 	up.button_index = MOUSE_BUTTON_LEFT
-	up.position = point
-	up.global_position = point
+	up.position = screen_point
+	up.global_position = screen_point
 	up.pressed = false
 	Input.parse_input_event(up)
 	await process_frame
